@@ -1,23 +1,44 @@
 import React, { Component } from 'react';
 import {
     View,
-    Text
+    Text,
+    Button
 } from 'react-native';
+import { ListRow } from 'teaset';
+import { Icon } from 'antd-mobile';
 import { connect } from 'react-redux';
 
 class Home extends Component{
+
     render(){
+        const selectModules=[];
+        console.log('刷新状态')
+        console.log(this.props.modules)
+        this.props.modules.map(function(item){
+            if(item.selected){
+                selectModules.push(item)
+            }
+       })
         let {initData} = this.props;
         return (
             <View>
-               <Text>{initData.text}</Text>    
+               <Text>{initData.text}</Text>
+               <Text>可用模块</Text>
+               {selectModules.map((item,i)=>{
+                   return <ListRow title={item.name} key={i} />
+               })}
+               <Button
+                    onPress={() => this.props.navigation.navigate('EditModules')}
+                    title="编辑模块"
+                />  
             </View>
         )
     }
 }
 function mapStateToProps(state){
     return {
-        initData:state.initReducer
+        initData:state.initReducer,
+        modules:state.localConfigReducer.modules,
     }
 }
 export default connect(mapStateToProps)(Home);
