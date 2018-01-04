@@ -16,14 +16,20 @@ const initialState = {
             name:'待办任务',
             selected:true,
         },
+        {
+            name:'功能5',
+            selected:true,
+        },
+        {
+            name:'功能6',
+            selected:true,
+        },
     ]
 }
 
 export function localConfigReducer(state = initialState, action){
     switch (action.type){
         case 'changeModules':
-            console.log('接收到新状态');
-            console.log(action.data)
             return {
                 ...state,
                 modules:[...action.data]

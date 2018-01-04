@@ -12,8 +12,6 @@ class Home extends Component{
 
     render(){
         const selectModules=[];
-        console.log('刷新状态')
-        console.log(this.props.modules)
         this.props.modules.map(function(item){
             if(item.selected){
                 selectModules.push(item)

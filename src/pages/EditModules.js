@@ -10,18 +10,21 @@ import {
 } from 'react-native';
 import { connect } from 'react-redux';
 const {height, width} = Dimensions.get('window');
-
+const topOffset = 50;
+const itemHeight = 49;
 class EditModules extends Component{
     constructor(...props){
         super(...props);
-        this.modules = this.props.modules;
+        this.modules = [...this.props.modules];
         this.items = [];
     }
 
     componentWillMount() {
         this._panResponder = PanResponder.create({
             onStartShouldSetPanResponder: (evt, gestureState) => true,
+            onStartShouldSetPanResponderCapture: (evt, gestureState) => true,
             onMoveShouldSetPanResponder: (evt, gestureState) => true,
+            onMoveShouldSetPanResponderCapture: (evt, gestureState) => true,
             onPanResponderGrant: (evt, gestureState) => {
                 const {pageY, locationY} = evt.nativeEvent;
                 this.index = this._getIdByPosition(pageY);
@@ -69,37 +72,26 @@ class EditModules extends Component{
                 item.setNativeProps({
                     style: {...shadowStyle, top: this._getTopValueYById(this.index)}
                 });
-                console.log('发送新状态');
-                this.props.dispatch({
-                    type:'changeModules',
-                    data:this.modules
-                })
             },
             onPanResponderTerminate: (evt, gestureState) => {
-                // Another component has become the responder, so this gesture
-                // should be cancelled
+
             }
         });
     }
     _getIdByPosition(pageY){
         var id = -1;
-        const height =49;
-        if(pageY >= height && pageY < height*2)
-            id = 0;
-        else if(pageY >= height*2 && pageY < height*3)
-            id = 1;
-        else if(pageY >= height*3 && pageY < height*4)
-            id = 2;
-        else if(pageY >= height*4 && pageY < height*5)
-            id = 3;
-        else if(pageY >= height*5 && pageY < height*6)
-            id = 4;
+        const modulesCount = this.modules.length;
+        pageY = pageY-topOffset;
+        for (let index = 0; index < modulesCount; index++) {
+            if (pageY >= itemHeight*index && pageY < itemHeight*(index+1)){
+                return index;
+            }            
+        }
         return id;
     }
 
     _getTopValueYById(id){
-        const height = 49;
-        return (id + 1) * height;
+        return (id + 1) * itemHeight;
     }
     render(){
         const { modules,dispatch } = this.props;
@@ -111,7 +103,7 @@ class EditModules extends Component{
                         {...this._panResponder.panHandlers} 
                         key={i} 
                         ref={(ref) => this.items[i] = ref}
-                        style={[styles.item, {top: (i+1)*49}]}
+                        style={[styles.item, {top: i*itemHeight + topOffset}]}
                     > 
                         <Text >{item.name}</Text>
                         <Switch 
@@ -121,6 +113,7 @@ class EditModules extends Component{
                                     ...item,
                                     selected:value
                                 }
+                                this.modules = [...newModules];
                                 dispatch({
                                     type:'changeModules',
                                     data:newModules
@@ -131,6 +124,14 @@ class EditModules extends Component{
                     </View>  
                     )
                 })}
+                <Button title='完成' 
+                    onPress={() => {
+                        dispatch({
+                            type:'changeModules',
+                            data:this.modules
+                        })
+                        this.props.navigation.navigate('Home');
+                    }} />
             </View>
         )
     }
@@ -139,11 +140,10 @@ class EditModules extends Component{
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        flexDirection: 'column',
     },
     item: {
         flexDirection: 'row',
-        height: 49,
+        height: itemHeight,
         width:width,
         alignItems: 'center',
         backgroundColor: '#fff',
