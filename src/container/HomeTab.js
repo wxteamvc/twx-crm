@@ -16,6 +16,8 @@ import Application from '../pages/Application';
 import Statistics from '../pages/Statistics';
 import Personal from '../pages/Personal';
 
+ 
+
 const HomeTab = TabNavigator({
     Home: {
         screen: Home,
