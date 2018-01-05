@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { View, Text, StatusBar, Image } from 'react-native';
 import { styles } from '../constants/styles'
 import { home_top, home_mid } from '../constants/mock'
+
 import { connect } from 'react-redux';
 import { Item } from 'antd-mobile/lib/tab-bar';
 import MenuItem from '../components/menuItem'
@@ -28,9 +29,5 @@ class Home extends Component {
         )
     }
 }
-function mapStateToProps(state) {
-    return {
-        initData: state.initReducer
-    }
-}
+
 export default connect(mapStateToProps)(Home);

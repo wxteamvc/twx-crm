@@ -1,22 +1,25 @@
 import React, { Component } from 'react';
-import {
-    View,
-    Text,
-} from 'react-native';
-
-import { StackNavigator,TabNavigator } from 'react-navigation';
+import { StackNavigator, TabNavigator } from 'react-navigation';
 import HomeTab from './HomeTab';
+import Lead from '../pages/Lead';
+import EditModules from '../pages/EditModules';
 
 const App = StackNavigator({
-    HomeTab:{
+    HomeTab: {
         screen: HomeTab,
         navigationOptions: ({ navigation }) => {
             return ({
-                    header: null
-                })
+                header: null
+            })
         }
-
+    },
+    EditModules: {
+        screen: EditModules,
+        navigationOptions: ({ navigation }) => ({
+            header: null
+        })
     }
-})
+    })
+
 
 export default App;

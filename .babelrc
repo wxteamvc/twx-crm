@@ -1,8 +1,9 @@
 {
-  "presets": [
-    "react-native"
-  ],
-  "plugins": [
+  "presets": ["react-native"]
+}
+  "presets": ["react-native"],
+  "plugins":[
     ["import", { "libraryName": "antd-mobile" }]
   ]
 }
+
