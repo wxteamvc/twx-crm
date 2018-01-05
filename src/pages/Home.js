@@ -6,11 +6,20 @@ import { home_top, home_mid } from '../constants/mock'
 import { connect } from 'react-redux';
 import { Item } from 'antd-mobile/lib/tab-bar';
 import MenuItem from '../components/menuItem'
-export default class Home extends Component {
+class Home extends Component {
+
+
+      
 
 
     render() {
-        let { initData } = this.props;
+        const { home_top,modules } = this.props;
+        const selectModules=[];
+        modules.map(function(item){
+            if(item.selected){
+                selectModules.push(item)
+            }
+        })
         return (
             <View style={{ flex: 1 }}>
                 <StatusBar
@@ -23,10 +32,26 @@ export default class Home extends Component {
                     </View>
                 </View>
                 <View style={{ margin: 10,marginBottom:20, backgroundColor: '#ccc', flex: 1 }}>
-                    <MenuItem data={home_mid}  />
+                    <MenuItem data={selectModules}  
+                    extraData={{  name:'更多',selected:true,icon:require('../constants/images/更多.png'),goUrl:'EditModules'}} 
+                    callBack = {
+                        ({goUrl})=>{
+                             this.props.navigation.navigate(goUrl);
+                        }
+                    }
+                    />
                 </View>
             </View>
         )
     }
 }
+
+
+function mapStateToProps(state){
+    return {
+        home_top:state.localConfigReducer.home_top,
+        modules:state.localConfigReducer.modules,
+    }
+}
+export default connect(mapStateToProps)(Home);
 
