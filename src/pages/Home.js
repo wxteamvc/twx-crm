@@ -11,13 +11,14 @@ import { connect } from 'react-redux';
 class Home extends Component{
 
     render(){
+        const { initData,modules } = this.props;
+        console.log(initData)
         const selectModules=[];
-        this.props.modules.map(function(item){
+        modules.map(function(item){
             if(item.selected){
                 selectModules.push(item)
             }
-       })
-        let {initData} = this.props;
+        })
         return (
             <View>
                <Text>{initData.text}</Text>

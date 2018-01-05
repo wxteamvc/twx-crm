@@ -11,7 +11,7 @@ import {
 import { connect } from 'react-redux';
 const {height, width} = Dimensions.get('window');
 const topOffset = 50;
-const itemHeight = 49;
+const itemHeight = 50;
 class EditModules extends Component{
     constructor(...props){
         super(...props);
@@ -91,7 +91,7 @@ class EditModules extends Component{
     }
 
     _getTopValueYById(id){
-        return (id + 1) * itemHeight;
+        return (id * itemHeight + topOffset);
     }
     render(){
         const { modules,dispatch } = this.props;
