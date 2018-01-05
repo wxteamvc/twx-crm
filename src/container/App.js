@@ -1,15 +1,21 @@
 import React, { Component } from 'react';
 import {
     View,
-    Text
+    Text,
 } from 'react-native';
 
-import { StackNavigator } from 'react-navigation';
-import Home from '../pages/Home';
+import { StackNavigator,TabNavigator } from 'react-navigation';
+import HomeTab from './HomeTab';
 
 const App = StackNavigator({
-    Home:{
-        screen: Home
+    HomeTab:{
+        screen: HomeTab,
+        navigationOptions: ({ navigation }) => {
+            return ({
+                    header: null
+                })
+        }
+
     }
 })
 
