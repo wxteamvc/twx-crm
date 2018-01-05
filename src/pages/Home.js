@@ -6,7 +6,7 @@ import { home_top, home_mid } from '../constants/mock'
 import { connect } from 'react-redux';
 import { Item } from 'antd-mobile/lib/tab-bar';
 import MenuItem from '../components/menuItem'
-class Home extends Component {
+export default class Home extends Component {
 
 
     render() {
@@ -30,4 +30,3 @@ class Home extends Component {
     }
 }
 
-export default connect(mapStateToProps)(Home);

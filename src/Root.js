@@ -5,7 +5,6 @@ import store from './store/ConfigureStore';
 import App from './container/App';
 import { NetInfo, AppState } from 'react-native';
 
-const store = configureStore();
 
 export default class Root extends Component{
     componentDidMount() {
