@@ -6,7 +6,8 @@ import {
     Button,
     Switch,
     PanResponder,
-    Dimensions
+    Dimensions,
+    TouchableHighlight
 } from 'react-native';
 import { connect } from 'react-redux';
 const {height, width} = Dimensions.get('window');
