@@ -63,6 +63,22 @@ export const styles = StyleSheet.create({
         borderRadius: 5,
         marginBottom: 20
     },
+    //首页活动列表容器
+    home_activity_title: {
+        padding: 10,
+        borderColor:'#ccc',
+        borderBottomWidth:0.3
+    },
+    //首页活动列表标题
+    home_activity_title_View: { 
+        paddingLeft: 5, 
+        borderColor: '#40A9FF',
+        borderLeftWidth: 3,
+    },
+      //首页活动列表item
+      home_activity_title_item: { 
+        flex: 1 ,paddingTop:5,paddingBottom:5,borderColor:'#ccc',borderBottomWidth:0.3,borderRightWidth:0.3
+    },
     //````````````````````````通知组件````````````````````````````````
     //通知组件身体样式
     notices_body: {
