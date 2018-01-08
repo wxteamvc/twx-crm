@@ -11,10 +11,12 @@ import {
 } from 'react-native';
 import { TabNavigator } from 'react-navigation';
 import { Icon } from 'antd-mobile';
-import Home from '../pages/Home';
-import Application from '../pages/Application';
-import Statistics from '../pages/Statistics';
-import Personal from '../pages/Personal';
+import Home from '../pages/HomeView';
+import Application from '../pages/ApplicationView';
+import Statistics from '../pages/StatisticsView';
+import Personal from '../pages/PersonalView';
+
+ 
 
 const HomeTab = TabNavigator({
     Home: {

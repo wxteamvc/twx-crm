@@ -30,7 +30,10 @@ export default class Root extends Component{
             data
         })
     }
-    render(){
+    render(){ 
+        console.log('*********************************************');
+        console.log(store.getState());
+        console.log('*********************************************');
         return (
             <Provider store={store}>
                 <App />
