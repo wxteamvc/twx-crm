@@ -1,4 +1,5 @@
 const initialState = {
+    token:null,
     modules: [
         {
             name: '潜在客户',
@@ -35,38 +36,7 @@ const initialState = {
             name: '系统消息',
             selected: true,
             icon: require('../constants/images/系统消息.png')
-        },
-                {
-            name:'我的客户',
-            selected:true,
-            icon:require('../constants/images/消息.png'),
-            goUrl:'home'
-        },
-        {
-            name:'联系跟进',
-            selected:true,
-            icon:require('../constants/images/消息.png')
-        },
-        {
-            name:'成交订单',
-            selected:true,
-            icon:require('../constants/images/消息.png')
-        },
-        {
-            name:'待办任务',
-            selected:true,
-            icon:require('../constants/images/消息.png')
-        },
-        {
-            name:'功能5',
-            selected:true,
-            icon:require('../constants/images/消息.png')
-        },
-        {
-            name:'功能6',
-            selected:true,
-            icon:require('../constants/images/消息.png')
-        },
+        }
     ]
 }
 

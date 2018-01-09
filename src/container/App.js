@@ -5,6 +5,14 @@ import Lead from '../pages/LeadView';
 import EditModules from '../pages/EditModules';
 import CustomerList from '../pages/CustomerListView';
 const App = StackNavigator({
+    Lead: {
+        screen: Lead,
+        navigationOptions: ({ navigation }) => {
+            return ({
+                header: null
+            })
+        }
+    },
     HomeTab: {
         screen: HomeTab,
         navigationOptions: ({ navigation }) => {

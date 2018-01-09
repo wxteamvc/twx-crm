@@ -3787,6 +3787,10 @@ react-native-menu@^0.23.0:
     prop-types "^15.5.10"
     react-timer-mixin "^0.13.3"
 
+react-native-pull@^2.0.2:
+  version "2.0.2"
+  resolved "http://registry.npm.taobao.org/react-native-pull/download/react-native-pull-2.0.2.tgz#15264a737bcf56debd4bacaa2705254d9ef1b345"
+
 react-native-swipeout@^2.2.2:
   version "2.3.3"
   resolved "http://registry.npm.taobao.org/react-native-swipeout/download/react-native-swipeout-2.3.3.tgz#3b99db845ef75f0bfa467f1d8de0b7f7946326bd"

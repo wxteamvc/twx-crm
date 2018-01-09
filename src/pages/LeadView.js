@@ -20,7 +20,7 @@ class Lead extends Component{
             const resetAction = NavigationActions.reset({
                 index:0,
                 actions:[
-                    NavigationActions.navigate({routeName:'Home'})
+                    NavigationActions.navigate({routeName:'HomeTab'})
                 ]
             })
             this.timer && clearTimeout(this.timer)
@@ -28,6 +28,7 @@ class Lead extends Component{
         }
     }
     componentDidMount(){
+        
         this.timer = setInterval(this.leadTime,1000);
     }
     componentWillUnmount() {
@@ -45,7 +46,8 @@ class Lead extends Component{
 }
 function mapStateToProps(state){
     return {
-        initData:state.initReducer
+        initData:state.initReducer,
+        localConfigReducer:state.localConfigReducer
     }
 }
 export default connect(mapStateToProps)(Lead);
