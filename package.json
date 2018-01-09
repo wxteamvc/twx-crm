@@ -11,6 +11,7 @@
     "babel-plugin-import": "^1.6.3",
     "react": "16.0.0",
     "react-native": "0.51.0",
+    "react-native-collapsible": "^0.10.0",
     "react-native-pull": "^2.0.2",
     "react-navigation": "^1.0.0-beta.22",
     "react-redux": "^5.0.6",

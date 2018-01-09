@@ -84,4 +84,11 @@ export const styles = StyleSheet.create({
     notices_body: {
         padding: 5, paddingLeft: 10, paddingRight: 10, backgroundColor: '#fff'
     },
+    //```````````````````````加载页面组件·······················
+    loadingBox: { // Loading居中
+        flex:1,
+        alignItems:'center',
+        justifyContent:'center',
+        backgroundColor:'rgba(0, 0, 0, 0.5)',
+    }
 })

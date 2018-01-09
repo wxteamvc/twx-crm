@@ -12,3 +12,10 @@ export const Login_BEGIN='Login_BEGIN';
 export const Login_SUCCESS='Login_SUCCESS';
 //登陆账号失败
 export const Login_FAILED='Login_FAILED';
+
+//获取用户信息开始
+export const UserInfo_BEGIN='UserInfo_BEGIN';
+//获取用户信息成功
+export const UserInfo_SUCCESS='UserInfo_SUCCESS';
+//登陆用户失败
+export const UserInfo_FAILED='UserInfo_FAILED';

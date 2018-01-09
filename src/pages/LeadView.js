@@ -10,7 +10,7 @@ import { NavigationActions } from 'react-navigation';
 
 class Lead extends Component{
     state = {
-        seconds:3
+        seconds:1
     }
     leadTime = ()=>{
         this.setState({

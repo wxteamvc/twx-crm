@@ -6,9 +6,8 @@
 'use strict';
 
 import {NetInfo} from 'react-native';
-import store from '../store/ConfigureStore';
 
-console.log(store.getState());
+
 let Util = {
     /**
      * http get 请求简单封装
@@ -55,6 +54,7 @@ let Util = {
             headers: {
                 // 'Accept': 'application/json',
                 // 'Content-Type': 'application/json'
+                'token':global.token,
                 'Content-Type': 'multipart/form-data',
             },
             body: formData
