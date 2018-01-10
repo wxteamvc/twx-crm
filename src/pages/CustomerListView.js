@@ -1,52 +1,64 @@
 import React, { Component } from 'react';
-import { View, Text, StatusBar, Image, ScrollView, FlatList } from 'react-native';
+import { View, Text, StatusBar, Image, ScrollView, FlatList, ProgressBarAndroid } from 'react-native';
 import { Icon, Grid, WhiteSpace, Carousel, Flex } from 'antd-mobile';
 import Accordion from '../components/Accordion/Accordion';
 import { styles } from '../constants/styles'
 import { ScreenWidth } from '../constants/global';
 import { connect } from 'react-redux';
-
-
+import { getCustomerList } from '../actions/customerAction';
+import * as Animatable from 'react-native-animatable';
 
 class CustomerList extends Component {
     constructor(props) {
         super(props)
     }
 
+    componentDidMount() {
+        this.props.dispatch(
+            getCustomerList()
+        )
+    }
 
-    renderBody = ( item ,key) => {
+
+    renderBody = (item, key) => {
         return (
             <View style={styles.item_body}>
+                <StatusBar
+                    backgroundColor='#40a9ff'
+                    translucent={false}
+                />
                 <View style={[styles.flex_row_between, styles.item_header]}>
                     <View style={styles.flex_row_columncenter}>
-                        <Icon type={"\uE66A"} size={15} color={'#40a9ff'} />
-                        <Text style={[styles.fontsize10, { marginLeft: 5 }]}>张飞</Text>
+                        <Animatable.Text animation="pulse" easing="ease-out" iterationCount="infinite" >
+                            {item.sex == 1 ? <Icon type={"\uE66A"} size={15} color={'#40a9ff'} /> : <Icon type={"\uE66A"} size={15} color={'#FF0033'} />}
+                        </Animatable.Text>
+                        <Text style={[styles.fontsize12, { marginLeft: 5 }]}>{item.cname}</Text>
                     </View>
-                    <Text style={styles.fontsize10}>身份证号 : 320288195507254256</Text>
+                    <Text style={styles.fontsize10}>身份证号 : {item.card_id}</Text>
                 </View>
                 <View style={[{ paddingLeft: 20, paddingRight: 20 }]}>
                     <WhiteSpace size={'sm'} />
                     <View style={[styles.flex_row_columncenter]}>
                         <View style={[{ flex: 1 }, styles.flex_row_columncenter]}>
                             <Text numberOfLines={1} style={styles.fontsize10}>
-                                就职公司 : 海润燃气
+                                就职公司 : {item.company ? item.company : '未填写'}
                             </Text>
                         </View>
                         <View style={[{ flex: 1 }, styles.flex_row_columncenter]}>
                             <Text numberOfLines={1} style={styles.fontsize10}>
-                                公司职务 : 主管
+                                公司职务 : {item.job ? item.job : '未填写'}
                             </Text>
                         </View>
                     </View>
                     <WhiteSpace size={'sm'} />
                     <Text numberOfLines={2} style={styles.fontsize10}>
-                        备注 : <Text style={[styles.fontsize10, { color: 'red' }]}>欠钱不还</Text>
+                        备注 : {item.mark ? <Text style={[styles.fontsize10, { color: 'red' }]}>{item.mark}</Text> : <Text style={[styles.fontsize10]}>未填写</Text>}
                     </Text>
                 </View>
                 <WhiteSpace size={'sm'} />
                 <View style={[styles.flex_row_between]}>
-                    <Text style={styles.fontsize8}>所属公司 : 新昌咨询</Text>
-                    <Text style={styles.fontsize8}>贷款总额 : &yen; 5000&nbsp;&nbsp;&nbsp;&nbsp;回款总额 : &yen; 5000</Text>
+                    <Text style={[styles.fontsize10, { color: '#ccc' }]}>所属公司 : 新昌咨询</Text>
+                    <Text style={[styles.fontsize10, { color: '#ccc' }]}>贷款总额 : &yen; 5000&nbsp;&nbsp;&nbsp;&nbsp;回款总额 : &yen; 5000</Text>
                 </View>
 
             </View>
@@ -54,44 +66,38 @@ class CustomerList extends Component {
     }
 
     render() {
-        return (
-            <View style={{ flex: 1 }}>
-                <WhiteSpace />
-                <Accordion
-                    sections={[
-                        {
-                            title: 'first',
-                            content: 'Accordion'
-                        },
-                        {
-                            title: 'first',
-                            content: 'Accordion'
-                        },
-                        {
-                            title: 'first',
-                            content: 'Accordion'
-                        },
-                        {
-                            title: 'first',
-                            content: 'Accordion'
-                        },
-                    ]}
-
-
-                    renderMainBody={this.renderBody}
-                    renderHeader={(section,key,isShow) => (
-                        <View style={styles.flex_center}>
-                            {isShow?<Icon type={'up'}  color={'#ccc'}/>:<Icon type={'down'}  color={'#ccc'}/>}
-                        </View>
-                    )}
-                    renderContent={(section) => (
-                        <View>
-                            <Text>{section.content}</Text>
-                        </View>
-                    )}
-                />
-            </View>
-        )
+        console.log(this.props.list)
+        if (this.props.customerReducer.status == 'done') {
+            return (
+                <View style={{ flex: 1 }}>
+                    <WhiteSpace />
+                    <Accordion
+                        sections={this.props.list.data}
+                        renderMainBody={this.renderBody}
+                        renderHeader={(section, key, isShow) => (
+                            <View style={[styles.flex_center, { padding: 10 }]}>
+                                {isShow ? <Icon type={'up'} size={15} color={'#ccc'} /> : <Icon type={'down'} size={15} color={'#ccc'} />}
+                            </View>
+                        )}
+                        renderContent={(section) => (
+                            <View>
+                                <Text>我是内容</Text>
+                            </View>
+                        )}
+                    />
+                </View>
+            )
+        } else {
+            return (
+                <View style={[{ flex: 1 }, styles.flex_center]}>
+                    <StatusBar
+                         backgroundColor='#40a9ff'
+                         translucent={false}
+                    />
+                    <ProgressBarAndroid styleAttr="Inverse" />
+                </View>
+            )
+        }
     }
 }
 
@@ -100,8 +106,8 @@ class CustomerList extends Component {
 
 function mapStateToProps(state) {
     return {
-        modules: state.localConfigReducer.modules,
-        home: state.homeReducer,
+        customerReducer: state.customerReducer,
+        list: state.customerReducer.list,
     }
 }
 export default connect(mapStateToProps)(CustomerList);

@@ -45,6 +45,10 @@ export const styles = StyleSheet.create({
         justifyContent: 'space-between',
         alignItems: 'center',
     },
+     //字体大小12
+     fontsize12: {
+        fontSize: 12 * fontSizeScaler
+    },
     //字体大小10
     fontsize10: {
         fontSize: 10 * fontSizeScaler
@@ -82,15 +86,15 @@ export const styles = StyleSheet.create({
     },
     //首页活动列表item
     home_activity_title_item: {
-        flex: 1, paddingTop: 5, paddingBottom: 5, borderColor: '#ccc', borderBottomWidth: 0.3, borderRightWidth: 0.3
+        flex: 1, paddingTop: 5, paddingBottom: 5, borderColor: '#ccc', borderBottomWidth: 0.5, borderRightWidth: 0.5
     },
     //````````````````````````客户列表页面````````````````````````````````
     //列表元素身体样式
     item_body: {
-      marginLeft:10,marginRight:10,paddingTop:10,paddingBottom:10,borderColor:'#ccc',borderBottomWidth:0.3
+      marginLeft:10,marginRight:10,paddingTop:10,paddingBottom:10,borderColor:'#ccc',borderBottomWidth:0.5
     },
     item_header: {
-       paddingBottom:5,borderColor:'#ccc',borderBottomWidth:0.3
+       paddingBottom:5,borderColor:'#ccc',borderBottomWidth:0.5
     },
 
 

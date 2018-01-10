@@ -30,7 +30,9 @@ const App = StackNavigator({
     CustomerList: {
         screen: CustomerList,
         navigationOptions: ({ navigation }) => ({
-            // header: null
+            headerStyle:{
+                backgroundColor:'#40a9ff'
+            }
         })
     },
 })

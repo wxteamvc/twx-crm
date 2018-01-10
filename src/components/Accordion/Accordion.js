@@ -1,8 +1,12 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { View, TouchableHighlight,TouchableOpacity,FlatList } from 'react-native';
+import { Icon, Grid, WhiteSpace, Carousel, Flex } from 'antd-mobile';
 import Collapsible from './Collapsible';
 import { ViewPropTypes } from './config/index';
+import * as Animatable from 'react-native-animatable';
+
+
 
 const COLLAPSIBLE_PROPS = Object.keys(Collapsible.propTypes);
 const VIEW_PROPS = Object.keys(ViewPropTypes);
@@ -68,6 +72,9 @@ export default class Accordion extends Component {
       }
     }
   }
+ 
+  
+
 
 
   renderItem = ({ item, index }) => {
@@ -80,11 +87,13 @@ export default class Accordion extends Component {
         viewProps[key] = this.props[key];
       }
     });
-
+   const animation=[
+     'bounceIn','bounceInDown','bounceInUp','bounceInLeft','bounceInRight'
+   ];
     const Touchable = this.props.touchableComponent;
     return (
-      <View {...viewProps} style={{backgroundColor:'#fff',marginBottom:5}}>
-        <View>
+      <Animatable.View {...viewProps} style={{backgroundColor:'#fff'}} animation={'bounceIn'} duration={2000}>
+        <View >
           {this.props.renderMainBody ? this.props.renderMainBody(
             item,
             index,
@@ -116,13 +125,14 @@ export default class Accordion extends Component {
             this.props.sections
           )}
         </Touchable>
-      </View>
+      </Animatable.View>
     );
   }
 
   render() {
      return(
        <FlatList
+       ItemSeparatorComponent={()=><WhiteSpace size='sm'/>}
        data={this.props.sections}
        extraData={this.state}
        renderItem={this.renderItem}

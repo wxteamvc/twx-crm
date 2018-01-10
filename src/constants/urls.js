@@ -7,3 +7,5 @@ export const BASIC_URL = DOMAIN + "/laravel-cms/public/api";
 export const Login_url = BASIC_URL + '/login';
 //获取用户信息
 export const UserInfo_url = BASIC_URL + '/getUserInfo';
+//获取客户列表信息
+export const CustomerList_url = BASIC_URL + '/getCustomerList';

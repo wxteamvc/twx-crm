@@ -51,8 +51,8 @@ class Home extends Component {
         return (
             <View style={{ flex: 1 }}>
                 <StatusBar
-                    backgroundColor="transparent"
-                    translucent={true}
+                    backgroundColor='#40a9ff'
+                    translucent={false}
                 />
                 <ScrollView showsVerticalScrollIndicator={false}>
                     <View style={[styles.home_top, styles.flex_column_end]}>

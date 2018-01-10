@@ -19,3 +19,11 @@ export const UserInfo_BEGIN='UserInfo_BEGIN';
 export const UserInfo_SUCCESS='UserInfo_SUCCESS';
 //登陆用户失败
 export const UserInfo_FAILED='UserInfo_FAILED';
+
+
+//获取客户列表信息开始
+export const CustomerList_BEGIN='CustomerList_BEGIN';
+//获取客户列表信息成功
+export const CustomerList_SUCCESS='CustomerList_SUCCESS';
+//获取客户列表失败
+export const CustomerList_FAILED='CustomerList_FAILED';
