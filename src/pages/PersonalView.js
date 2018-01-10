@@ -13,18 +13,17 @@ import {
 } from 'react-native';
 import { connect } from 'react-redux';
 import { NavigationBar,ListRow  } from 'teaset';
-import { Card, WingBlank, WhiteSpace,Grid, Accordion,List } from 'antd-mobile';
+import { Card, WingBlank, WhiteSpace,Grid,List } from 'antd-mobile';
 import { PullView } from 'react-native-pull';
 import { initPersonal } from '../actions/personalAction';
 import Loading from '../components/loading'; 
-import Collapsible from 'react-native-collapsible';
+
 
 class Personal extends Component{
     constructor(props) {
         super(props);
         this.state = {
             refreshing: false,
-            isCollapsed:true,
         };
         this.onPullRelease = this.onPullRelease.bind(this);
         this.topIndicatorRender = this.topIndicatorRender.bind(this);
@@ -80,9 +79,6 @@ class Personal extends Component{
         const rightView = (
             <NavigationBar.LinkButton
             onPress={()=>{
-                this.setState({
-                    isCollapsed:!this.state.isCollapsed
-                })
             }}
                 title="设置"
             />
@@ -97,37 +93,6 @@ class Personal extends Component{
         if (userInfo.status == 'done' || userInfo.info !== null){
             return (
                 <View style={{flex:1}}>
-                    <Collapsible collapsed={this.state.isCollapsed}>
-                        <View>
-                            <Text>123123</Text>
-                            <Text>123123</Text>
-                            <Text>123123</Text>
-                            <Text>123123</Text>
-                        </View>
-                    </Collapsible>
-
-
-                    {/* <Accordion
-                        sections={[
-                            {
-                                title:'first',
-                                content:'Accordion'
-                            }
-                        ]}
-                        renderHeader={(section)=>(
-                            <View>
-                            <Text style={styles.headerText}>{section.title}</Text>
-                            </View>
-                        )}
-                        renderContent={(section)=>(
-                            <View>
-                            <Text>{section.content}</Text>
-                            </View>
-                        )}
-                    /> */}
-
-
-
                     <View style={{height:66,backgroundColor:"#337AB7",padding:0,margin:0}}>
                         <NavigationBar title='我的' 
                         ref={(ref)=>this.navBar = ref}

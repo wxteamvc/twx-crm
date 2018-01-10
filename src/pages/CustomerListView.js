@@ -1,18 +1,20 @@
 import React, { Component } from 'react';
 import { View, Text, StatusBar, Image, ScrollView, FlatList } from 'react-native';
 import { Icon, Grid, WhiteSpace, Carousel, Flex } from 'antd-mobile';
-
+import Accordion from 'react-native-collapsible/Accordion';
 import { styles } from '../constants/styles'
 import { ScreenWidth } from '../constants/global';
 import { connect } from 'react-redux';
-// alert(Accordion)
+
+
+
 class CustomerList extends Component {
     constructor(props) {
         super(props)
     }
 
 
-    renderFlatListItem = ({ item, index }) => {
+    renderBody = ( item ,key) => {
         return (
             <View style={styles.item_body}>
                 <View style={[styles.flex_row_between, styles.item_header]}>
@@ -27,7 +29,7 @@ class CustomerList extends Component {
                     <View style={[styles.flex_row_columncenter]}>
                         <View style={[{ flex: 1 }, styles.flex_row_columncenter]}>
                             <Text numberOfLines={1} style={styles.fontsize10}>
-                                所属行业 : 制造业
+                                就职公司 : 海润燃气
                             </Text>
                         </View>
                         <View style={[{ flex: 1 }, styles.flex_row_columncenter]}>
@@ -46,6 +48,7 @@ class CustomerList extends Component {
                     <Text style={styles.fontsize8}>所属公司 : 新昌咨询</Text>
                     <Text style={styles.fontsize8}>贷款总额 : &yen; 5000&nbsp;&nbsp;&nbsp;&nbsp;回款总额 : &yen; 5000</Text>
                 </View>
+
             </View>
         )
     }
@@ -54,10 +57,62 @@ class CustomerList extends Component {
         return (
             <View style={{ flex: 1 }}>
                 <WhiteSpace />
-                <FlatList
-                    data={[1, 2]}
-                    keyExtractor={(item, index) => index}
-                    renderItem={this.renderFlatListItem}
+                <Accordion
+                    sections={[
+                        {
+                            title: 'first',
+                            content: 'Accordion'
+                        },
+                        {
+                            title: 'first',
+                            content: 'Accordion'
+                        },
+                        {
+                            title: 'first',
+                            content: 'Accordion'
+                        },
+                        {
+                            title: 'first',
+                            content: 'Accordion'
+                        },
+                        {
+                            title: 'first',
+                            content: 'Accordion'
+                        },
+                        {
+                            title: 'first',
+                            content: 'Accordion'
+                        },
+                        {
+                            title: 'first',
+                            content: 'Accordion'
+                        },
+                        {
+                            title: 'first',
+                            content: 'Accordion'
+                        },
+                        {
+                            title: 'first',
+                            content: 'Accordion'
+                        },
+                        {
+                            title: 'first',
+                            content: 'Accordion'
+                        },
+                    ]}
+
+
+                    renderMainBody={this.renderBody}
+                    renderHeader={(section) => (
+                        <View>
+                            <Text>{section.title}</Text>
+                        </View>
+                    )}
+                    renderContent={(section) => (
+                        <View>
+                            <Text>{section.content}</Text>
+                        </View>
+                    )}
                 />
             </View>
         )

@@ -6,7 +6,6 @@ import { ScreenWidth } from '../constants/global';
 import { connect } from 'react-redux';
 import { Item } from 'antd-mobile/lib/tab-bar';
 import Notices from '../components/notices';
-import FoldingPanel from '../components/foldingPanel'
 class Home extends Component {
 
     renderCarouselItem = () => {
@@ -97,7 +96,6 @@ class Home extends Component {
                         />
                     </View>
                     <WhiteSpace size={'sm'} />
-                    <FoldingPanel></FoldingPanel>
                     <Notices data={notices} imageSize={30} callBack={(item) => { alert('我要去' + item.goUrl) }} />
                     <WhiteSpace size={'sm'} />
                     <Carousel
