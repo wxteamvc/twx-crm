@@ -33,13 +33,18 @@ export const styles = StyleSheet.create({
         justifyContent: 'center',
         alignItems: 'center',
     },
-    //垂直居中 ,水平靠右
+    //垂直居中,水平靠右
     flex_row_end: {
         flexDirection: 'row',
         justifyContent: 'flex-end',
         alignItems: 'center',
     },
-
+    //水平布局 两端对齐 垂直居中
+    flex_row_between: {
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        alignItems: 'center',
+    },
     //字体大小10
     fontsize10: {
         fontSize: 10 * fontSizeScaler
@@ -66,19 +71,29 @@ export const styles = StyleSheet.create({
     //首页活动列表容器
     home_activity_title: {
         padding: 10,
-        borderColor:'#ccc',
-        borderBottomWidth:0.3
+        borderColor: '#ccc',
+        borderBottomWidth: 0.3
     },
     //首页活动列表标题
-    home_activity_title_View: { 
-        paddingLeft: 5, 
+    home_activity_title_View: {
+        paddingLeft: 5,
         borderColor: '#40A9FF',
         borderLeftWidth: 3,
     },
-      //首页活动列表item
-      home_activity_title_item: { 
-        flex: 1 ,paddingTop:5,paddingBottom:5,borderColor:'#ccc',borderBottomWidth:0.3,borderRightWidth:0.3
+    //首页活动列表item
+    home_activity_title_item: {
+        flex: 1, paddingTop: 5, paddingBottom: 5, borderColor: '#ccc', borderBottomWidth: 0.3, borderRightWidth: 0.3
     },
+    //````````````````````````客户列表页面````````````````````````````````
+    //列表元素身体样式
+    item_body: {
+        backgroundColor:'#fff',marginBottom:5,padding:10
+    },
+    item_header: {
+       paddingBottom:5,borderColor:'#ccc',borderBottomWidth:0.3
+    },
+
+
     //````````````````````````通知组件````````````````````````````````
     //通知组件身体样式
     notices_body: {
