@@ -30,8 +30,7 @@ export default class Root extends Component{
             data
         })
     }
-    render(){ 
-      
+    render(){
         return (
             <Provider store={store}>
                 <App />

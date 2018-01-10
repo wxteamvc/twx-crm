@@ -4,3 +4,18 @@ export const Home_BEGIN= 'Home_BEGIN';
 export const Home_SUCCESS = 'Home_SUCCESS';
 //首页内容获取失败的动作
 export const Home_FAILED = 'Home_FAILED';
+
+
+//登陆账户开始
+export const Login_BEGIN='Login_BEGIN';
+//登陆账号成功
+export const Login_SUCCESS='Login_SUCCESS';
+//登陆账号失败
+export const Login_FAILED='Login_FAILED';
+
+//获取用户信息开始
+export const UserInfo_BEGIN='UserInfo_BEGIN';
+//获取用户信息成功
+export const UserInfo_SUCCESS='UserInfo_SUCCESS';
+//登陆用户失败
+export const UserInfo_FAILED='UserInfo_FAILED';

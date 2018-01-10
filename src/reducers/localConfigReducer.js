@@ -1,4 +1,5 @@
 const initialState = {
+    token:'eyJpdiI6ImR4MTJVR0NNUnlFS1ErQ1ZoWFFGVlE9PSIsInZhbHVlIjoiVmRjcnFRdWM5amowTmx5SGhIbHlBakdUTExvbVh3YytTMlJYdHFoN1NIMD0iLCJtYWMiOiJlOTk3ZTUwMTNiNGNiNTRhMDIzM2E5MjA3ZjFmNTZkYWJhMzg5ZTRhODhjOGIxMDk4MDQwY2I1MDE0MjkyZWNkIn0=',
     modules: [
         {
             name: '潜在客户',
@@ -35,7 +36,7 @@ const initialState = {
             name: '系统消息',
             selected: true,
             icon: require('../constants/images/系统消息.png')
-        },
+        }
     ]
 }
 
