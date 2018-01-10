@@ -87,7 +87,7 @@ export const styles = StyleSheet.create({
     //````````````````````````客户列表页面````````````````````````````````
     //列表元素身体样式
     item_body: {
-        backgroundColor:'#fff',marginBottom:5,padding:10
+      marginLeft:10,marginRight:10,paddingTop:10,paddingBottom:10,borderColor:'#ccc',borderBottomWidth:0.3
     },
     item_header: {
        paddingBottom:5,borderColor:'#ccc',borderBottomWidth:0.3

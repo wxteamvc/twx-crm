@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { View, Text, StatusBar, Image, ScrollView, FlatList } from 'react-native';
 import { Icon, Grid, WhiteSpace, Carousel, Flex } from 'antd-mobile';
-import Accordion from 'react-native-collapsible/Accordion';
+import Accordion from '../components/Accordion/Accordion';
 import { styles } from '../constants/styles'
 import { ScreenWidth } from '../constants/global';
 import { connect } from 'react-redux';
@@ -75,37 +75,13 @@ class CustomerList extends Component {
                             title: 'first',
                             content: 'Accordion'
                         },
-                        {
-                            title: 'first',
-                            content: 'Accordion'
-                        },
-                        {
-                            title: 'first',
-                            content: 'Accordion'
-                        },
-                        {
-                            title: 'first',
-                            content: 'Accordion'
-                        },
-                        {
-                            title: 'first',
-                            content: 'Accordion'
-                        },
-                        {
-                            title: 'first',
-                            content: 'Accordion'
-                        },
-                        {
-                            title: 'first',
-                            content: 'Accordion'
-                        },
                     ]}
 
 
                     renderMainBody={this.renderBody}
-                    renderHeader={(section) => (
-                        <View>
-                            <Text>{section.title}</Text>
+                    renderHeader={(section,key,isShow) => (
+                        <View style={styles.flex_center}>
+                            {isShow?<Icon type={'up'}  color={'#ccc'}/>:<Icon type={'down'}  color={'#ccc'}/>}
                         </View>
                     )}
                     renderContent={(section) => (

@@ -3748,6 +3748,12 @@ react-native-accordion@^1.0.1:
   dependencies:
     react-tween-state "0.0.5"
 
+react-native-animatable@^1.2.4:
+  version "1.2.4"
+  resolved "http://registry.npm.taobao.org/react-native-animatable/download/react-native-animatable-1.2.4.tgz#b5fb7657e8f6edadbc26697057a327fb920b3039"
+  dependencies:
+    prop-types "^15.5.10"
+
 react-native-camera-roll-picker@^1.2.1:
   version "1.2.3"
   resolved "http://registry.npm.taobao.org/react-native-camera-roll-picker/download/react-native-camera-roll-picker-1.2.3.tgz#b117fd3a2b9012dcccee1261a9bc427226b8d6d2"
