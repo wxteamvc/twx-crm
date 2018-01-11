@@ -29,12 +29,7 @@ class Personal extends Component {
     }
 
     componentWillMount() {
-        let { token } = this.props.localConfigReducer;
-        global.token = token;
-        if (token) {
-            console.log('执行请求');
-            this.props.dispatch(initPersonal());
-        }
+
     }
     onPullRelease = (resolve) => {
         //do something
@@ -100,6 +95,7 @@ class Personal extends Component {
 
     render() {
         let { initData, userInfo } = this.props;
+        console.log(userInfo);
         const rightView = (
             <NavigationBar.LinkButton
                 onPress={() => {

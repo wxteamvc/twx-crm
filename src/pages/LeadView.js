@@ -4,9 +4,11 @@ import {
     Text,
     Button
 } from 'react-native';
+import * as Types from "../actions/actionTypes";
 import { Icon } from 'antd-mobile';
 import { connect } from 'react-redux';
 import { NavigationActions } from 'react-navigation';
+import { initPersonal } from '../actions/personalAction';
 
 class Lead extends Component{
     state = {
@@ -28,12 +30,18 @@ class Lead extends Component{
         }
     }
     componentDidMount(){
-        
+        let { token } = this.props.localConfigReducer;
+        //获取用户坐标
+        global.token = token;
+        if (token) {
+            this.props.dispatch(initPersonal());
+        }
         this.timer = setInterval(this.leadTime,1000);
     }
     componentWillUnmount() {
         this.timer && clearTimeout(this.timer)
     }
+
     render(){
         let {initData} = this.props;
         return (
@@ -47,7 +55,8 @@ class Lead extends Component{
 function mapStateToProps(state){
     return {
         initData:state.initReducer,
-        localConfigReducer:state.localConfigReducer
+        localConfigReducer:state.localConfigReducer,
+        userInfo: state.personalReducer,
     }
 }
 export default connect(mapStateToProps)(Lead);

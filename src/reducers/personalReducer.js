@@ -4,6 +4,7 @@ const initialState = {
     status:null,
     info:null,
     notice:[],
+    geolocation:{}
 }
 
 export function personalReducer(state = initialState, action){
@@ -22,6 +23,11 @@ export function personalReducer(state = initialState, action){
         case Types.UserInfo_FAILED:
             return {
                 initialState
+            }
+        case Types.GetGeolocation:
+            return {
+                ...state,
+                geolocation:action.data
             }
         default:
         return state;

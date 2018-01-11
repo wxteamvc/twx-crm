@@ -27,3 +27,7 @@ export const CustomerList_BEGIN='CustomerList_BEGIN';
 export const CustomerList_SUCCESS='CustomerList_SUCCESS';
 //获取客户列表失败
 export const CustomerList_FAILED='CustomerList_FAILED';
+
+
+//获取用户坐标
+export const GetGeolocation='GetGeolocation';
