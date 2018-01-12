@@ -38,6 +38,12 @@ export const styles = StyleSheet.create({
     },
     //字体大小12
     fontsize12: {
+    //字体大小16
+    fontsize16: {
+        fontSize: 16 * fontSizeScaler
+    },
+     //字体大小12
+     fontsize12: {
         fontSize: 12 * fontSizeScaler
     },
     //字体大小10

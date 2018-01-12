@@ -4,14 +4,15 @@ import { localConfigReducer } from './localConfigReducer';
 import { homeReducer } from './homeReducer';
 import { personalReducer } from './personalReducer';
 import { customerReducer } from './customerReducer';
-
+import { companyReducer } from './companyReducer';
 
 const rootReducer = combineReducers({
     initReducer,
     localConfigReducer,
     homeReducer,
     personalReducer,
-    customerReducer
+    customerReducer,
+    companyReducer
 })
 
 export default rootReducer;

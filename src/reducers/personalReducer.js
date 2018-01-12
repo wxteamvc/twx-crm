@@ -20,9 +20,7 @@ export function personalReducer(state = initialState, action){
                 info:action.data
             }
         case Types.UserInfo_FAILED:
-            return {
-                initialState
-            }
+            return initialState
         default:
         return state;
     }

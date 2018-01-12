@@ -7,6 +7,8 @@ import Lead from '../pages/LeadView';
 import EditModules from '../pages/EditModules';
 import CustomerList from '../pages/CustomerListView';
 import CustomerInfo from '../pages/CustomerInfoView';
+import CompanyList from '../pages/CompanyListView';
+
 const App = StackNavigator({
     Lead: {
         screen: Lead,
@@ -48,6 +50,14 @@ const App = StackNavigator({
         }),
       
     },
+    CompanyList: {
+        screen: CompanyList,
+        navigationOptions: ({ navigation }) => ({
+            headerStyle:{
+                backgroundColor:'#40a9ff'
+            }
+        })
+    },
 }, 
 {
      transitionConfig: () => ({
@@ -60,6 +70,7 @@ const App = StackNavigator({
   }),
 
 }
+ 
 )
 
 

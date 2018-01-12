@@ -29,12 +29,7 @@ class Personal extends Component {
     }
 
     componentWillMount() {
-        let { token } = this.props.localConfigReducer;
-        global.token = token;
-        if (token) {
-            console.log('执行请求');
-            this.props.dispatch(initPersonal());
-        }
+
     }
     onPullRelease = (resolve) => {
         //do something
@@ -144,7 +139,6 @@ class Personal extends Component {
 
         ];
         if (userInfo.status == 'done' || userInfo.info !== null) {
-            console.log(userInfo)
             return (
                 <View style={{ flex: 1 }}>
                     <View style={{ height: 66, backgroundColor: "#337AB7", padding: 0, margin: 0 }}>
