@@ -28,6 +28,12 @@ export const CustomerList_SUCCESS='CustomerList_SUCCESS';
 //获取客户列表失败
 export const CustomerList_FAILED='CustomerList_FAILED';
 
+//获取客户列表信息开始
+export const CompanyList_BEGIN='CompanyList_BEGIN';
+//获取客户列表信息成功
+export const CompanyList_SUCCESS='CompanyList_SUCCESS';
+//获取客户列表失败
+export const CompanyList_FAILED='CompanyList_FAILED';
 
 //获取用户坐标
 export const GetGeolocation='GetGeolocation';

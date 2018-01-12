@@ -10,7 +10,8 @@ const initialState = {
         {
             name: '待办任务',
             selected: true,
-            icon: require('../constants/images/待办任务.png')
+            icon: require('../constants/images/待办任务.png'),
+            goUrl: 'CompanyList'
         },
         {
             name: '审批订单',

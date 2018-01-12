@@ -30,14 +30,14 @@ export default class Root extends Component {
         this.storeDispatch('listenerAppState', nextAppState);
     }
     _handleGetGeolocation() {
-        navigator.geolocation.getCurrentPosition((position) => {
-            this.storeDispatch(Types.GetGeolocation, position)
-        },
-            (error) => {
-                alert(error.message)
-            },
-            // {enableHighAccuracy: true, timeout: 20000, maximumAge: 1000}
-        )
+        // navigator.geolocation.getCurrentPosition((position) => {
+        //     this.storeDispatch(Types.GetGeolocation, position)
+        // },
+        //     (error) => {
+        //         alert(error.message)
+        //     },
+        //     // {enableHighAccuracy: true, timeout: 20000, maximumAge: 1000}
+        // )
         this.watchID = navigator.geolocation.watchPosition((position) => {
             this.storeDispatch(Types.GetGeolocation, position)
         });

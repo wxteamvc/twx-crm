@@ -4,6 +4,8 @@ import HomeTab from './HomeTab';
 import Lead from '../pages/LeadView';
 import EditModules from '../pages/EditModules';
 import CustomerList from '../pages/CustomerListView';
+import CompanyList from '../pages/CompanyListView';
+
 const App = StackNavigator({
     Lead: {
         screen: Lead,
@@ -29,6 +31,14 @@ const App = StackNavigator({
     },
     CustomerList: {
         screen: CustomerList,
+        navigationOptions: ({ navigation }) => ({
+            headerStyle:{
+                backgroundColor:'#40a9ff'
+            }
+        })
+    },
+    CompanyList: {
+        screen: CompanyList,
         navigationOptions: ({ navigation }) => ({
             headerStyle:{
                 backgroundColor:'#40a9ff'

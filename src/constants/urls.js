@@ -9,3 +9,6 @@ export const Login_url = BASIC_URL + '/login';
 export const UserInfo_url = BASIC_URL + '/getUserInfo';
 //获取客户列表信息
 export const CustomerList_url = BASIC_URL + '/getCustomerList';
+
+//获取公司列表信息
+export const CompanyList_url = BASIC_URL + '/getCompanyList';

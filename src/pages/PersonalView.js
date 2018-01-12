@@ -95,7 +95,6 @@ class Personal extends Component {
 
     render() {
         let { initData, userInfo } = this.props;
-        console.log(userInfo);
         const rightView = (
             <NavigationBar.LinkButton
                 onPress={() => {
@@ -140,7 +139,6 @@ class Personal extends Component {
 
         ];
         if (userInfo.status == 'done' || userInfo.info !== null) {
-            console.log(userInfo)
             return (
                 <View style={{ flex: 1 }}>
                     <View style={{ height: 66, backgroundColor: "#337AB7", padding: 0, margin: 0 }}>
