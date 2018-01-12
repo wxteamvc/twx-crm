@@ -2,16 +2,20 @@ import React, { Component } from 'react';
 import {
     View,
     Text,
-    Button
+    Button,
+    StatusBar
 } from 'react-native';
 import { connect } from 'react-redux';
 
-class Application extends Component{
-    render(){
-        let {initData} = this.props;
+class Application extends Component {
+    render() {
+        let { initData } = this.props;
         return (
             <View>
-               <Text>我是申请</Text>   
+                <StatusBar
+                    translucent={false}
+                />
+                <Text>我是申请</Text>
             </View>
 
         )
@@ -19,9 +23,9 @@ class Application extends Component{
 }
 
 
-function mapStateToProps(state){
+function mapStateToProps(state) {
     return {
-        initData:state.initReducer
+        initData: state.initReducer
     }
 }
 export default connect(mapStateToProps)(Application);

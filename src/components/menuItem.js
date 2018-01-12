@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View, Text, StatusBar, Image, ScrollView, TouchableHighlight } from 'react-native';
+import { View, Text, Image, ScrollView, TouchableHighlight } from 'react-native';
 import { Carousel } from 'antd-mobile';
 import { styles } from '../constants/styles'
 import { ScreenWidth } from '../constants/global'

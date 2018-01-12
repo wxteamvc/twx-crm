@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View, Text, StatusBar, Image, ScrollView, FlatList } from 'react-native';
+import { View, Text, Image, ScrollView, FlatList, StatusBar } from 'react-native';
 import { Grid, WhiteSpace, Carousel, Flex } from 'antd-mobile';
 import { styles } from '../constants/styles'
 import { ScreenWidth } from '../constants/global';
@@ -26,14 +26,14 @@ class Home extends Component {
                     <Text numberOfLines={1} style={styles.fontsize8}>{item.content}</Text>
                 </Flex>
                 <Flex justify={'center'} align={'center'} style={{ flex: 0.3 }}>
-                    <Image source={{ uri: item.image }} style={{ width: 40, height: 40,borderRadius:20 }} />
+                    <Image source={{ uri: item.image }} style={{ width: 40, height: 40, borderRadius: 20 }} />
                 </Flex>
             </Flex>
         )
     }
 
     render() {
-        const {modules,home} = this.props;
+        const { modules, home } = this.props;
         const { home_top, notices, home_activity } = home;
         const selectModules = [];
         modules.map(function (item) {
@@ -50,9 +50,9 @@ class Home extends Component {
         )
         return (
             <View style={{ flex: 1 }}>
-                <StatusBar
-                    backgroundColor='#40a9ff'
-                    translucent={false}
+                <StatusBar 
+                   translucent={false}
+                   backgroundColor='#40a9ff'
                 />
                 <ScrollView showsVerticalScrollIndicator={false}>
                     <View style={[styles.home_top, styles.flex_column_end]}>
@@ -109,7 +109,7 @@ class Home extends Component {
                     <FlatList
                         style={{ backgroundColor: '#fff' }}
                         ListHeaderComponent={
-                            <View style={[styles.flex_row_columncenter,styles.home_activity_title]}>
+                            <View style={[styles.flex_row_columncenter, styles.home_activity_title]}>
                                 <View style={styles.home_activity_title_View}>
                                     <Text style={styles.fontsize10}>生活服务</Text>
                                 </View>
@@ -120,7 +120,7 @@ class Home extends Component {
                         keyExtractor={(item, index) => index}
                         renderItem={this.renderFlatListItem}
                     />
-                   
+
                 </ScrollView>
             </View>
         )
@@ -131,7 +131,7 @@ class Home extends Component {
 function mapStateToProps(state) {
     return {
         modules: state.localConfigReducer.modules,
-        home: state.homeReducer,    
+        home: state.homeReducer,
     }
 }
 export default connect(mapStateToProps)(Home);

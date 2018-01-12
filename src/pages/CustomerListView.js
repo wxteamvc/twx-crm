@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View, Text, StatusBar, Image, ScrollView, FlatList, ProgressBarAndroid } from 'react-native';
+import { View, Text, Image, ScrollView, FlatList, ProgressBarAndroid, TouchableOpacity,StatusBar } from 'react-native';
 import { Icon, Grid, WhiteSpace, Carousel, Flex } from 'antd-mobile';
 import Accordion from '../components/Accordion/Accordion';
 import { styles } from '../constants/styles'
@@ -22,14 +22,15 @@ class CustomerList extends Component {
 
     renderBody = (item, key) => {
         return (
-            <View style={styles.item_body}>
-                <StatusBar
-                    backgroundColor='#40a9ff'
-                    translucent={false}
-                />
+            <TouchableOpacity
+                style={styles.item_body}
+                activeOpacity={1}
+                onPress={() => {
+                    this.props.navigation.navigate('CustomerInfo')
+                }}>
                 <View style={[styles.flex_row_between, styles.item_header]}>
                     <View style={styles.flex_row_columncenter}>
-                        <Animatable.Text animation="pulse" easing="ease-out" iterationCount="infinite" >
+                        <Animatable.Text animation="rubberBand" iterationCount="infinite" duration={5000} >
                             {item.sex == 1 ? <Icon type={"\uE66A"} size={15} color={'#40a9ff'} /> : <Icon type={"\uE66A"} size={15} color={'#FF0033'} />}
                         </Animatable.Text>
                         <Text style={[styles.fontsize12, { marginLeft: 5 }]}>{item.cname}</Text>
@@ -61,7 +62,7 @@ class CustomerList extends Component {
                     <Text style={[styles.fontsize10, { color: '#ccc' }]}>贷款总额 : &yen; 5000&nbsp;&nbsp;&nbsp;&nbsp;回款总额 : &yen; 5000</Text>
                 </View>
 
-            </View>
+            </TouchableOpacity>
         )
     }
 
@@ -70,6 +71,10 @@ class CustomerList extends Component {
         if (this.props.customerReducer.status == 'done') {
             return (
                 <View style={{ flex: 1 }}>
+                    <StatusBar
+                        translucent={false}
+                        backgroundColor='#40a9ff'
+                    />
                     <WhiteSpace />
                     <Accordion
                         sections={this.props.list.data}
@@ -91,8 +96,8 @@ class CustomerList extends Component {
             return (
                 <View style={[{ flex: 1 }, styles.flex_center]}>
                     <StatusBar
-                         backgroundColor='#40a9ff'
-                         translucent={false}
+                        translucent={false}
+                        backgroundColor='#40a9ff'
                     />
                     <ProgressBarAndroid styleAttr="Inverse" />
                 </View>
