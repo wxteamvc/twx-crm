@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
-import { Animated,Easing} from 'react-native';
-import { StackNavigator, TabNavigator} from 'react-navigation';
+import { Animated, Easing } from 'react-native';
+import { StackNavigator, TabNavigator } from 'react-navigation';
 import CardStackStyleInterpolator from 'react-navigation/src/views/CardStack/CardStackStyleInterpolator';
 import HomeTab from './HomeTab';
 import Lead from '../pages/LeadView';
@@ -10,6 +10,7 @@ import CustomerInfo from '../pages/CustomerInfoView';
 import CompanyList from '../pages/CompanyListView';
 import Login from '../pages/LoginView';
 import Agreement from '../pages/AgreementView';
+
 
 
 const App = StackNavigator({
@@ -38,10 +39,10 @@ const App = StackNavigator({
     CustomerList: {
         screen: CustomerList,
         navigationOptions: ({ navigation }) => ({
-            headerStyle:{
-                backgroundColor:'#40a9ff'
+            headerStyle: {
+                backgroundColor: '#40a9ff'
             }
-        })
+        }),
     },
     CustomerInfo: {
         screen: CustomerInfo,
@@ -51,12 +52,13 @@ const App = StackNavigator({
             //     backgroundColor:'#40a9ff',
             // },
         }),
+
     },
     CompanyList: {
         screen: CompanyList,
         navigationOptions: ({ navigation }) => ({
-            headerStyle:{
-                backgroundColor:'#40a9ff'
+            headerStyle: {
+                backgroundColor: '#40a9ff'
             }
         })
     },
@@ -85,9 +87,7 @@ const App = StackNavigator({
           timing: Animated.timing,
         },
   }),
-
 }
- 
 )
 
 

@@ -14,7 +14,7 @@ import { ScreenWidth, StatusBarHeight } from '../constants/global';
 export default class OrderListPage extends Component {
 
 
-       
+
 
     renderListItem = ({ item, index }) => {
         const images = [
@@ -26,14 +26,14 @@ export default class OrderListPage extends Component {
             require('../constants/images/坏账.png')
         ]
 
-        const status =[
-            '被驳回','待审核','审核通过','还款中','订单完成','已坏账'
+        const status = [
+            '被驳回', '待审核', '审核通过', '还款中', '订单完成', '已坏账'
         ]
         const color = [
-            '#f50','#FAAD14','#52C41A','#52C41A','#108ee9','#f50'
+            '#f50', '#FAAD14', '#52C41A', '#52C41A', '#108ee9', '#f50'
         ]
         return (
-            <View style={styles.OrderListPage_item_body}>
+            <View style={[styles.OrderListPage_item_body,{backgroundColor: '#fff'}]}>
                 <View style={[styles.flex_row_between, styles.OrderListPage_item_header]}>
                     <View style={styles.flex_row_columncenter}>
                         <Image source={require('../constants/images/单号.jpg')} style={styles.OrderListPage_item_header_img} />
@@ -41,15 +41,17 @@ export default class OrderListPage extends Component {
                     </View>
                     <Text style={[styles.fontsize10, { color: '#ccc' }]}>放款时间 : 2017-7-20</Text>
                 </View>
-                <View style={[styles.flex_row_between,styles.OrderListPage_item_content]}>
-                <View style={styles.flex_row_columncenter}>
-                   <Image  source={images[3]} style={{width:20,height:20,marginRight:10}}/>
-                   <Text style={[styles.fontsize12,{color:color[3]}]}>{status[3]}</Text>
-                </View>
-                   
+                <View style={[styles.flex_row_between, styles.OrderListPage_item_content]}>
+                    <View style={styles.flex_row_columncenter}>
+                        <Image source={images[3]} style={{ width: 20, height: 20, marginRight: 10 }} />
+                        <Text style={[styles.fontsize12, { color: color[3] }]}>{status[3]}</Text>
+                    </View>
                     <Text style={[styles.fontsize10, { flex: 0.4 }]} numberOfLines={1}>放款金额:￥8000000 </Text>
                     <Text style={[styles.fontsize10, { flex: 0.4 }]} numberOfLines={1}>已还金额:￥2000000</Text>
-
+                </View>
+                <View style={[styles.flex_row_between,styles.OrderListPage_item_footer]}>
+                    <Text style={[styles.fontsize10,{color:'#ccc'}]}>所属公司:新昌咨询</Text>
+                    <Text style={[styles.fontsize10,{color:'#ccc'}]}>录入人:杨小姐</Text>
                 </View>
             </View>
         )
@@ -59,6 +61,7 @@ export default class OrderListPage extends Component {
 
 
     render() {
+    
         const { data } = this.props
         return (
             <View style={{ flex: 1 }}>
@@ -67,7 +70,8 @@ export default class OrderListPage extends Component {
                     data={[1, 2, 3]}
                     keyExtractor={(item, index) => index}
                     renderItem={this.renderListItem}
-                    style={{ backgroundColor: '#fff' }}
+                    style={{ backgroundColor: '#E9E9EF' }}
+                    ItemSeparatorComponent={()=><WhiteSpace size={'sm'}/>}
                 />
             </View>
         )

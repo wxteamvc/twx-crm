@@ -5,7 +5,7 @@ export const styles = StyleSheet.create({
     //````````````````````````通用````````````````````````````````
     //垂直布局垂直靠下
     flex_column_end: {
-        flexDirection: 'column',justifyContent: 'flex-end',
+        flexDirection: 'column', justifyContent: 'flex-end',
     },
     //垂直布局水平居中
     flex_column_rowcenter: {
@@ -19,18 +19,18 @@ export const styles = StyleSheet.create({
     flex_row_columncenter: {
         flexDirection: 'row', alignItems: 'center',
     },
-    
+
     //双向居中
     flex_center: {
         justifyContent: 'center', alignItems: 'center',
     },
     //垂直居中,水平靠右
     flex_row_end: {
-        flexDirection: 'row',justifyContent: 'flex-end', alignItems: 'center',
+        flexDirection: 'row', justifyContent: 'flex-end', alignItems: 'center',
     },
     //水平布局 两端对齐 垂直居中
     flex_row_between: {
-        flexDirection: 'row',justifyContent: 'space-between', alignItems: 'center',
+        flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center',
     },
     //字体大小24
     fontsize24: {
@@ -48,12 +48,12 @@ export const styles = StyleSheet.create({
     fontsize16: {
         fontSize: 16 * fontSizeScaler
     },
-    //字体大小14
-    fontsize14: {
+     //字体大小14
+     fontsize14: {
         fontSize: 14 * fontSizeScaler
     },
-     //字体大小12
-     fontsize12: {
+    //字体大小12
+    fontsize12: {
         fontSize: 12 * fontSizeScaler
     },
     //字体大小10
@@ -68,7 +68,7 @@ export const styles = StyleSheet.create({
     //````````````````````````首页````````````````````````````````
     //首页顶部
     home_top: {
-        height: 150,backgroundColor: '#40a9ff',
+        height: 150, backgroundColor: '#40a9ff',
     },
     //首页顶部内容
     home_top_content: {
@@ -112,23 +112,36 @@ export const styles = StyleSheet.create({
     },
     //```````````````````````加载页面组件·······················
     loadingBox: { // Loading居中
-        flex: 1,alignItems: 'center',justifyContent: 'center', backgroundColor: 'rgba(0, 0, 0, 0.5)',
+        flex: 1, alignItems: 'center', justifyContent: 'center', backgroundColor: 'rgba(0, 0, 0, 0.5)',
     },
-      //```````````````````````客户信息组件样式·······················
-      InfoPage_item_body: { 
-        padding:10,borderColor:'#ccc',borderBottomWidth:0.5
+    //```````````````````````客户信息组件样式·······················
+    InfoPage_item_body: {
+        padding: 10, borderColor: '#ccc', borderBottomWidth: 0.5
     },
-     //```````````````````````客户订单列表组件样式·······················
-     OrderListPage_item_body: { 
-        padding:10,borderBottomWidth:0.5,borderColor:'#ccc'
+    //```````````````````````客户订单列表组件样式·······················
+    OrderListPage_item_body: {
+        paddingLeft: 10, paddingRight: 10
     },
-    OrderListPage_item_header: { 
-        borderBottomWidth:0.3,borderColor:'#ccc',paddingTop:5,paddingBottom:5
+    OrderListPage_item_header: {
+        borderBottomWidth: 0.3, borderColor: '#ccc', paddingTop: 5, paddingBottom: 5
     },
-    OrderListPage_item_header_img: { 
-        width:15,height:15,borderRadius:7.5,marginRight:10
+    OrderListPage_item_header_img: {
+        width: 15, height: 15, borderRadius: 7.5, marginRight: 10
     },
-    OrderListPage_item_content: { 
-        paddingBottom:10,paddingTop:10
+    OrderListPage_item_content: {
+        paddingBottom: 10, paddingTop: 10, borderColor: '#ccc', borderBottomWidth: 0.5
+    },
+    OrderListPage_item_footer: {
+        paddingBottom: 5, paddingTop: 5
+    },
+    //```````````````````````客户联系人组件样式·······················
+    CustomerContacts_item_body: {
+        padding:5,backgroundColor:'#fff'
+    },
+    CustomerContacts_item_image: {
+        width:40,height:40,borderRadius:20
+    },
+    CustomerContacts_item_rightImg: {
+        width:15,height:15,
     },
 })
