@@ -8,6 +8,9 @@ import EditModules from '../pages/EditModules';
 import CustomerList from '../pages/CustomerListView';
 import CustomerInfo from '../pages/CustomerInfoView';
 import CompanyList from '../pages/CompanyListView';
+import Login from '../pages/LoginView';
+import Agreement from '../pages/AgreementView';
+
 
 const App = StackNavigator({
     Lead: {
@@ -48,7 +51,6 @@ const App = StackNavigator({
             //     backgroundColor:'#40a9ff',
             // },
         }),
-      
     },
     CompanyList: {
         screen: CompanyList,
@@ -57,6 +59,21 @@ const App = StackNavigator({
                 backgroundColor:'#40a9ff'
             }
         })
+    },
+    Login: {
+        screen: Login,
+        navigationOptions: ({ navigation }) => ({
+            header: null
+        })
+    },
+    Agreement:{
+        screen: Agreement,
+        navigationOptions: ({ navigation }) => ({
+            headerTitle:'用户服务协议',
+            headerStyle:{
+                backgroundColor:'#40a9ff'
+            },
+        }),
     },
 }, 
 {

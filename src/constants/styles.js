@@ -32,15 +32,25 @@ export const styles = StyleSheet.create({
     flex_row_between: {
         flexDirection: 'row',justifyContent: 'space-between', alignItems: 'center',
     },
+    //字体大小24
+    fontsize24: {
+        fontSize: 24 * fontSizeScaler
+    },
+    //字体大小22
+    fontsize22: {
+        fontSize: 22 * fontSizeScaler
+    },
     //字体大小20
     fontsize20: {
         fontSize: 20 * fontSizeScaler
     },
-    //字体大小12
-    fontsize12: {
     //字体大小16
     fontsize16: {
         fontSize: 16 * fontSizeScaler
+    },
+    //字体大小14
+    fontsize14: {
+        fontSize: 14 * fontSizeScaler
     },
      //字体大小12
      fontsize12: {

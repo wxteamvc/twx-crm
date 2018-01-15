@@ -211,7 +211,12 @@ class CustomerList extends Component {
         const { list, status } = this.props.companyReducer;
         console.log(list)
         return (
-            <View style={{ flex: 1 }}>
+            <View style={{ flex: 1 }}>                    
+                <StatusBar
+                    translucent={false}
+                    backgroundColor='#40a9ff'
+                />
+
                 <FlatList
                     ListFooterComponent={this._renderFoot()}
                     initialNumToRender={5}

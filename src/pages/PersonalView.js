@@ -94,11 +94,11 @@ class Personal extends Component {
     }
 
     render() {
-        let { initData, userInfo } = this.props;
+        let { initData, userInfo,navigation } = this.props;
         const rightView = (
             <NavigationBar.LinkButton
                 onPress={() => {
-
+                    navigation.navigate('Login');
                 }}
                 title="设置"
             />

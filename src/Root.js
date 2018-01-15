@@ -5,9 +5,12 @@ import store from './store/ConfigureStore';
 import App from './container/App';
 import { NetInfo, AppState } from 'react-native';
 import * as Types from "./actions/actionTypes";
+import DeviceInfo from 'react-native-device-info';
 
 export default class Root extends Component {
     componentDidMount() {
+        //获取手机相关信息
+        this._getMobileInfo();
         //监听网络状况
         NetInfo.isConnected.fetch().done((isConnected) => {
             this.storeDispatch('listenerNetInfo', isConnected);
@@ -22,6 +25,17 @@ export default class Root extends Component {
         NetInfo.isConnected.removeEventListener('connectionChange', this._handleConnectivityChange);
         AppState.removeEventListener('change', this._handleAppStateChange);
         navigator.geolocation.clearWatch(this.watchID);
+    }
+    _getMobileInfo = ()=>{
+        let mobileInfo = {
+            PhoneNumber: DeviceInfo.getPhoneNumber(),
+            SerialNumber:DeviceInfo.getSerialNumber(),
+            UniqueID:DeviceInfo.getUniqueID(),
+            Manufacturer:DeviceInfo.getManufacturer(),
+            Brand: DeviceInfo.getBrand(),
+            SystemName:DeviceInfo.getSystemName()
+        }
+        this.storeDispatch('inputMobileInfo',mobileInfo);
     }
     _handleConnectivityChange = (isConnected) => {
         this.storeDispatch('listenerNetInfo', isConnected);
