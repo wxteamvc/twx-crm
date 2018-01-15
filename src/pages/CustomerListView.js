@@ -67,7 +67,7 @@ class CustomerList extends Component {
     }
 
     render() {
-        console.log(this.props.list)
+        // console.log(this.props.list)
         if (this.props.customerReducer.status == 'done') {
             return (
                 <View style={{ flex: 1 }}>

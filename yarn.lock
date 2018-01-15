@@ -3805,6 +3805,12 @@ react-native-menu@^0.23.0:
     prop-types "^15.5.10"
     react-timer-mixin "^0.13.3"
 
+react-native-parallax-scroll-view@^0.20.1:
+  version "0.20.1"
+  resolved "http://registry.npm.taobao.org/react-native-parallax-scroll-view/download/react-native-parallax-scroll-view-0.20.1.tgz#7fad3411df8632b7c99fed5d0a5c0a8f97007b38"
+  dependencies:
+    prop-types "^15.6.0"
+
 react-native-pull@^2.0.2:
   version "2.0.2"
   resolved "http://registry.npm.taobao.org/react-native-pull/download/react-native-pull-2.0.2.tgz#15264a737bcf56debd4bacaa2705254d9ef1b345"
