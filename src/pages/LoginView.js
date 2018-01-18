@@ -5,10 +5,26 @@ import { styles } from '../constants/styles'
 import { ScreenWidth } from '../constants/global'
 import { Isao } from 'react-native-textinput-effects';
 import { NavigationBar } from 'teaset';
+import { Button } from 'antd-mobile';
 
 class Login extends Component {
+    constructor(props){
+        super(props);
+        state={
+            uname:'',
+            upassword:''
+        }
+    }
+
+    submit = ()=>{
+        //这边写简单的验证
+        console.log(this.state)
+        alert(1)
+    }
+
     render() {
         const {initInfo} = this.props;
+
         return (
             <View style={{flex:1,backgroundColor:'#fff', alignItems: 'center'}}>
             <StatusBar
@@ -29,6 +45,11 @@ class Login extends Component {
                 activeColor={'#40a9ff'}
                 // this is applied as passive border and label color
                 passiveColor={'#dadada'}
+                onChangeText={(text) => {
+                    this.setState({
+                        uname:text
+                    });
+                }}
                 />
                 <Isao
                 label={'密码'}
@@ -36,8 +57,22 @@ class Login extends Component {
                 activeColor={'#40a9ff'}
                 // this is applied as passive border and label color
                 passiveColor={'#dadada'}
+                secureTextEntry={true}
+                onChangeText={(text) => {
+                    this.setState({
+                        upassword:text
+                    });
+                }}
                 />
             </View>
+            <View
+                style={{width:ScreenWidth-40,marginTop:10}}
+            >
+                <Button type="primary"
+                    onClick={this.submit}
+                >登陆</Button>
+            </View>
+            
             <View 
             style={{width:ScreenWidth-40,marginTop:30,flexDirection: 'row',alignItems: 'flex-start'}}
             >
