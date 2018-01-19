@@ -10,6 +10,7 @@ import { Icon, Grid, WhiteSpace, Carousel, Flex } from 'antd-mobile';
 import Accordion from '../components/Accordion/Accordion';
 import { styles } from '../constants/styles'
 import { ScreenWidth, StatusBarHeight } from '../constants/global';
+import { Item } from 'antd-mobile/lib/tab-bar';
 
 export default class OrderListPage extends Component {
 
@@ -33,27 +34,31 @@ export default class OrderListPage extends Component {
             '#f50', '#FAAD14', '#52C41A', '#52C41A', '#108ee9', '#f50'
         ]
         return (
-            <View style={[styles.OrderListPage_item_body,{backgroundColor: '#fff'}]}>
+            <TouchableOpacity 
+            style={[styles.OrderListPage_item_body,{backgroundColor: '#fff'}]}
+            activeOpacity ={1}
+            onPress={()=>this.props.navigation.navigate('OrderInfo',{order_id:item.order_id})}
+            >
                 <View style={[styles.flex_row_between, styles.OrderListPage_item_header]}>
                     <View style={styles.flex_row_columncenter}>
                         <Image source={require('../constants/images/单号.jpg')} style={styles.OrderListPage_item_header_img} />
-                        <Text style={styles.fontsize12}>单号 : 1000201801110001</Text>
+                        <Text style={styles.fontsize12}>单号 : {item.order_id}</Text>
                     </View>
-                    <Text style={[styles.fontsize10, { color: '#ccc' }]}>放款时间 : 2017-7-20</Text>
+                    <Text style={[styles.fontsize10, { color: '#ccc' }]}>放款时间 : {item.loan_time}</Text>
                 </View>
                 <View style={[styles.flex_row_between, styles.OrderListPage_item_content]}>
                     <View style={styles.flex_row_columncenter}>
-                        <Image source={images[3]} style={{ width: 20, height: 20, marginRight: 10 }} />
-                        <Text style={[styles.fontsize12, { color: color[3] }]}>{status[3]}</Text>
+                        <Image source={images[item.steps]} style={{ width: 20, height: 20, marginRight: 10 }} />
+                        <Text style={[styles.fontsize12, { color: color[item.steps] }]}>{status[item.steps]}</Text>
                     </View>
-                    <Text style={[styles.fontsize10, { flex: 0.4 }]} numberOfLines={1}>放款金额:￥8000000 </Text>
-                    <Text style={[styles.fontsize10, { flex: 0.4 }]} numberOfLines={1}>已还金额:￥2000000</Text>
+                    <Text style={[styles.fontsize10, { flex: 0.4 }]} numberOfLines={1}>放款金额:￥{item.loan}</Text>
+                    <Text style={[styles.fontsize10, { flex: 0.4 }]} numberOfLines={1}>已还金额:￥{item.balance}</Text>
                 </View>
                 <View style={[styles.flex_row_between,styles.OrderListPage_item_footer]}>
-                    <Text style={[styles.fontsize10,{color:'#ccc'}]}>所属公司:新昌咨询</Text>
-                    <Text style={[styles.fontsize10,{color:'#ccc'}]}>录入人:杨小姐</Text>
+                    <Text style={[styles.fontsize10,{color:'#ccc'}]}>所属公司:新昌咨询(还是死数据 等后台传回)</Text>
+                    <Text style={[styles.fontsize10,{color:'#ccc'}]}>录入人:{item.input_name}</Text>
                 </View>
-            </View>
+            </TouchableOpacity>
         )
     }
 
@@ -67,7 +72,7 @@ export default class OrderListPage extends Component {
             <View style={{ flex: 1 }}>
                 <WhiteSpace size={'sm'} />
                 <FlatList
-                    data={[1, 2, 3]}
+                    data={this.props.data}
                     keyExtractor={(item, index) => index}
                     renderItem={this.renderListItem}
                     style={{ backgroundColor: '#E9E9EF' }}

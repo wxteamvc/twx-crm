@@ -30,3 +30,32 @@ export function getCustomerList(){
         )
     }
 }
+
+export function getCustomerInfo(customerId){
+    return (dispatch) =>{
+        dispatch({
+            type:Types.CustomerInfo_BEGIN
+        })
+        Util.post(Urls.CustomerInfo_url+'/'+customerId,{},
+            (respJson) =>{
+                if (respJson.code == 1){
+                    dispatch({
+                        type:Types.CustomerInfo_SUCCESS,
+                        data:respJson.data
+                    })
+                }else{
+                    dispatch({
+                        type:Types.CustomerInfo_SUCCESS,
+                        data:respJson.data
+                     })
+                }
+            },
+            (error)=>{
+                console.log(error)
+                dispatch({
+                    type:Types.CustomerInfo_FAILED,
+                })
+            }
+        )
+    }
+}

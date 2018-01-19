@@ -10,7 +10,7 @@ import CustomerInfo from '../pages/CustomerInfoView';
 import CompanyList from '../pages/CompanyListView';
 import Login from '../pages/LoginView';
 import Agreement from '../pages/AgreementView';
-
+import OrderInfo from '../pages/OrderInfoView';
 
 
 const App = StackNavigator({
@@ -62,32 +62,38 @@ const App = StackNavigator({
             }
         })
     },
+    OrderInfo: {
+        screen: OrderInfo,
+        navigationOptions: ({ navigation }) => ({
+            header: null
+        })
+    },
     Login: {
         screen: Login,
         navigationOptions: ({ navigation }) => ({
             header: null
         })
     },
-    Agreement:{
+    Agreement: {
         screen: Agreement,
         navigationOptions: ({ navigation }) => ({
-            headerTitle:'用户服务协议',
-            headerStyle:{
-                backgroundColor:'#40a9ff'
+            headerTitle: '用户服务协议',
+            headerStyle: {
+                backgroundColor: '#40a9ff'
             },
         }),
     },
-}, 
-{
-     transitionConfig: () => ({
-        screenInterpolator: CardStackStyleInterpolator.forHorizontal,
-        transitionSpec: {
-          duration: 250,
-          easing: Easing.ease,
-          timing: Animated.timing,
-        },
-  }),
-}
+},
+    {
+        transitionConfig: () => ({
+            screenInterpolator: CardStackStyleInterpolator.forHorizontal,
+            transitionSpec: {
+                duration: 250,
+                easing: Easing.ease,
+                timing: Animated.timing,
+            },
+        }),
+    }
 )
 
 

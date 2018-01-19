@@ -26,49 +26,47 @@ class CustomerList extends Component {
                 style={styles.item_body}
                 activeOpacity={1}
                 onPress={() => {
-                    this.props.navigation.navigate('CustomerInfo')
+                    this.props.navigation.navigate('CustomerInfo',{id:item.id})
                 }}>
                 <View style={[styles.flex_row_between, styles.item_header]}>
                     <View style={styles.flex_row_columncenter}>
-                        <Animatable.Text animation="rubberBand" iterationCount="infinite" duration={5000} >
-                            {item.sex == 1 ? <Icon type={"\uE66A"} size={15} color={'#40a9ff'} /> : <Icon type={"\uE66A"} size={15} color={'#FF0033'} />}
-                        </Animatable.Text>
-                        <Text style={[styles.fontsize12, { marginLeft: 5 }]}>{item.cname}</Text>
+                        <Animatable.View animation="rubberBand" iterationCount="infinite" duration={5000} >
+                            {item.sex == 1?<Image source = {require('../constants/images/客户男.png')} style={styles.item_header_img}/>:<Image source = {require('../constants/images/客户女.png')} style={styles.item_header_img}/>}
+                        </Animatable.View>
+                        <Text style={[styles.fontsize14, { marginLeft: 5 ,color:'#fff'}]}>{item.cname}</Text>
                     </View>
-                    <Text style={styles.fontsize10}>身份证号 : {item.card_id}</Text>
+                    <Text style={[styles.fontsize12,{color:'#fff'}]}>身份证号 : {item.card_id}</Text>
                 </View>
                 <View style={[{ paddingLeft: 20, paddingRight: 20 }]}>
                     <WhiteSpace size={'sm'} />
                     <View style={[styles.flex_row_columncenter]}>
                         <View style={[{ flex: 1 }, styles.flex_row_columncenter]}>
-                            <Text numberOfLines={1} style={styles.fontsize10}>
+                            <Text numberOfLines={1} style={styles.fontsize12}>
                                 就职公司 : {item.company ? item.company : '未填写'}
                             </Text>
                         </View>
                         <View style={[{ flex: 1 }, styles.flex_row_columncenter]}>
-                            <Text numberOfLines={1} style={styles.fontsize10}>
+                            <Text numberOfLines={1} style={styles.fontsize12}>
                                 公司职务 : {item.job ? item.job : '未填写'}
                             </Text>
                         </View>
                     </View>
                     <WhiteSpace size={'sm'} />
-                    <Text numberOfLines={2} style={styles.fontsize10}>
-                        备注 : {item.mark ? <Text style={[styles.fontsize10, { color: 'red' }]}>{item.mark}</Text> : <Text style={[styles.fontsize10]}>未填写</Text>}
+                    <Text numberOfLines={2} style={styles.fontsize12}>
+                        备注 : {item.mark ? <Text style={[styles.fontsize12, { color: 'red' }]}>{item.mark}</Text> : <Text style={[styles.fontsize12]}>未填写</Text>}
                     </Text>
                 </View>
                 <WhiteSpace size={'sm'} />
                 <View style={[styles.flex_row_between]}>
-                    <Text style={[styles.fontsize10, { color: '#ccc' }]}>所属公司 : 新昌咨询</Text>
-                    <Text style={[styles.fontsize10, { color: '#ccc' }]}>贷款总额 : &yen; 5000&nbsp;&nbsp;&nbsp;&nbsp;回款总额 : &yen; 5000</Text>
+                    <Text style={[styles.fontsize12, { color: '#ccc' }]}>所属公司 : 新昌咨询(死数据)</Text>
+                    <Text style={[styles.fontsize12, { color: '#ccc' }]}>贷款总额 : &yen; 5000&nbsp;&nbsp;&nbsp;&nbsp;回款总额 : &yen; 5000(死数据)</Text>
                 </View>
-
             </TouchableOpacity>
         )
     }
 
     render() {
-        // console.log(this.props.list)
-        if (this.props.customerReducer.status == 'done') {
+        if (this.props.list.status == 'done') {
             return (
                 <View style={{ flex: 1 }}>
                     <StatusBar
@@ -111,7 +109,6 @@ class CustomerList extends Component {
 
 function mapStateToProps(state) {
     return {
-        customerReducer: state.customerReducer,
         list: state.customerReducer.list,
     }
 }
