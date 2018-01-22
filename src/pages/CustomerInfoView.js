@@ -5,7 +5,7 @@ import Accordion from '../components/Accordion/Accordion';
 import { styles } from '../constants/styles'
 import { ScreenWidth, StatusBarHeight } from '../constants/global';
 import { connect } from 'react-redux';
-import { getCustomerList } from '../actions/customerAction';
+import { getCustomerInfo } from '../actions/customerAction';
 import * as Animatable from 'react-native-animatable';
 import ScrollableTabView, { ScrollableTabBar } from 'react-native-scrollable-tab-view';
 import ParallaxScrollView from 'react-native-parallax-scroll-view';
@@ -17,8 +17,14 @@ import Orders from '../components/customerOrders'
 
 
 class CustomerInfo extends Component {
-
+    componentWillMount() {
+        console.log(this.props.navigation.state.params.id)
+        this.props.dispatch(getCustomerInfo(this.props.navigation.state.params.id));
+    }
+    
     render() {
+        const{data} =this.props.info;
+        console.log(data)
         const tabs = [
             { title: <Text>所有订单</Text> },
             { title: <Text>详细资料</Text> },
@@ -54,21 +60,21 @@ class CustomerInfo extends Component {
                                         </TouchableOpacity>
                                     </View>
                                     <View style={[styles.flex_center, { flex: 1 }]}>
-                                        <Text style={[styles.fontsize20, { color: '#fff' }]}>成龙</Text>
+                                        <Text style={[styles.fontsize20, { color: '#fff' }]}>{data.cname}</Text>
                                     </View>
                                     <View style={[styles.flex_row_center, { flex: 1, marginBottom: 10 }]}>
                                         <View style={[styles.flex_row_between, { flex: 0.3, paddingLeft: 10, paddingRight: 10 }]}>
                                             <TouchableOpacity
                                                 style={[styles.customerInfo_head_btn, styles.flex_center]}
                                                 activeOpacity={1}
-                                                onPress={() => Linking.openURL('tel:10086')}
+                                                onPress={() => Linking.openURL(`tel:${data.phone}`)}
                                             >
                                                 <Image source={require('../constants/images/电话.png')} style={{ width: 20, height: 20 }} />
                                             </TouchableOpacity>
                                             <TouchableOpacity
                                                 style={[styles.customerInfo_head_btn, styles.flex_center]}
                                                 activeOpacity={1}
-                                                onPress={() => Linking.openURL('smsto:10086')}
+                                                onPress={() => Linking.openURL(`smsto:${data.phone}`)}
                                             >
                                                 <Image source={require('../constants/images/短信.png')} style={{ width: 20, height: 20 }} />
                                             </TouchableOpacity>
@@ -87,7 +93,7 @@ class CustomerInfo extends Component {
                                 <Icon type={'left'} color={'#fff'} />
                             </TouchableOpacity>
                             <View style={[styles.flex_center,{flex:0.8}]}>
-                                <Text style={[styles.fontsize16, { color: '#fff' }]}>成龙</Text>
+                                <Text style={[styles.fontsize16, { color: '#fff' }]}>{data.cname}</Text>
                             </View>
                         </View>
                     )}
@@ -95,9 +101,9 @@ class CustomerInfo extends Component {
                     <Tabs tabs={tabs}
                         initialPage={1}
                     >
-                        <Orders data={'我是列表'}></Orders>
-                        <InfoPage data={{ card_id: '320555195507084569', income: 1000000 }}></InfoPage>
-                        <Contacts data={'我是联系人'}></Contacts>
+                        <Orders {...this.props} data={data.orders}></Orders>
+                        <InfoPage {...this.props} data={data}></InfoPage>
+                        <Contacts {...this.props} data={data.customer_relation}></Contacts>
                     </Tabs>
                 </ParallaxScrollView>
             </View>
@@ -107,8 +113,7 @@ class CustomerInfo extends Component {
 
 function mapStateToProps(state) {
     return {
-        customerReducer: state.customerReducer,
-        list: state.customerReducer.list,
+        info: state.customerReducer.info,
     }
 }
 export default connect(mapStateToProps)(CustomerInfo);

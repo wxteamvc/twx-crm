@@ -32,11 +32,22 @@ export const CustomerList_SUCCESS='CustomerList_SUCCESS';
 //获取客户列表失败
 export const CustomerList_FAILED='CustomerList_FAILED';
 
-//获取客户列表信息开始
+//获取客户详情信息开始
+export const CustomerInfo_BEGIN='CustomerInfo_BEGIN';
+//获取客户详情信息成功
+export const CustomerInfo_SUCCESS='CustomerInfo_SUCCESS';
+//获取客户详情失败
+export const CustomerInfo_FAILED='CustomerInfo_FAILED';
+
+
+
+
+
+//获取公司列表信息开始
 export const CompanyList_BEGIN='CompanyList_BEGIN';
-//获取客户列表信息成功
+//获取公司列表信息成功
 export const CompanyList_SUCCESS='CompanyList_SUCCESS';
-//获取客户列表失败
+//获取公司列表失败
 export const CompanyList_FAILED='CompanyList_FAILED';
 
 //获取用户坐标

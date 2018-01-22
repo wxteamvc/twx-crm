@@ -12,6 +12,7 @@ import Login from '../pages/LoginView';
 import Setting from '../pages/SettingView';
 import Agreement from '../pages/AgreementView';
 import GiftedFormModal from '../pages/GiftedFormModal';
+import OrderInfo from '../pages/OrderInfoView';
 
 
 const App = StackNavigator({
@@ -63,6 +64,12 @@ const App = StackNavigator({
             }
         })
     },
+    OrderInfo: {
+        screen: OrderInfo,
+        navigationOptions: ({ navigation }) => ({
+            header: null
+        })
+    },
     Login: {
         screen: Login,
         navigationOptions: ({ navigation }) => ({
@@ -75,12 +82,12 @@ const App = StackNavigator({
             header: null
         })
     },
-    Agreement:{
+    Agreement: {
         screen: Agreement,
         navigationOptions: ({ navigation }) => ({
-            headerTitle:'用户服务协议',
-            headerStyle:{
-                backgroundColor:'#40a9ff'
+            headerTitle: '用户服务协议',
+            headerStyle: {
+                backgroundColor: '#40a9ff'
             },
         }),
     },

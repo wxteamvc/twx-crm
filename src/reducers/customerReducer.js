@@ -2,30 +2,58 @@ import * as Types from "../actions/actionTypes";
 
 
 const customerState = {
-    status: false,
-    msg: '',
+   
     list: {
         data:[],
+        status: false,
+        msg: '',
     },
-    info: {},
+    info: {
+        data:{},
+        status: false,
+        msg: '',
+    },
 }
 
 
 
 export function customerReducer(state = customerState, action) {
     switch (action.type) {
+        case Types.CustomerInfo_BEGIN:
+            return {
+                ...state,
+                info:{
+                    ...state.info,
+                    status: 'doing',
+                }
+                
+            }
+        case Types.CustomerInfo_SUCCESS:
+            return {
+                ...state,
+                info:{
+                    ...state.info,
+                    status: 'done',
+                    data: action.data        
+                }
+            }
+        case Types.CustomerInfo_FAILED:
+            return customerState
         case Types.CustomerList_BEGIN:
             return {
                 ...state,
-                status: 'doing',
+                list:{
+                    ...state.list,
+                    status: 'doing',    
+                }   
             }
         case Types.CustomerList_SUCCESS:
             return {
                 ...state,
-                status: 'done',
                 list: {
                     ...state.list,
                     ...action.data,
+                    status: 'done',
                     data:state.list.data.concat(action.data.data)
                 }         
             }
