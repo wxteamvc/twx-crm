@@ -55,7 +55,7 @@ let Util = {
                 // 'Accept': 'application/json',
                 // 'Content-Type': 'application/json'
                 'token':global.token,
-                'Content-Type': 'multipart/form-data',
+                'Content-Type': 'multipart/form-data;charset=utf-8',
             },
             body: formData
             // body: JSON.stringify(data)

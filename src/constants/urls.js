@@ -12,3 +12,4 @@ export const CustomerList_url = BASIC_URL + '/getCustomerList';
 
 //获取公司列表信息
 export const CompanyList_url = BASIC_URL + '/getCompanyList';
+

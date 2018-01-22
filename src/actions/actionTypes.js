@@ -19,7 +19,11 @@ export const UserInfo_BEGIN='UserInfo_BEGIN';
 export const UserInfo_SUCCESS='UserInfo_SUCCESS';
 //登陆用户失败
 export const UserInfo_FAILED='UserInfo_FAILED';
+//保存请求时的Token
+export const Change_TOKEN = 'changeToken';
 
+//用户登出
+export const Logout = 'Logout';
 
 //获取客户列表信息开始
 export const CustomerList_BEGIN='CustomerList_BEGIN';
@@ -37,3 +41,4 @@ export const CompanyList_FAILED='CompanyList_FAILED';
 
 //获取用户坐标
 export const GetGeolocation='GetGeolocation';
+

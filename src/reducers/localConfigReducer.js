@@ -1,5 +1,5 @@
 const initialState = {
-    token:'eyJpdiI6ImR4MTJVR0NNUnlFS1ErQ1ZoWFFGVlE9PSIsInZhbHVlIjoiVmRjcnFRdWM5amowTmx5SGhIbHlBakdUTExvbVh3YytTMlJYdHFoN1NIMD0iLCJtYWMiOiJlOTk3ZTUwMTNiNGNiNTRhMDIzM2E5MjA3ZjFmNTZkYWJhMzg5ZTRhODhjOGIxMDk4MDQwY2I1MDE0MjkyZWNkIn0=',
+    token:'',
     modules: [
         {
             name: '潜在客户',
@@ -47,6 +47,11 @@ export function localConfigReducer(state = initialState, action) {
             return {
                 ...state,
                 modules: [...action.data]
+            }
+        case 'changeToken':
+            return {
+                ...state,
+                token:action.data
             }
         default:
             return state;

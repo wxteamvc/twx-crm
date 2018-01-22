@@ -9,8 +9,9 @@ import CustomerList from '../pages/CustomerListView';
 import CustomerInfo from '../pages/CustomerInfoView';
 import CompanyList from '../pages/CompanyListView';
 import Login from '../pages/LoginView';
+import Setting from '../pages/SettingView';
 import Agreement from '../pages/AgreementView';
-
+import GiftedFormModal from '../pages/GiftedFormModal';
 
 
 const App = StackNavigator({
@@ -68,6 +69,12 @@ const App = StackNavigator({
             header: null
         })
     },
+    Setting: {
+        screen: Setting,
+        navigationOptions: ({ navigation }) => ({
+            header: null
+        })
+    },
     Agreement:{
         screen: Agreement,
         navigationOptions: ({ navigation }) => ({
@@ -77,6 +84,12 @@ const App = StackNavigator({
             },
         }),
     },
+    Modal: { 
+        screen: GiftedFormModal,
+        navigationOptions: ({ navigation }) => ({
+            header: null
+        })
+    }
 }, 
 {
      transitionConfig: () => ({
