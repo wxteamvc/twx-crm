@@ -9,7 +9,8 @@ import {
     ActivityIndicator,
     TouchableWithoutFeedback,
     Animated,
-    Easing
+    Easing,
+    TouchableOpacity
 } from 'react-native';
 import { connect } from 'react-redux';
 import { NavigationBar, ListRow } from 'teaset';
@@ -64,11 +65,11 @@ class Personal extends Component {
         );
     }
 
-    renderListRow = (listData)=>{
+    renderListRow = (listData) => {
         let list = [];
-        listData.map((items,index)=>{
+        listData.map((items, index) => {
             list.push(
-                <View  key={index}>
+                <View key={index}>
                     <Card full>
                         <Card.Body>
                             {renderItem(items)}
@@ -78,14 +79,14 @@ class Personal extends Component {
                 </View>
             )
         })
-        function renderItem(items){
+        function renderItem(items) {
             let row = [];
-            items.map((item,index)=>{
+            items.map((item, index) => {
                 row.push(
-                <ListRow key={index} title={item.title} detail='Detail'
-                icon={item.icon}
-                accessory='indicator'
-                />)
+                    <ListRow key={index} title={item.title} detail='Detail'
+                        icon={item.icon}
+                        accessory='indicator'
+                    />)
             })
             return row;
         }
@@ -94,7 +95,7 @@ class Personal extends Component {
     }
 
     render() {
-        let { initData, userInfo,navigation } = this.props;
+        let { initData, userInfo, navigation } = this.props;
         const rightView = (
             <NavigationBar.LinkButton
                 onPress={() => {
@@ -104,17 +105,17 @@ class Personal extends Component {
             />
         )
         const headerBottom = (
-        <Card full
-            style={{ borderWidth: 0, backgroundColor: "#fff" }}
-        >
-            <Card.Header
-                title="公司管理"
-                thumb={<Image
-                    source={require('../constants/images/个人消息.png')}
-                    style={{ height: 20, width: 20 }}
-                />}
-            />
-        </Card>
+            <Card full
+                style={{ borderWidth: 0, backgroundColor: "#fff" }}
+            >
+                <Card.Header
+                    title="公司管理"
+                    thumb={<Image
+                        source={require('../constants/images/个人消息.png')}
+                        style={{ height: 20, width: 20 }}
+                    />}
+                />
+            </Card>
         );
         const data = [
             { name: '订单管理' },
@@ -125,16 +126,16 @@ class Personal extends Component {
         ];
         const listData = [
             [
-                {title:'个人消息',icon:require('../constants/images/个人消息.png')},
-                {title:'个人消息',icon:require('../constants/images/个人消息.png')},
-                {title:'个人消息',icon:require('../constants/images/个人消息.png')},
-                {title:'个人消息',icon:require('../constants/images/个人消息.png')},
+                { title: '个人消息', icon: require('../constants/images/个人消息.png') },
+                { title: '个人消息', icon: require('../constants/images/个人消息.png') },
+                { title: '个人消息', icon: require('../constants/images/个人消息.png') },
+                { title: '个人消息', icon: require('../constants/images/个人消息.png') },
             ],
             [
-                {title:'个人消息',icon:require('../constants/images/个人消息.png')},
-                {title:'个人消息',icon:require('../constants/images/个人消息.png')},
-                {title:'个人消息',icon:require('../constants/images/个人消息.png')},
-                {title:'个人消息',icon:require('../constants/images/个人消息.png')},
+                { title: '个人消息', icon: require('../constants/images/个人消息.png') },
+                { title: '个人消息', icon: require('../constants/images/个人消息.png') },
+                { title: '个人消息', icon: require('../constants/images/个人消息.png') },
+                { title: '个人消息', icon: require('../constants/images/个人消息.png') },
             ]
 
         ];
@@ -148,15 +149,15 @@ class Personal extends Component {
                         />
                     </View>
                     <PullView
-                        style={{ top: -1}}
+                        style={{ top: -1 }}
                         showsVerticalScrollIndicator={false}
                         onPullRelease={this.onPullRelease}
                         topIndicatorRender={this.topIndicatorRender}
                         topIndicatorHeight={60}
-                        isPullEnd={userInfo.status == 'done'?true:false}
+                        isPullEnd={userInfo.status == 'done' ? true : false}
                     >
                         <Card full
-                            style={{ borderWidth: 0, backgroundColor: "#337AB7"}}
+                            style={{ borderWidth: 0, backgroundColor: "#337AB7" }}
                         >
                             <Card.Header
                                 title={null}
@@ -167,13 +168,16 @@ class Personal extends Component {
                                 extra={<Text>{userInfo.info.nickname}</Text>}
                             />
                         </Card>
-                        {userInfo.info.rid <= 2 ? headerBottom :false}
+                        {userInfo.info.rid <= 2 ? headerBottom : false}
                         <WhiteSpace size="lg" />
                         <View style={{ backgroundColor: "#fff" }}>
                             <Grid data={data}
                                 columnNum={3}
                                 renderItem={dataItem => (
-                                    <Text>{dataItem.name}</Text>
+                                    <TouchableOpacity onPress={()=>{this.props.navigation.navigate('Orders')}}>
+                                        <Text>{dataItem.name}</Text>
+                                    </TouchableOpacity>
+
                                 )}
                             />
                         </View>

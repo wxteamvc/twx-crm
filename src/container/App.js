@@ -11,7 +11,7 @@ import CompanyList from '../pages/CompanyListView';
 import Login from '../pages/LoginView';
 import Agreement from '../pages/AgreementView';
 import OrderInfo from '../pages/OrderInfoView';
-
+import OrdersView from '../pages/OrdersView';
 
 const App = StackNavigator({
     Lead: {
@@ -78,6 +78,14 @@ const App = StackNavigator({
         screen: Agreement,
         navigationOptions: ({ navigation }) => ({
             headerTitle: '用户服务协议',
+            headerStyle: {
+                backgroundColor: '#40a9ff'
+            },
+        }),
+    },
+    Orders: {
+        screen: OrdersView,
+        navigationOptions: ({ navigation }) => ({
             headerStyle: {
                 backgroundColor: '#40a9ff'
             },
