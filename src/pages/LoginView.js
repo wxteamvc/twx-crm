@@ -31,14 +31,14 @@ class Login extends Component {
     }
 
     render() {
-        const {initInfo,userInfo} = this.props;
+        const {initInfo,userInfo,navigation} = this.props;
         return (
             <View style={{flex:1,backgroundColor:'#fff', alignItems: 'center'}}>
             <StatusBar
                 translucent={false}
                 backgroundColor='#40a9ff'
             />
-            <NavigationBar title='用户登陆' leftView={<NavigationBar.BackButton title='Back' />} />
+            <NavigationBar title='用户登陆' leftView={<NavigationBar.BackButton title='Back' onPress={()=>{navigation.goBack()}}/>} />
             <View style={{width:ScreenWidth-40,marginTop:80}}>
                 <Text style={[styles.fontsize22,{fontWeight: '500'}]}>登 录</Text>
                 <Text style={[styles.fontsize12,{ color: '#ccc'}]}>使用此账号登录以使用更多服务</Text>

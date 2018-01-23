@@ -10,6 +10,7 @@ import CustomerInfo from '../pages/CustomerInfoView';
 import CompanyList from '../pages/CompanyListView';
 import Login from '../pages/LoginView';
 import Setting from '../pages/SettingView';
+import SetUserInfo from '../pages/SetUserInfoView';
 import Agreement from '../pages/AgreementView';
 import GiftedFormModal from '../pages/GiftedFormModal';
 import OrderInfo from '../pages/OrderInfoView';
@@ -72,6 +73,12 @@ const App = StackNavigator({
     },
     Login: {
         screen: Login,
+        navigationOptions: ({ navigation }) => ({
+            header: null
+        })
+    },
+    SetUserInfo:{
+        screen:SetUserInfo,
         navigationOptions: ({ navigation }) => ({
             header: null
         })

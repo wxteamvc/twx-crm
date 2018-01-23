@@ -112,7 +112,6 @@ class Application extends Component {
 
 
     render() {
-        console.log(this.state.picker)
         const { getFieldProps, getFieldError, getFieldDecorator } = this.props.form;
         return (
             <View style={{ flex: 1 }}>

@@ -18,3 +18,5 @@ export const CustomerInfo_url = BASIC_URL + '/getCustomerInfo';
 //获取公司列表信息
 export const CompanyList_url = BASIC_URL + '/getCompanyList';
 
+//上传头像
+export const Upload_avatar = BASIC_URL + '/upload/avatar';

@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import {
     View,
     Text,
-    Button,
     SectionList,
     ScrollView,
     Image,
@@ -12,8 +11,8 @@ import {
     Easing
 } from 'react-native';
 import { connect } from 'react-redux';
-import { NavigationBar, ListRow } from 'teaset';
-import { Card, WhiteSpace, Grid, List } from 'antd-mobile';
+import { NavigationBar, ListRow,Button } from 'teaset';
+import { Card, WhiteSpace, Grid, List , } from 'antd-mobile';
 import { PullView } from 'react-native-pull';
 import { initPersonal } from '../actions/personalAction';
 import Loading from '../components/loading';
@@ -99,19 +98,13 @@ class Personal extends Component {
 
     render() {
         let { initData, userInfo,navigation } = this.props;
-        const rightView = userInfo.isLogin ? 
-            <NavigationBar.LinkButton
+        const rightView = (
+            <NavigationBar.IconButton
                 onPress={() => {
                     navigation.navigate('Setting');
                 }}
-                title="设置"
-            />: 
-            <NavigationBar.LinkButton
-                onPress={() => {
-                    navigation.navigate('Login');
-                }}
-                title="登陆"
-            />
+                icon={require('../constants/images/设置.png')}
+            />);
         const headerBottom = (
         <Card full
             style={{ borderWidth: 0, backgroundColor: "#fff" }}
@@ -147,6 +140,12 @@ class Personal extends Component {
             ]
 
         ];
+        const userCard =  userInfo.isLogin ? 
+        <Button title='个人信息' type='secondary' onPress={() => navigation.navigate('SetUserInfo')} />
+        :<Button title='登陆' type='secondary' onPress={() => navigation.navigate('Login')} />;
+        const avatar = userInfo.isLogin ? 
+        { uri: userInfo.info.avatar_path } 
+        : require('../constants/images/头像.png');
         return (
             <View style={{ flex: 1 }}>
                 <View style={{ height: 66, backgroundColor: "#337AB7", padding: 0, margin: 0 }}>
@@ -163,22 +162,17 @@ class Personal extends Component {
                     topIndicatorHeight={60}
                     isPullEnd={userInfo.status == 'done'?true:false}
                 >
-                {userInfo.isLogin ?
-                    <Card full
-                    style={{ borderWidth: 0, backgroundColor: "#337AB7"}}
-                >
+                <Card full style={{ borderWidth: 0, backgroundColor: "#337AB7"}}>
                     <Card.Header
                         title={null}
-                        thumb={<Image
-                            source={{ uri: "http://www.wxdevelop.com/xc-cms/public/avatar/20180102/16b76ea61a3b26e1f590f72699868d15.jpg" }}
-                            style={{ height: 80, width: 80,borderRadius:40 }}
+                        thumb={
+                        <Image
+                            source={avatar}
+                            style={{ height: 70, width: 70,borderRadius:35 }}
                         />}
-                        extra={<Text>{userInfo.info.nickname}</Text>}
+                        extra={userCard}
                     />
                 </Card>
-                :null
-
-                }
                 {userInfo.isLogin && userInfo.info.rid <= 2 ? headerBottom :false}
                     <WhiteSpace size="lg" />
                     <View style={{ backgroundColor: "#fff" }}>

@@ -18,8 +18,10 @@ import Orders from '../components/customerOrders'
 
 class CustomerInfo extends Component {
     componentWillMount() {
-        console.log(this.props.navigation.state.params.id)
-        this.props.dispatch(getCustomerInfo(this.props.navigation.state.params.id));
+        const { userInfo,navigation } = this.props;
+        if (userInfo.isLogin === false) navigation.navigate('Login');
+        this.props.dispatch(getCustomerInfo(navigation.state.params.id));
+        
     }
     
     render() {
@@ -114,6 +116,7 @@ class CustomerInfo extends Component {
 function mapStateToProps(state) {
     return {
         info: state.customerReducer.info,
+        userInfo: state.personalReducer,
     }
 }
 export default connect(mapStateToProps)(CustomerInfo);

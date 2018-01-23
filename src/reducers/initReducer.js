@@ -3,6 +3,7 @@ import * as Types from "../actions/actionTypes";
 const initialState = {
     listeners:{
         netInfo:null,
+        netMode:null,
         appState:null,
         geolocation:{}
     },
@@ -30,6 +31,14 @@ export function initReducer(state = initialState, action){
                 listeners:{
                     ...state.listeners,
                     netInfo:action.data
+                }
+            }
+        case 'listenerNetMode':
+            return {
+                ...state,
+                listeners:{
+                    ...state.listeners,
+                    netMode:action.data
                 }
             }
         case 'listenerAppState':

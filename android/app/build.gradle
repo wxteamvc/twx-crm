@@ -143,6 +143,7 @@ dependencies {
     compile project(':react-native-device-info')
     compile project(':react-native-image-picker')
     compile project(':react-native-image-crop-picker')
+    compile project(':RCTHttpCache')
 }
 
 // Run this once to be able to run the application with BUCK

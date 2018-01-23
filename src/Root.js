@@ -15,20 +15,22 @@ export default class Root extends Component {
         //获取手机相关信息
         this._getMobileInfo();
         //监听网络状况
-        NetInfo.isConnected.fetch().done((isConnected) => {
-            this.storeDispatch('listenerNetInfo', isConnected);
-        })
-        //监听App运行状况
         NetInfo.isConnected.addEventListener('connectionChange', this._handleConnectivityChange);
-        //监听坐标位置
+        //监听网络环境
+        NetInfo.addEventListener('connectionChange',this._handleFirstConnectivityChange);
+        //监听App运行状况
         AppState.addEventListener('change', this._handleAppStateChange);
+        //监听坐标位置
         this._handleGetGeolocation();
     }
+    
     componentWillUnmount() {
         NetInfo.isConnected.removeEventListener('connectionChange', this._handleConnectivityChange);
+        NetInfo.removeEventListener('connectionChange',this._handleFirstConnectivityChange);
         AppState.removeEventListener('change', this._handleAppStateChange);
         navigator.geolocation.clearWatch(this.watchID);
     }
+
     _getMobileInfo = ()=>{
         let mobileInfo = {
             PhoneNumber: DeviceInfo.getPhoneNumber(),
@@ -42,6 +44,9 @@ export default class Root extends Component {
     }
     _handleConnectivityChange = (isConnected) => {
         this.storeDispatch('listenerNetInfo', isConnected);
+    }
+    _handleFirstConnectivityChange = (connectionInfo)=>{
+        this.storeDispatch('listenerNetMode', connectionInfo);
     }
     _handleAppStateChange = (nextAppState) => {
         this.storeDispatch('listenerAppState', nextAppState);

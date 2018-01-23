@@ -2,6 +2,7 @@ package com.kehu;
 
 import android.app.Application;
 
+import cn.reactnative.httpcache.HttpCachePackage;
 import com.facebook.react.ReactApplication;
 import com.reactnative.ivpusic.imagepicker.PickerPackage;
 import com.learnium.RNDeviceInfo.RNDeviceInfo;
@@ -27,7 +28,8 @@ public class MainApplication extends Application implements ReactApplication {
           new MainReactPackage(),
             new PickerPackage(),
             new RNDeviceInfo(),
-            new ImagePickerPackage()
+            new ImagePickerPackage(),
+            new HttpCachePackage()
       );
     }
 

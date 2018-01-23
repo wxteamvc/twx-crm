@@ -1,3 +1,6 @@
+import { styles } from '../constants/styles';
+import { stylesNight } from '../constants/stylesNight';
+
 const initialState = {
     token:'',
     modules: [
@@ -38,11 +41,29 @@ const initialState = {
             selected: true,
             icon: require('../constants/images/系统消息.png')
         }
-    ]
+    ],
+    setting:{
+        cacheSize:'0M',
+        nightMode:false,
+    },
+    stylesMode: styles
 }
 
 export function localConfigReducer(state = initialState, action) {
     switch (action.type) {
+        case 'changeSetting':
+            return {
+                ...state,
+                setting:{
+                    ...state.setting,
+                    [action.data.key]:action.data.value
+                }
+            }
+        case 'changeStyles':
+            return {
+                ...state,
+                stylesMode:action.data ? stylesNight : styles
+            }
         case 'changeModules':
             return {
                 ...state,

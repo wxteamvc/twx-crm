@@ -148,6 +148,7 @@ function mapStateToProps(state) {
     return {
         modules: state.localConfigReducer.modules,
         home: state.homeReducer,
+        init:state.initReducer
     }
 }
 export default connect(mapStateToProps)(Home);

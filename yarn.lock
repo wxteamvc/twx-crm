@@ -3584,7 +3584,7 @@ promise@^7.1.1:
   dependencies:
     asap "~2.0.3"
 
-prop-types@15.x, prop-types@^15.5.10, prop-types@^15.5.4, prop-types@^15.5.6, prop-types@^15.5.8, prop-types@^15.6.0:
+prop-types@15.x, prop-types@^15.5.10, prop-types@^15.5.4, prop-types@^15.5.6, prop-types@^15.5.7, prop-types@^15.5.8, prop-types@^15.6.0:
   version "15.6.0"
   resolved "http://registry.npm.taobao.org/prop-types/download/prop-types-15.6.0.tgz#ceaf083022fc46b4a35f69e13ef75aed0d639856"
   dependencies:
@@ -3878,6 +3878,10 @@ react-native-google-places-autocomplete@^1.3.6:
     prop-types "^15.5.10"
     qs "^5.2.0"
 
+react-native-http-cache@^0.2.0:
+  version "0.2.0"
+  resolved "http://registry.npm.taobao.org/react-native-http-cache/download/react-native-http-cache-0.2.0.tgz#1796ef5a2bbad845a066338f6f8d96a591e421e3"
+
 react-native-image-crop-picker@^0.19.1:
   version "0.19.1"
   resolved "http://registry.npm.taobao.org/react-native-image-crop-picker/download/react-native-image-crop-picker-0.19.1.tgz#29ac98104b89e623501d5bcf476ada875679cce8"
@@ -3893,6 +3897,13 @@ react-native-menu@^0.23.0:
     create-react-class "^15.6.0"
     prop-types "^15.5.10"
     react-timer-mixin "^0.13.3"
+
+react-native-modalbox@^1.4.2:
+  version "1.4.2"
+  resolved "http://registry.npm.taobao.org/react-native-modalbox/download/react-native-modalbox-1.4.2.tgz#818c9354c9b13327ec807c6436e8516b3b419478"
+  dependencies:
+    create-react-class "^15.6.0"
+    prop-types "^15.5.10"
 
 react-native-parallax-scroll-view@^0.20.1:
   version "0.20.1"
@@ -4891,6 +4902,12 @@ to-fast-properties@^1.0.3:
 to-fast-properties@^2.0.0:
   version "2.0.0"
   resolved "http://registry.npm.taobao.org/to-fast-properties/download/to-fast-properties-2.0.0.tgz#dc5e698cbd079265bc73e0377681a4e4e83f616e"
+
+toggle-switch-react-native@^0.2.0:
+  version "0.2.0"
+  resolved "http://registry.npm.taobao.org/toggle-switch-react-native/download/toggle-switch-react-native-0.2.0.tgz#81cd10098a78bd73ced06fc1df20e9694d7ed49f"
+  dependencies:
+    prop-types "^15.5.7"
 
 tough-cookie@>=2.3.3, tough-cookie@^2.3.3, tough-cookie@~2.3.0, tough-cookie@~2.3.3:
   version "2.3.3"

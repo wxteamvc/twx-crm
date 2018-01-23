@@ -36,8 +36,6 @@ class Lead extends Component {
     componentWillUnmount() {
         this.timer && clearTimeout(this.timer)
     }
-   
-
     render(){
         return (
             <View>

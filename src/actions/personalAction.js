@@ -46,6 +46,28 @@ export function logout(data,type=1){
     }
 }
 
+export function uploadAvatar(data){
+    return (dispatch)=>{
+        Util.post(Urls.Upload_avatar,data,
+            (respJson)=>{
+                if (respJson.code == 1){
+                    dispatch({
+                        type:Types.Upload_Avatar_SUCCESS,
+                        data:respJson.data
+                    })
+                }else{
+                    Toast.message(respJson.msg);
+                }
+            },
+            (error)=>{
+                console.log(error)
+                Toast.message(error.message);
+            }
+        )
+
+    }
+}
+
 export function initPersonal(){
     return (dispatch) =>{
         dispatch({

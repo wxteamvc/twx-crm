@@ -209,7 +209,6 @@ class CustomerList extends Component {
     }
     render() {
         const { list, status } = this.props.companyReducer;
-        console.log(list)
         return (
             <View style={{ flex: 1 }}>                    
                 <StatusBar

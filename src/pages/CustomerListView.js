@@ -13,6 +13,13 @@ class CustomerList extends Component {
         super(props)
     }
 
+    componentWillMount() {
+        const { userInfo,navigation } = this.props;
+        if (userInfo.isLogin === false){
+            navigation.navigate('Login');
+        } 
+    }
+
     componentDidMount() {
         this.props.dispatch(
             getCustomerList()
@@ -66,6 +73,9 @@ class CustomerList extends Component {
     }
 
     render() {
+        if (this.props.userInfo.isLogin === false){
+            return <View></View>
+        }
         if (this.props.list.status == 'done') {
             return (
                 <View style={{ flex: 1 }}>
@@ -110,6 +120,7 @@ class CustomerList extends Component {
 function mapStateToProps(state) {
     return {
         list: state.customerReducer.list,
+        userInfo: state.personalReducer,
     }
 }
 export default connect(mapStateToProps)(CustomerList);

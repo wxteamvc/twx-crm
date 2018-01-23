@@ -53,3 +53,7 @@ export const CompanyList_FAILED='CompanyList_FAILED';
 //获取用户坐标
 export const GetGeolocation='GetGeolocation';
 
+
+//上传成功
+export const Upload_Avatar_SUCCESS = 'Upload_Avatar_SUCCESS';
+
