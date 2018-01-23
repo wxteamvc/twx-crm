@@ -2,7 +2,7 @@ import { styles } from '../constants/styles';
 import { stylesNight } from '../constants/stylesNight';
 
 const initialState = {
-    token:'',
+    token: '',
     modules: [
         {
             name: '潜在客户',
@@ -72,7 +72,7 @@ export function localConfigReducer(state = initialState, action) {
         case 'changeToken':
             return {
                 ...state,
-                token:action.data
+                token: action.data
             }
         default:
             return state;

@@ -49,7 +49,7 @@ class Home extends Component {
     }
 
     render() { 
-        const { modules, home } = this.props;
+        const { modules, home , isLogin} = this.props;
         const { home_top, notices, home_activity } = home;
         const selectModules = [];
         modules.map(function (item) {
@@ -98,7 +98,11 @@ class Home extends Component {
                             carouselMaxRow={2}
                             hasLine={false}
                             onClick={(item, index) => {
-                                this.props.navigation.navigate(item.goUrl)
+                                if(isLogin){
+                                    this.props.navigation.navigate(item.goUrl)
+                                }else{
+                                    this.props.navigation.navigate('Login',{jumpwhere:item.goUrl})
+                                }     
                             }}
                             itemStyle={styles.flex_center}
                             renderItem={(dataItem, index) => {
@@ -148,7 +152,8 @@ function mapStateToProps(state) {
     return {
         modules: state.localConfigReducer.modules,
         home: state.homeReducer,
-        init:state.initReducer
+        init:state.initReducer,
+        isLogin: state.personalReducer.isLogin,
     }
 }
 export default connect(mapStateToProps)(Home);

@@ -35,13 +35,13 @@ export default class OrderListPage extends Component {
         ]
         return (
             <TouchableOpacity 
-            style={[styles.OrderListPage_item_body,{backgroundColor: '#fff'}]}
+            style={[styles.OrderListPage_item_body]}
             activeOpacity ={1}
             onPress={()=>this.props.navigation.navigate('OrderInfo',{order_id:item.order_id})}
             >
                 <View style={[styles.flex_row_between, styles.OrderListPage_item_header]}>
                     <View style={styles.flex_row_columncenter}>
-                        <Image source={require('../constants/images/单号.jpg')} style={styles.OrderListPage_item_header_img} />
+                        <Image source={require('../constants/images/单号.png')} style={styles.OrderListPage_item_header_img} />
                         <Text style={styles.fontsize12}>单号 : {item.order_id}</Text>
                     </View>
                     <Text style={[styles.fontsize10, { color: '#ccc' }]}>放款时间 : {item.loan_time}</Text>

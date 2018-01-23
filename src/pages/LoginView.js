@@ -7,7 +7,7 @@ import { Isao } from 'react-native-textinput-effects';
 import { NavigationBar } from 'teaset';
 import { Button } from 'antd-mobile';
 import { login } from '../actions/personalAction';
-
+import { NavigationActions } from 'react-navigation';
 
 class Login extends Component {
     constructor(props){
@@ -26,7 +26,19 @@ class Login extends Component {
     componentWillUpdate(nextProps,nextState) {
         const {userInfo,navigation } = this.props;
         if (userInfo.isLogin !== nextProps.userInfo.isLogin && nextProps.userInfo.isLogin == true){
-            navigation.goBack()
+            if(navigation.state.params.jumpwhere){  
+                const resetAction = NavigationActions.reset({
+                            index: 1,
+                            actions: [
+                                NavigationActions.navigate({ routeName:'HomeTab'}),  
+                                NavigationActions.navigate({ routeName:navigation.state.params.jumpwhere}),  
+                            ]
+                        })
+                        this.props.navigation.dispatch(resetAction);
+            }else{
+                navigation.goBack()
+            }
+            
         }
     }
 

@@ -14,7 +14,7 @@ import SetUserInfo from '../pages/SetUserInfoView';
 import Agreement from '../pages/AgreementView';
 import GiftedFormModal from '../pages/GiftedFormModal';
 import OrderInfo from '../pages/OrderInfoView';
-
+import OrdersView from '../pages/OrdersView';
 
 const App = StackNavigator({
     Lead: {
@@ -98,6 +98,14 @@ const App = StackNavigator({
             },
         }),
     },
+    Orders: {
+        screen: OrdersView,
+        navigationOptions: ({ navigation }) => ({
+            headerStyle: {
+                backgroundColor: '#40a9ff'
+            },
+        }),
+    }, 
     Modal: { 
         screen: GiftedFormModal,
         navigationOptions: ({ navigation }) => ({

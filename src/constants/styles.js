@@ -1,5 +1,5 @@
 import { StyleSheet } from 'react-native';
-import { fontSizeScaler } from '../constants/global';
+import { fontSizeScaler, ScreenHeight, StatusBarHeight, ScreenWidth } from '../constants/global';
 export const styles = StyleSheet.create({
 
     //````````````````````````通用````````````````````````````````
@@ -22,7 +22,7 @@ export const styles = StyleSheet.create({
 
     //双向居中
     flex_center: {
-         justifyContent: 'center', alignItems: 'center',
+        justifyContent: 'center', alignItems: 'center',
     },
     //垂直居中,水平靠右
     flex_row_end: {
@@ -48,8 +48,8 @@ export const styles = StyleSheet.create({
     fontsize16: {
         fontSize: 16 * fontSizeScaler
     },
-     //字体大小14
-     fontsize14: {
+    //字体大小14
+    fontsize14: {
         fontSize: 14 * fontSizeScaler
     },
     //字体大小12
@@ -63,6 +63,30 @@ export const styles = StyleSheet.create({
     //字体大小8
     fontsize8: {
         fontSize: 8 * fontSizeScaler, color: '#ccc'
+    },
+    //正常模式标题背景颜色
+    title_bgc_light: {
+        backgroundColor: ''
+    },
+    //夜间模式标题背景颜色
+    title_bgc_dark: {
+        backgroundColor: ''
+    },
+    //正常模式内容背景颜色
+    content_bgc_light: {
+        backgroundColor: ''
+    },
+    //夜间模式内容背景颜色
+    content_bgc_dark: {
+        backgroundColor: ''
+    },
+    //正常模式文字颜色
+    text_light: {
+        color: ''
+    },
+    //夜间模式文字颜色
+    text_dark: {
+        color: ''
     },
 
     //````````````````````````首页````````````````````````````````
@@ -93,10 +117,10 @@ export const styles = StyleSheet.create({
     },
     //列表元素头部样式
     item_header: {
-        padding: 5,backgroundColor:'#009966',borderTopLeftRadius:10,borderTopRightRadius:10
+        padding: 5, backgroundColor: '#009966', borderTopLeftRadius: 10, borderTopRightRadius: 10
     },
-    item_header_img:{
-        width:25,height:25
+    item_header_img: {
+        width: 25, height: 25
     },
     //````````````````````````客户详细信息页面````````````````````````````````
     //头部背景样式
@@ -126,83 +150,99 @@ export const styles = StyleSheet.create({
         paddingLeft: 10, paddingRight: 10
     },
     OrderListPage_item_header: {
-        borderBottomWidth: 0.3, borderColor: '#ccc', paddingTop: 5, paddingBottom: 5
+        borderBottomWidth: 0.3, borderColor: '#ccc', padding: 5, backgroundColor: '#009966', borderTopLeftRadius: 5, borderTopRightRadius: 5
     },
     OrderListPage_item_header_img: {
         width: 15, height: 15, borderRadius: 7.5, marginRight: 10
     },
     OrderListPage_item_content: {
-        paddingBottom: 10, paddingTop: 10, borderColor: '#ccc', borderBottomWidth: 0.5
+        padding: 5, paddingBottom: 10, paddingTop: 10, borderColor: '#ccc', borderBottomWidth: 0.5, borderLeftWidth: 0.5, borderRightWidth: 0.5, backgroundColor: '#fff'
     },
     OrderListPage_item_footer: {
-        paddingBottom: 5, paddingTop: 5
+        padding: 5, borderColor: '#ccc', borderLeftWidth: 0.5, borderRightWidth: 0.5, backgroundColor: '#fff'
     },
     //```````````````````````客户联系人组件样式·······················
     CustomerContacts_item_body: {
-        padding:5,backgroundColor:'#fff'
+        padding: 5, backgroundColor: '#fff'
     },
     CustomerContacts_item_image: {
-        width:40,height:40,
+        width: 40, height: 40,
     },
     CustomerContacts_item_rightImg: {
-        width:25,height:25,
+        width: 25, height: 25,
     },
-     //```````````````````````添加新客户页面样式·······················
-     ApplicationView_item_body: {
-        backgroundColor: '#fff',marginLeft:10,marginRight:10 ,paddingBottom:5,
+    //```````````````````````添加新客户页面样式·······················
+    ApplicationView_item_body: {
+        backgroundColor: '#fff', marginLeft: 10, marginRight: 10, paddingBottom: 5,
     },
     //```````````````````````订单详情页面样式·······················
     OrderInfo_container: {
         flex: 1, backgroundColor: '#fff'
     },
     OrderInfo_top: {
-       height:120,backgroundColor: 'rgba(255,255,255,0.3)'
+        height: 120, backgroundColor: 'rgba(255,255,255,0.3)'
     },
     OrderInfo_top_img: {
         width: 30, height: 30, borderRadius: 10
     },
     OrderInfo_tab_btn: {
-        padding:5,paddingLeft:20,paddingRight:20,
+        padding: 5, paddingLeft: 20, paddingRight: 20,
     },
     OrderInfo_tab_Lbtn: {
-       borderTopLeftRadius:5,borderBottomLeftRadius:5
+        borderTopLeftRadius: 5, borderBottomLeftRadius: 5
     },
     OrderInfo_tab_Rbtn: {
-        borderTopRightRadius:5,borderBottomRightRadius:5
+        borderTopRightRadius: 5, borderBottomRightRadius: 5
     },
     OrderInfo_content_header: {
-        height: 20,marginTop:10,marginLeft:40,marginRight:40,backgroundColor:'#2A3B61',borderTopLeftRadius:5,borderTopRightRadius:5
+        height: 20, marginTop: 10, marginLeft: 40, marginRight: 40, backgroundColor: '#2A3B61', borderTopLeftRadius: 5, borderTopRightRadius: 5
     },
     OrderInfo_content_container: {
-        marginLeft:20,marginRight:20,backgroundColor:'#4B5DA2',borderRadius:5,
+        marginLeft: 20, marginRight: 20, backgroundColor: '#4B5DA2', borderRadius: 5,
     },
-     //```````````````````````订单详情组件样式·······················
-     order_info_head:{
-        backgroundColor:'#445596',padding:15,paddingTop:20,paddingBottom:20,borderTopLeftRadius:5,borderTopRightRadius:5
+    //```````````````````````订单详情组件样式·······················
+    order_info_head: {
+        backgroundColor: '#445596', padding: 15, paddingTop: 20, paddingBottom: 20, borderTopLeftRadius: 5, borderTopRightRadius: 5
     },
-    order_info_rowItem_body:{
-        padding:10,borderColor:'#ccc',borderBottomWidth:0.7
+    order_info_rowItem_body: {
+        padding: 10, borderColor: '#ccc', borderBottomWidth: 0.7
     },
-     //```````````````````````订单周期组件样式·······················
-     order_cycle_container:{
+    //```````````````````````订单周期组件样式·······················
+    order_cycle_container: {
         flex: 1
     },
-    order_cycle_listItem:{
-        paddingLeft: 10, paddingRight: 10 
+    order_cycle_listItem: {
+        paddingLeft: 10, paddingRight: 10
     },
-     order_cycle_whitespace:{
-        height:5,backgroundColor:'#2A3B61',
+    order_cycle_whitespace: {
+        height: 5, backgroundColor: '#2A3B61',
     },
-    order_cycle_listItem_head:{
-        paddingTop:5,paddingBottom:5,borderColor:'#ccc',borderBottomWidth:0.7
+    order_cycle_listItem_head: {
+        paddingTop: 5, paddingBottom: 5, borderColor: '#ccc', borderBottomWidth: 0.7
     },
-    order_cycle_listItem_body:{
-        paddingTop:5,paddingBottom:5,borderColor:'#ccc',borderBottomWidth:0.7
+    order_cycle_listItem_body: {
+        paddingTop: 5, paddingBottom: 5, borderColor: '#ccc', borderBottomWidth: 0.7
     },
-    order_cycle_listItem_foot:{
-        paddingTop:5,paddingBottom:5,borderColor:'#ccc',borderBottomWidth:0.7
+    order_cycle_listItem_foot: {
+        paddingTop: 5, paddingBottom: 5, borderColor: '#ccc', borderBottomWidth: 0.7
     },
-    order_cycle_listItem_foot_img:{
-       width:20,height:20
+    order_cycle_listItem_foot_img: {
+        width: 20, height: 20
+    },
+    //```````````````````````订单管理页面样式·······················
+    OrdersView_menu_container: {
+        position: 'absolute', top: 0, zIndex: 20, width: ScreenWidth
+    },
+    OrdersView_menu_header: {
+        width: ScreenWidth, height: 40, backgroundColor: '#fff'
+    },
+    OrdersView_menu_left: {
+        flex: 1, borderColor: '#ccc', borderRightWidth: 1
+    },
+    OrdersView_menu_content_typeView: {
+        paddingTop: 10, paddingBottom: 10
+    },
+    OrdersView_content_container: {
+        flex: 1, zIndex: 1, marginTop: 40,
     },
 })  
