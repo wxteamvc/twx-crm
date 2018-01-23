@@ -1,5 +1,6 @@
+
 const initialState = {
-    token:'',
+    token: '',
     modules: [
         {
             name: '潜在客户',
@@ -38,7 +39,8 @@ const initialState = {
             selected: true,
             icon: require('../constants/images/系统消息.png')
         }
-    ]
+    ],
+    styles:styles
 }
 
 export function localConfigReducer(state = initialState, action) {
@@ -51,7 +53,7 @@ export function localConfigReducer(state = initialState, action) {
         case 'changeToken':
             return {
                 ...state,
-                token:action.data
+                token: action.data
             }
         default:
             return state;

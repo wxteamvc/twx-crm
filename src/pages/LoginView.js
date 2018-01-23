@@ -7,7 +7,7 @@ import { Isao } from 'react-native-textinput-effects';
 import { NavigationBar } from 'teaset';
 import { Button } from 'antd-mobile';
 import { login } from '../actions/personalAction';
-
+import { NavigationActions } from 'react-navigation';
 
 class Login extends Component {
     constructor(props){
@@ -26,19 +26,31 @@ class Login extends Component {
     componentWillUpdate(nextProps,nextState) {
         const {userInfo,navigation } = this.props;
         if (userInfo.isLogin !== nextProps.userInfo.isLogin && nextProps.userInfo.isLogin == true){
-            navigation.goBack()
+            if(navigation.state.params.jumpwhere){  
+                const resetAction = NavigationActions.reset({
+                            index: 1,
+                            actions: [
+                                NavigationActions.navigate({ routeName:'HomeTab'}),  
+                                NavigationActions.navigate({ routeName:navigation.state.params.jumpwhere}),  
+                            ]
+                        })
+                        this.props.navigation.dispatch(resetAction);
+            }else{
+                navigation.goBack()
+            }
+            
         }
     }
 
     render() {
-        const {initInfo,userInfo} = this.props;
+        const {initInfo,userInfo,navigation,} = this.props;
         return (
             <View style={{flex:1,backgroundColor:'#fff', alignItems: 'center'}}>
             <StatusBar
                 translucent={false}
                 backgroundColor='#40a9ff'
             />
-            <NavigationBar title='用户登陆' leftView={<NavigationBar.BackButton title='Back' />} />
+            <NavigationBar title='用户登陆' leftView={<NavigationBar.BackButton title='Back' onPress={()=>navigation.goBack()}/>} />
             <View style={{width:ScreenWidth-40,marginTop:80}}>
                 <Text style={[styles.fontsize22,{fontWeight: '500'}]}>登 录</Text>
                 <Text style={[styles.fontsize12,{ color: '#ccc'}]}>使用此账号登录以使用更多服务</Text>
