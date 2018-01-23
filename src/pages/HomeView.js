@@ -1,12 +1,28 @@
 import React, { Component } from 'react';
-import { View, Text, Image, ScrollView, FlatList, StatusBar } from 'react-native';
+import { View, Text, Image, ScrollView, FlatList, StatusBar,Platform,BackHandler } from 'react-native';
 import { Grid, WhiteSpace, Carousel, Flex } from 'antd-mobile';
 import { styles } from '../constants/styles'
 import { ScreenWidth } from '../constants/global';
 import { connect } from 'react-redux';
 import { Item } from 'antd-mobile/lib/tab-bar';
 import Notices from '../components/notices';
+
 class Home extends Component {
+    componentDidMount() {
+        if (Platform.OS === 'android'){
+            BackHandler.addEventListener('hardwareBackPress', this.onBackAndroid);
+        }
+    }
+
+    componentWillUnmount() {
+        if (Platform.OS === 'android') {
+            BackHandler.removeEventListener('hardwareBackPress', this.onBackAndroid);
+        }
+    }
+    
+    onBackAndroid = ()=>{
+        
+    }
 
     renderCarouselItem = () => {
         const { banner } = this.props.home;
@@ -32,7 +48,7 @@ class Home extends Component {
         )
     }
 
-    render() {
+    render() { 
         const { modules, home } = this.props;
         const { home_top, notices, home_activity } = home;
         const selectModules = [];

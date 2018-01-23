@@ -18,12 +18,3 @@ export const CustomerInfo_url = BASIC_URL + '/getCustomerInfo';
 //获取公司列表信息
 export const CompanyList_url = BASIC_URL + '/getCompanyList';
 
-
-//创建带参数的url
-// export function buildUrlWithParams( url,params = ''){
-//     return _get(url);
-//     // let url = _get(url);
-//     // if (url){
-//     //     return `${url}/${params}`;
-//     // }
-// }

@@ -9,7 +9,6 @@ import * as Types from "../actions/actionTypes";
 import { Icon } from 'antd-mobile';
 import { connect } from 'react-redux';
 import { NavigationActions } from 'react-navigation';
-import { initPersonal } from '../actions/personalAction';
 
 class Lead extends Component {
     state = {
@@ -30,14 +29,8 @@ class Lead extends Component {
             this.props.navigation.dispatch(resetAction);
         }
     }
- 
+
     componentDidMount(){
-        let { token } = this.props.localConfigReducer;
-        //获取用户坐标
-        global.token = token;
-        if (token) {
-            this.props.dispatch(initPersonal());
-        }
         this.timer = setInterval(this.leadTime,1000);
     }
     componentWillUnmount() {
@@ -46,7 +39,6 @@ class Lead extends Component {
    
 
     render(){
-        let {initData} = this.props;
         return (
             <View>
                 <StatusBar
@@ -61,10 +53,7 @@ class Lead extends Component {
 }
 function mapStateToProps(state) {
     return {
-        initData: state.initReducer,
         localConfigReducer: state.localConfigReducer,
-        initData:state.initReducer,
-        localConfigReducer:state.localConfigReducer,
         userInfo: state.personalReducer,
     }
 }

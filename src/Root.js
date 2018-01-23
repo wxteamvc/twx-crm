@@ -7,8 +7,11 @@ import { NetInfo, AppState } from 'react-native';
 import * as Types from "./actions/actionTypes";
 import DeviceInfo from 'react-native-device-info';
 
+
+
 export default class Root extends Component {
     componentDidMount() {
+        global.token = '';
         //获取手机相关信息
         this._getMobileInfo();
         //监听网络状况

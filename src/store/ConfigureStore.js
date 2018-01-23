@@ -8,7 +8,7 @@ import {persistStore, autoRehydrate} from 'redux-persist';
 import { AsyncStorage } from 'react-native';
 const createStoreWithMiddleware = applyMiddleware(thunkMiddleware)(createStore);
 
-const store = createStoreWithMiddleware(rootReducer)
+const store = createStoreWithMiddleware(rootReducer,autoRehydrate())
 
 persistStore(store,{
     storage:AsyncStorage,

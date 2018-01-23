@@ -3,12 +3,13 @@ package com.kehu;
 import android.app.Application;
 
 import com.facebook.react.ReactApplication;
+import com.reactnative.ivpusic.imagepicker.PickerPackage;
 import com.learnium.RNDeviceInfo.RNDeviceInfo;
 import com.facebook.react.ReactNativeHost;
 import com.facebook.react.ReactPackage;
 import com.facebook.react.shell.MainReactPackage;
 import com.facebook.soloader.SoLoader;
-
+import com.imagepicker.ImagePickerPackage;
 import java.util.Arrays;
 import java.util.List;
 
@@ -24,7 +25,9 @@ public class MainApplication extends Application implements ReactApplication {
     protected List<ReactPackage> getPackages() {
       return Arrays.<ReactPackage>asList(
           new MainReactPackage(),
-            new RNDeviceInfo()
+            new PickerPackage(),
+            new RNDeviceInfo(),
+            new ImagePickerPackage()
       );
     }
 
