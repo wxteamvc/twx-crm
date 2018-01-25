@@ -64,30 +64,30 @@ export const styles = StyleSheet.create({
     fontsize8: {
         fontSize: 8 * fontSizeScaler, color: '#ccc'
     },
-    //正常模式标题背景颜色
-    title_bgc_light: {
-        backgroundColor: ''
-    },
-    //夜间模式标题背景颜色
-    title_bgc_dark: {
-        backgroundColor: ''
-    },
-    //正常模式内容背景颜色
-    content_bgc_light: {
-        backgroundColor: ''
-    },
-    //夜间模式内容背景颜色
-    content_bgc_dark: {
-        backgroundColor: ''
-    },
-    //正常模式文字颜色
-    text_light: {
-        color: ''
-    },
-    //夜间模式文字颜色
-    text_dark: {
-        color: ''
-    },
+    // //正常模式标题背景颜色
+    // title_bgc_light: {
+    //     backgroundColor: ''
+    // },
+    // //夜间模式标题背景颜色
+    // title_bgc_dark: {
+    //     backgroundColor: ''
+    // },
+    // //正常模式内容背景颜色
+    // content_bgc_light: {
+    //     backgroundColor: ''
+    // },
+    // //夜间模式内容背景颜色
+    // content_bgc_dark: {
+    //     backgroundColor: ''
+    // },
+    // //正常模式文字颜色
+    // text_light: {
+    //     color: ''
+    // },
+    // //夜间模式文字颜色
+    // text_dark: {
+    //     color: ''
+    // },
 
     //````````````````````````首页````````````````````````````````
     //首页顶部
@@ -150,16 +150,16 @@ export const styles = StyleSheet.create({
         paddingLeft: 10, paddingRight: 10
     },
     OrderListPage_item_header: {
-        borderBottomWidth: 0.3, borderColor: '#ccc', padding: 5, backgroundColor: '#009966', borderTopLeftRadius: 5, borderTopRightRadius: 5
+     padding: 5, borderTopLeftRadius: 5, borderTopRightRadius: 5,backgroundColor:'#fff',borderColor:'#ccc',borderBottomWidth:0.5
     },
     OrderListPage_item_header_img: {
         width: 15, height: 15, borderRadius: 7.5, marginRight: 10
     },
     OrderListPage_item_content: {
-        padding: 5, paddingBottom: 10, paddingTop: 10, borderColor: '#ccc', borderBottomWidth: 0.5, borderLeftWidth: 0.5, borderRightWidth: 0.5, backgroundColor: '#fff'
+        padding: 5, paddingBottom: 10, paddingTop: 10, backgroundColor: '#fff'
     },
     OrderListPage_item_footer: {
-        padding: 5, borderColor: '#ccc', borderLeftWidth: 0.5, borderRightWidth: 0.5, backgroundColor: '#fff'
+        padding: 5, backgroundColor: '#fff'
     },
     //```````````````````````客户联系人组件样式·······················
     CustomerContacts_item_body: {
@@ -186,7 +186,7 @@ export const styles = StyleSheet.create({
         width: 30, height: 30, borderRadius: 10
     },
     OrderInfo_tab_btn: {
-        padding: 5, paddingLeft: 20, paddingRight: 20,
+        padding: 10, flex:1
     },
     OrderInfo_tab_Lbtn: {
         borderTopLeftRadius: 5, borderBottomLeftRadius: 5
@@ -195,10 +195,10 @@ export const styles = StyleSheet.create({
         borderTopRightRadius: 5, borderBottomRightRadius: 5
     },
     OrderInfo_content_header: {
-        height: 20, marginTop: 10, marginLeft: 40, marginRight: 40, backgroundColor: '#2A3B61', borderTopLeftRadius: 5, borderTopRightRadius: 5
+        height: 20, marginTop: 10, marginLeft: 20, marginRight: 20, backgroundColor: '#2A3B61', borderTopLeftRadius: 5, borderTopRightRadius: 5
     },
     OrderInfo_content_container: {
-        marginLeft: 20, marginRight: 20, backgroundColor: '#4B5DA2', borderRadius: 5,
+        backgroundColor: '#4B5DA2', borderRadius: 5,marginLeft:10,marginRight:10
     },
     //```````````````````````订单详情组件样式·······················
     order_info_head: {
@@ -215,7 +215,7 @@ export const styles = StyleSheet.create({
         paddingLeft: 10, paddingRight: 10
     },
     order_cycle_whitespace: {
-        height: 5, backgroundColor: '#2A3B61',
+        height: 5, backgroundColor: '#E9E9EF',
     },
     order_cycle_listItem_head: {
         paddingTop: 5, paddingBottom: 5, borderColor: '#ccc', borderBottomWidth: 0.7

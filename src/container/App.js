@@ -15,6 +15,7 @@ import Agreement from '../pages/AgreementView';
 import GiftedFormModal from '../pages/GiftedFormModal';
 import OrderInfo from '../pages/OrderInfoView';
 import OrdersView from '../pages/OrdersView';
+import RepayView from '../pages/RepayView';
 
 const App = StackNavigator({
     Lead: {
@@ -100,6 +101,14 @@ const App = StackNavigator({
     },
     Orders: {
         screen: OrdersView,
+        navigationOptions: ({ navigation }) => ({
+            headerStyle: {
+                backgroundColor: '#40a9ff'
+            },
+        }),
+    }, 
+    Repay: {
+        screen: RepayView,
         navigationOptions: ({ navigation }) => ({
             headerStyle: {
                 backgroundColor: '#40a9ff'
