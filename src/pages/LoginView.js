@@ -99,40 +99,6 @@ class Login extends Component {
                     value={this.state.upassword}
                     onChangeText={ (value) => this.setState({ upassword:value}) }
                 />
-                <NavigationBar title='用户登陆' leftView={<NavigationBar.BackButton title='Back' onPress={() => { navigation.goBack() }} />} />
-                <View style={{ width: ScreenWidth - 40, marginTop: 80 }}>
-                    <Text style={[styles.fontsize22, { fontWeight: '500' }]}>登 录</Text>
-                    <Text style={[styles.fontsize12, { color: '#ccc' }]}>使用此账号登录以使用更多服务</Text>
-                </View>
-                <View
-                    style={{ width: ScreenWidth - 40, marginTop: 10 }}
-                >
-                    <Isao
-                        label={'账号'}
-                        // this is applied as active border and label color
-                        activeColor={'#40a9ff'}
-                        // this is applied as passive border and label color
-                        passiveColor={'#dadada'}
-                        onChangeText={(text) => {
-                            this.setState({
-                                uname: text
-                            });
-                        }}
-                    />
-                    <Isao
-                        label={'密码'}
-                        // this is applied as active border and label color
-                        activeColor={'#40a9ff'}
-                        // this is applied as passive border and label color
-                        passiveColor={'#dadada'}
-                        secureTextEntry={true}
-                        onChangeText={(text) => {
-                            this.setState({
-                                upassword: text
-                            });
-                        }}
-                    />
-                </View>
                 <View
                     style={{ width: ScreenWidth - 40, marginTop: 10 }}
                 >
