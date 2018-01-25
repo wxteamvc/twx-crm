@@ -18,6 +18,7 @@ import OrdersView from '../pages/OrdersView';
 import BindTel from '../pages/BindTelView';
 import FeedBack from '../pages/FeedBackView';
 import ChangePassword from '../pages/ChangePasswordView';
+import RepayView from '../pages/RepayView';
 
 const App = StackNavigator({
     Lead: {
@@ -103,6 +104,14 @@ const App = StackNavigator({
     },
     Orders: {
         screen: OrdersView,
+        navigationOptions: ({ navigation }) => ({
+            headerStyle: {
+                backgroundColor: '#40a9ff'
+            },
+        }),
+    }, 
+    Repay: {
+        screen: RepayView,
         navigationOptions: ({ navigation }) => ({
             headerStyle: {
                 backgroundColor: '#40a9ff'

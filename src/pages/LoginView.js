@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View, Text,Image,TouchableWithoutFeedback,StatusBar } from 'react-native';
+import { View, Text, Image, TouchableWithoutFeedback, StatusBar } from 'react-native';
 import { connect } from 'react-redux';
 import { styles } from '../constants/styles'
 import { ScreenWidth } from '../constants/global'
@@ -12,7 +12,7 @@ import * as WeChat from 'react-native-wechat';
 
 
 class Login extends Component {
-    constructor(props){
+    constructor(props) {
         super(props);
         this.state={
             uname:'',
@@ -20,7 +20,7 @@ class Login extends Component {
         }
     }
 
-    submit = ()=>{
+    submit = () => {
         //这边写简单的验证
         this.props.dispatch(login(this.state))
     }
@@ -68,12 +68,12 @@ class Login extends Component {
             }else{
                 navigation.goBack()
             }
-            
+
         }
     }
 
     render() {
-        const {initInfo,userInfo,navigation} = this.props;
+        const { initInfo, userInfo, navigation } = this.props;
         return (
             <View style={{flex:1,backgroundColor:'#fff', alignItems: 'center'}}>
             <StatusBar
@@ -99,48 +99,81 @@ class Login extends Component {
                     value={this.state.upassword}
                     onChangeText={ (value) => this.setState({ upassword:value}) }
                 />
-            </View>
-            <View
-                style={{width:ScreenWidth-40,marginTop:10}}
-            >
-                <Button type="primary"
-                    onClick={this.submit}
-                >登陆</Button>
-            </View>
-            
-            <View 
-            style={{width:ScreenWidth-40,marginTop:30,flexDirection: 'row',alignItems: 'flex-start'}}
-            >
-            <TouchableWithoutFeedback
-                    onPress={()=>{
-                        alert('验证码登陆')
-                    }}
+                <NavigationBar title='用户登陆' leftView={<NavigationBar.BackButton title='Back' onPress={() => { navigation.goBack() }} />} />
+                <View style={{ width: ScreenWidth - 40, marginTop: 80 }}>
+                    <Text style={[styles.fontsize22, { fontWeight: '500' }]}>登 录</Text>
+                    <Text style={[styles.fontsize12, { color: '#ccc' }]}>使用此账号登录以使用更多服务</Text>
+                </View>
+                <View
+                    style={{ width: ScreenWidth - 40, marginTop: 10 }}
                 >
-                <View style={{flex:1,alignItems:'flex-start'}}>
-                    <Text style={[styles.fontsize14]}>手机验证登陆</Text>
+                    <Isao
+                        label={'账号'}
+                        // this is applied as active border and label color
+                        activeColor={'#40a9ff'}
+                        // this is applied as passive border and label color
+                        passiveColor={'#dadada'}
+                        onChangeText={(text) => {
+                            this.setState({
+                                uname: text
+                            });
+                        }}
+                    />
+                    <Isao
+                        label={'密码'}
+                        // this is applied as active border and label color
+                        activeColor={'#40a9ff'}
+                        // this is applied as passive border and label color
+                        passiveColor={'#dadada'}
+                        secureTextEntry={true}
+                        onChangeText={(text) => {
+                            this.setState({
+                                upassword: text
+                            });
+                        }}
+                    />
                 </View>
-            </TouchableWithoutFeedback>  
-            <TouchableWithoutFeedback
-                onPress={()=>{
-                     alert('找回密码')
-                }}
-            >
-                <View style={{flex:1,alignItems:'flex-end'}}>
-                    <Text style={[styles.fontsize14]}>忘记了?找回密码</Text>    
-                </View>
-                </TouchableWithoutFeedback>  
-            </View>
-            <View style={{alignItems: 'flex-start',justifyContent:'center',height:100}}>
-                <TouchableWithoutFeedback
-                    onPress={()=>{
-                        this.props.navigation.navigate('Agreement')
-                    }}
+                <View
+                    style={{ width: ScreenWidth - 40, marginTop: 10 }}
                 >
-                <View>
-                    <Text style={[styles.fontsize10,{color:'#ccc'}]}>登陆/注册即视为同意用户服务协议</Text>
+                    <Button type="primary"
+                        onClick={this.submit}
+                    >登陆</Button>
                 </View>
-                </TouchableWithoutFeedback>
-            </View>
+
+                <View
+                    style={{ width: ScreenWidth - 40, marginTop: 30, flexDirection: 'row', alignItems: 'flex-start' }}
+                >
+                    <TouchableWithoutFeedback
+                        onPress={() => {
+                            alert('验证码登陆')
+                        }}
+                    >
+                        <View style={{ flex: 1, alignItems: 'flex-start' }}>
+                            <Text style={[styles.fontsize14]}>手机验证登陆</Text>
+                        </View>
+                    </TouchableWithoutFeedback>
+                    <TouchableWithoutFeedback
+                        onPress={() => {
+                            alert('找回密码')
+                        }}
+                    >
+                        <View style={{ flex: 1, alignItems: 'flex-end' }}>
+                            <Text style={[styles.fontsize14]}>忘记了?找回密码</Text>
+                        </View>
+                    </TouchableWithoutFeedback>
+                </View>
+                <View style={{ alignItems: 'flex-start', justifyContent: 'center', height: 100 }}>
+                    <TouchableWithoutFeedback
+                        onPress={() => {
+                            this.props.navigation.navigate('Agreement')
+                        }}
+                    >
+                        <View>
+                            <Text style={[styles.fontsize10, { color: '#ccc' }]}>登陆/注册即视为同意用户服务协议</Text>
+                        </View>
+                    </TouchableWithoutFeedback>
+                </View>
 
             <View style={[styles.flex_row_columncenter,{height:50}]}>
                 <View style={{flex:1,backgroundColor:'gray',height:1,marginLeft:10 ,opacity:0.1}}></View>
@@ -158,14 +191,23 @@ class Login extends Component {
                         />
                     </TouchableWithoutFeedback>
                 </View>
-                <View style={{flex:0.25,alignItems:'center'}}>
-                    <Image 
-                        source={require('../constants/images/qq.png')}
-                        style={{width:35,height:35}}
-                    />
+                <View style={{ flexDirection: 'row' }}>
+                    <View style={{ flex: 0.25, alignItems: 'center' }}>
+                        <Image
+                            source={require('../constants/images/微信.png')}
+                            style={{ width: 35, height: 35 }}
+                        />
+                    </View>
+                    <View style={{ flex: 0.25, alignItems: 'center' }}>
+                        <Image
+                            source={require('../constants/images/qq.png')}
+                            style={{ width: 35, height: 35 }}
+                        />
+                    </View>
                 </View>
             </View>
             </View>
+        </View>
         )
     }
 }

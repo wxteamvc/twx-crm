@@ -12,8 +12,8 @@ import {
     TouchableOpacity
 } from 'react-native';
 import { connect } from 'react-redux';
-import { NavigationBar, ListRow,Button } from 'teaset';
-import { Card, WhiteSpace, Grid, List , } from 'antd-mobile';
+import { NavigationBar, ListRow, Button } from 'teaset';
+import { Card, WhiteSpace, Grid, List, } from 'antd-mobile';
 import { PullView } from 'react-native-pull';
 import { initPersonal } from '../actions/personalAction';
 import Loading from '../components/loading';
@@ -98,7 +98,7 @@ class Personal extends Component {
     }
 
     render() {
-        let { initData, userInfo,navigation } = this.props;
+        let { initData, userInfo, navigation } = this.props;
         const rightView = (
             <NavigationBar.IconButton
                 onPress={() => {
@@ -120,11 +120,11 @@ class Personal extends Component {
             </Card>
         );
         const data = [
-            { name: '订单管理' },
-            { name: '客户管理' },
-            { name: '还款管理' },
-            { name: '过账管理' },
-            { name: '通知管理' },
+            { name: '订单管理', gourl: 'Orders' },
+            { name: '客户管理', gourl: 'Orders' },
+            { name: '还款管理', gourl: 'Repay' },
+            { name: '过账管理', gourl: 'Orders' },
+            { name: '通知管理', gourl: 'Orders' },
         ];
         const listData = [
             [
@@ -141,12 +141,12 @@ class Personal extends Component {
             ]
 
         ];
-        const userCard =  userInfo.isLogin ? 
-        <Button title='个人信息' type='secondary' onPress={() => navigation.navigate('SetUserInfo')} />
-        :<Button title='登陆' type='secondary' onPress={() => navigation.navigate('Login')} />;
-        const avatar = userInfo.isLogin ? 
-        { uri: userInfo.info.avatar_path } 
-        : require('../constants/images/头像.png');
+        const userCard = userInfo.isLogin ?
+            <Button title='个人信息' type='secondary' onPress={() => navigation.navigate('SetUserInfo')} />
+            : <Button title='登陆' type='secondary' onPress={() => navigation.navigate('Login')} />;
+        const avatar = userInfo.isLogin ?
+            { uri: userInfo.info.avatar_path }
+            : require('../constants/images/头像.png');
         return (
             <View style={{ flex: 1 }}>
                 <View style={{ height: 66, backgroundColor: "#337AB7", padding: 0, margin: 0 }}>
@@ -161,26 +161,26 @@ class Personal extends Component {
                     onPullRelease={this.onPullRelease}
                     topIndicatorRender={this.topIndicatorRender}
                     topIndicatorHeight={60}
-                    isPullEnd={userInfo.status == 'done'?true:false}
+                    isPullEnd={userInfo.status == 'done' ? true : false}
                 >
-                <Card full style={{ borderWidth: 0, backgroundColor: "#337AB7"}}>
-                    <Card.Header
-                        title={null}
-                        thumb={
-                        <Image
-                            source={avatar}
-                            style={{ height: 70, width: 70,borderRadius:35 }}
-                        />}
-                        extra={userCard}
-                    />
-                </Card>
-                {userInfo.isLogin && userInfo.info.rid <= 2 ? headerBottom :false}
+                    <Card full style={{ borderWidth: 0, backgroundColor: "#337AB7" }}>
+                        <Card.Header
+                            title={null}
+                            thumb={
+                                <Image
+                                    source={avatar}
+                                    style={{ height: 70, width: 70, borderRadius: 35 }}
+                                />}
+                            extra={userCard}
+                        />
+                    </Card>
+                    {userInfo.isLogin && userInfo.info.rid <= 2 ? headerBottom : false}
                     <WhiteSpace size="lg" />
                     <View style={{ backgroundColor: "#fff" }}>
                         <Grid data={data}
                             columnNum={3}
                             renderItem={dataItem => (
-                                <TouchableOpacity onPress={()=>this.props.navigation.navigate('Orders')}>
+                                <TouchableOpacity onPress={() => this.props.navigation.navigate(dataItem.gourl)}>
                                     <Text>{dataItem.name}</Text>
                                 </TouchableOpacity>
 

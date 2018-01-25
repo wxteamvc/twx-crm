@@ -70,7 +70,7 @@ export default class OrderListPage extends Component {
         const { data } = this.props
         return (
             <View style={{ flex: 1 }}>
-                <WhiteSpace size={'sm'} />
+                <View style={{backgroundColor:'#E9E9EF',height:5}}></View>
                 <FlatList
                     data={this.props.data}
                     keyExtractor={(item, index) => index}

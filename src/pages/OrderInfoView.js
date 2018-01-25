@@ -11,7 +11,7 @@ import {
     Easing
 } from 'react-native';
 import { connect } from 'react-redux';
-import { List, InputItem, Toast, WhiteSpace, Button, Picker, Icon } from 'antd-mobile';
+import { List, InputItem, Toast, WhiteSpace, Button, Picker, Icon, Tabs } from 'antd-mobile';
 import { styles } from '../constants/styles';
 import { ScreenHeight, StatusBarHeight, ScreenWidth } from '../constants/global';
 import OrderInfo from '../components/orderInfo';
@@ -25,96 +25,35 @@ class OrderInfoView extends Component {
         super(props)
         this.state = {
             type: 'info',
-            x1: new Animated.Value(1),
-            x2: new Animated.Value(1),
-            opacity1: new Animated.Value(1),
-            opacity2: new Animated.Value(1),
+            opacity: new Animated.Value(1),
         }
     }
 
     startAnimation = (type) => {
-        if (type != this.state.type) {
-            const speed = 300;
-            this.state.x1.setValue(1);
-            this.state.x2.setValue(1);
-            this.state.opacity1.setValue(1);
-            this.state.opacity2.setValue(1);
-            // Animated.sequence([
-            Animated.parallel([
-                Animated.timing(
-                    this.state.x1,
-                    {
-                        toValue: 2,
-                        duration: speed,
-                        easing: Easing.out(Easing.quad),
-                    }
-                ),
-                Animated.timing(
-                    this.state.x2,
-                    {
-                        toValue: 0,
-                        duration: speed,
-                        easing: Easing.out(Easing.quad),
-                    }
-                ),
-                Animated.timing(
-                    this.state.opacity1,
-                    {
-                        toValue: 0,
-                        duration: speed,
-                        easing: Easing.out(Easing.quad),
-                    }
-                ),
-                Animated.timing(
-                    this.state.opacity2,
-                    {
-                        toValue: 0,
-                        duration: speed,
-                        easing: Easing.out(Easing.quad),
-                    }
-                ),
-            ]).start(() => {
-                this.setState({ type: type })
-                this.state.x1.setValue(0);
-                this.state.x2.setValue(2);
-                this.state.opacity2.setValue(0.3);
-                Animated.parallel([
-                    Animated.timing(
-                        this.state.x1,
-                        {
-                            toValue: 1,
-                            duration: speed,
-                            easing: Easing.out(Easing.quad),
-                        }
-                    ),
-                    Animated.spring(
-                        this.state.x2,
-                        {
-                            toValue: 1,
-                            friction: 5,// 摩擦力，默认为7.
-                            tension: 40,// 张力，默认40。
-                        }
-                    ),
-                    Animated.timing(
-                        this.state.opacity1,
-                        {
-                            toValue: 1,
-                            duration: speed,
-                            easing: Easing.out(Easing.quad),
-                        }
-                    ),
-                    Animated.timing(
-                        this.state.opacity2,
-                        {
-                            toValue: 1,
-                            duration: speed,
-                            easing: Easing.out(Easing.quad),
-                        }
-                    )
-                ]).start()
-            })
-            // ]).start();
-        }
+        this.setState({ type: type });
+        // if (type != this.state.type) {
+        //     const speed = 300;
+        //     this.state.opacity.setValue(1);
+        //     Animated.timing(
+        //         this.state.opacity,
+        //         {
+        //             toValue: 0,
+        //             duration: speed,
+        //             easing: Easing.out(Easing.quad),
+        //         }
+        //     ).start(() => {
+        //         this.setState({ type: type });
+        //         this.state.opacity.setValue(0);
+        //         Animated.timing(
+        //             this.state.opacity,
+        //             {
+        //                 toValue:1,
+        //                 duration: speed,
+        //                 easing: Easing.out(Easing.quad),
+        //             }
+        //         ).start()
+        //     })
+        // }
     }
 
 
@@ -139,8 +78,8 @@ class OrderInfoView extends Component {
                     stickyHeaderHeight={50}
                     parallaxHeaderHeight={120}
                     backgroundSpeed={10}
-                    backgroundColor={'#4B5DA2'}
-                    contentBackgroundColor={'#F6F8FA'}
+                    backgroundColor={'#000'}
+                    contentBackgroundColor={'#E9E9EF'}
                     showsVerticalScrollIndicator={false}
                     renderForeground={
                         () =>
@@ -181,51 +120,30 @@ class OrderInfoView extends Component {
                         </View>
                     )}
                 >
-                    <View style={[styles.flex_row_center, { marginTop: 10 }]}>
+                    <View style={[styles.flex_row_center, { margin: 10 }]}>
                         <TouchableOpacity
                             onPress={() => {
-                                // this.setState({ type: 'info' });
                                 this.startAnimation('info')
                             }}
                             activeOpacity={1}
-                            style={[styles.OrderInfo_tab_btn, styles.OrderInfo_tab_Lbtn, { backgroundColor: type == 'info' ? '#2A3B61' : '#4B5DA2' }]} >
+                            style={[styles.OrderInfo_tab_btn, styles.OrderInfo_tab_Lbtn,styles.flex_center, { backgroundColor: type == 'info' ? '#2A3B61' : '#4B5DA2' }]} >
                             <Text style={[styles.fontsize12, { color: '#fff' }]}>订单详情</Text>
                         </TouchableOpacity>
                         <TouchableOpacity
                             onPress={() => {
-                                // this.setState({ type: 'repay' });
                                 this.startAnimation('repay')
                             }}
                             activeOpacity={1}
-                            style={[styles.OrderInfo_tab_btn, styles.OrderInfo_tab_Rbtn, { backgroundColor: type == 'repay' ? '#2A3B61' : '#4B5DA2' }]}>
+                            style={[styles.OrderInfo_tab_btn, styles.OrderInfo_tab_Rbtn,styles.flex_center, { backgroundColor: type == 'repay' ? '#2A3B61' : '#4B5DA2' }]}>
                             <Text style={[styles.fontsize12, { color: '#fff' }]}>还款详情</Text>
                         </TouchableOpacity>
                     </View>
-                    <Animated.View
-                        style={[styles.OrderInfo_content_header,
-                        {
-                            transform: [
-                                {
-                                    translateX: this.state.x1.interpolate({
-                                        inputRange: [0, 2],
-                                        outputRange: [-200, 200]
-                                    })
-                                }, // x轴移动
-                            ],
-                            opacity: this.state.opacity1
-                        }]}>
-                    </Animated.View>
+                    {/* <View
+                        style={[styles.OrderInfo_content_header]}>
+                    </View> */}
                     <Animated.View style={[styles.OrderInfo_content_container,
                     {
-                        transform: [
-                            {
-                                translateX: this.state.x2.interpolate({
-                                    inputRange: [0, 2],
-                                    outputRange: [-200, 200]
-                                })
-                            }, // x轴移动
-                        ],
-                        opacity: this.state.opacity2
+                        opacity: this.state.opacity
                     }
 
                     ]}>
@@ -235,6 +153,8 @@ class OrderInfoView extends Component {
             </View>
         )
     }
+
+
 }
 
 
