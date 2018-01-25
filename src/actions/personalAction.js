@@ -3,6 +3,79 @@ import * as Urls from "../constants/urls";
 import Util from "../constants/util";
 import { Toast } from 'teaset';
 
+export function bindWechat(data){
+    return (dispatch)=>{
+        Util.post(Urls.Bind_wechat+'/'+data,{},
+            (respJson)=>{
+                if (respJson.code == 1){
+                    dispatch({
+                        type:Types.Change_User_Info,
+                        data:respJson.data
+                    })
+                    Toast.success(respJson.msg);
+                }else{
+                    Toast.message(respJson.msg);
+                }
+            },
+            (error)=>{
+                Toast.message(error.message);
+            }
+        )
+    }
+}
+
+export function unbindWeChat(data){
+    return (dispatch)=>{
+        Util.post(Urls.Unbind_wechat,{},
+            (respJson)=>{
+                if (respJson.code == 1){
+                    dispatch({
+                        type:Types.Change_User_Info,
+                        data:respJson.data
+                    })
+                    Toast.success(respJson.msg);
+                }else{
+                    Toast.message(respJson.msg);
+                }
+            },
+            (error)=>{
+                Toast.message(error.message);
+            }
+        )
+    }
+}
+
+export function loginWithWechat(data,type=1){
+    return (dispatch)=>{
+        Util.post(Urls.Login_wechat_url+'/'+data,{},
+            (respJson)=>{
+                if (respJson.code == 1){
+                    dispatch({
+                        type:Types.Login_SUCCESS,
+                        data:respJson.data
+                    })
+                    dispatch({
+                        type:Types.Change_TOKEN,
+                        data:respJson.data.token
+                    })
+                }else{
+                    Toast.message(respJson.msg);
+                    dispatch({
+                        type:Types.Login_FAILED,
+                        data:respJson.msg
+                    })
+                }
+            },
+            (error)=>{
+                console.log(error)
+                dispatch({
+                    type:Types.Login_FAILED,
+                })
+            }
+        )
+    }
+}
+
 export function login(data,type=1){
     return (dispatch)=>{
         Util.post(Urls.Login_url,data,
@@ -17,7 +90,7 @@ export function login(data,type=1){
                         data:respJson.data.token
                     })
                 }else{
-                    Toast.message(respJson.msg);
+                    Toast.fail(respJson.msg);
                     dispatch({
                         type:Types.Login_FAILED,
                         data:respJson.msg
@@ -88,10 +161,10 @@ export function initPersonal(){
                         type:Types.Change_TOKEN,
                         data:''
                     })
+                    Toast.fail(respJson.msg);
                 }
             },
             (error)=>{
-                console.log(error)
                 dispatch({
                     type:Types.UserInfo_FAILED,
                 })
@@ -99,6 +172,7 @@ export function initPersonal(){
                     type:Types.Change_TOKEN,
                     data:''
                 })
+                Toast.fail(error.message);
             }
         )
     }

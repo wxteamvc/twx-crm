@@ -5,6 +5,9 @@ export const DOMAIN = 'http://www.wxdevelop.com';
 export const BASIC_URL = DOMAIN + "/laravel-cms/public/api";
 //登陆
 export const Login_url = BASIC_URL + '/login';
+//微信登陆
+export const Login_wechat_url = BASIC_URL + '/wxLogin';
+
 //获取用户信息
 export const UserInfo_url = BASIC_URL + '/getUserInfo';
 
@@ -20,3 +23,15 @@ export const CompanyList_url = BASIC_URL + '/getCompanyList';
 
 //上传头像
 export const Upload_avatar = BASIC_URL + '/upload/avatar';
+
+//绑定微信
+export const Bind_wechat = BASIC_URL + '/bindWeChat';
+//绑定微信
+export const Unbind_wechat = BASIC_URL + '/unbindWeChat';
+//获取验证码
+export const Get_captcha = BASIC_URL + '/getCaptcha';
+//绑定手机
+export const Bind_tel = BASIC_URL + '/bindTel';
+
+//提交反馈意见
+export const Submit_feed_back = BASIC_URL + '/submitFeedBack';

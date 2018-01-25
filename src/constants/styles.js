@@ -65,29 +65,29 @@ export const styles = StyleSheet.create({
         fontSize: 8 * fontSizeScaler, color: '#ccc'
     },
     //正常模式标题背景颜色
-    title_bgc_light: {
-        backgroundColor: ''
-    },
-    //夜间模式标题背景颜色
-    title_bgc_dark: {
-        backgroundColor: ''
-    },
-    //正常模式内容背景颜色
-    content_bgc_light: {
-        backgroundColor: ''
-    },
-    //夜间模式内容背景颜色
-    content_bgc_dark: {
-        backgroundColor: ''
-    },
-    //正常模式文字颜色
-    text_light: {
-        color: ''
-    },
-    //夜间模式文字颜色
-    text_dark: {
-        color: ''
-    },
+    // title_bgc_light: {
+    //     backgroundColor: ''
+    // },
+    // //夜间模式标题背景颜色
+    // title_bgc_dark: {
+    //     backgroundColor: ''
+    // },
+    // //正常模式内容背景颜色
+    // content_bgc_light: {
+    //     backgroundColor: ''
+    // },
+    // //夜间模式内容背景颜色
+    // content_bgc_dark: {
+    //     backgroundColor: ''
+    // },
+    // //正常模式文字颜色
+    // text_light: {
+    //     color: ''
+    // },
+    // //夜间模式文字颜色
+    // text_dark: {
+    //     color: ''
+    // },
 
     //````````````````````````首页````````````````````````````````
     //首页顶部

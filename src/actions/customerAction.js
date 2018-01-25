@@ -1,6 +1,8 @@
 import * as Types from "./actionTypes";
 import * as Urls from "../constants/urls";
 import Util from "../constants/util";
+import { Toast } from 'teaset';
+
 
 export function getCustomerList(){
     return (dispatch) =>{
@@ -19,13 +21,14 @@ export function getCustomerList(){
                         type:Types.CustomerList_SUCCESS,
                         data:respJson.data
                      })
+                     Toast.fail(respJson.msg);
                 }
             },
             (error)=>{
-                console.log(error)
                 dispatch({
                     type:Types.CustomerList_FAILED,
                 })
+                Toast.fail(error.msg);
             }
         )
     }
@@ -48,13 +51,14 @@ export function getCustomerInfo(customerId){
                         type:Types.CustomerInfo_SUCCESS,
                         data:respJson.data
                      })
+                     Toast.fail(respJson.msg);
                 }
             },
             (error)=>{
-                console.log(error)
                 dispatch({
                     type:Types.CustomerInfo_FAILED,
                 })
+                Toast.fail(error.msg);
             }
         )
     }

@@ -12,7 +12,6 @@ import { List, InputItem, Toast, WhiteSpace, Button, Picker } from 'antd-mobile'
 import { createForm } from 'rc-form';
 import { styles } from '../constants/styles';
 import { ApplicationForm } from '../constants/form';
-import { Akira } from 'react-native-textinput-effects';
 import { ScreenHeight, StatusBarHeight, ScreenWidth } from '../constants/global';
 
 

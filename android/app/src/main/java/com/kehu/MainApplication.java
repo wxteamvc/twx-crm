@@ -2,6 +2,7 @@ package com.kehu;
 
 import android.app.Application;
 
+import com.theweflex.react.WeChatPackage;
 import cn.reactnative.httpcache.HttpCachePackage;
 import com.facebook.react.ReactApplication;
 import com.reactnative.ivpusic.imagepicker.PickerPackage;
@@ -29,7 +30,8 @@ public class MainApplication extends Application implements ReactApplication {
             new PickerPackage(),
             new RNDeviceInfo(),
             new ImagePickerPackage(),
-            new HttpCachePackage()
+            new HttpCachePackage(),
+            new WeChatPackage()  
       );
     }
 

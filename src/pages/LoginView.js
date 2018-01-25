@@ -3,16 +3,18 @@ import { View, Text,Image,TouchableWithoutFeedback,StatusBar } from 'react-nativ
 import { connect } from 'react-redux';
 import { styles } from '../constants/styles'
 import { ScreenWidth } from '../constants/global'
-import { Isao } from 'react-native-textinput-effects';
-import { NavigationBar } from 'teaset';
+import { TextField } from 'react-native-material-textfield';
+import { NavigationBar,Toast } from 'teaset';
 import { Button } from 'antd-mobile';
-import { login } from '../actions/personalAction';
+import { login,loginWithWechat } from '../actions/personalAction';
 import { NavigationActions } from 'react-navigation';
+import * as WeChat from 'react-native-wechat';
+
 
 class Login extends Component {
     constructor(props){
         super(props);
-        state={
+        this.state={
             uname:'',
             upassword:''
         }
@@ -22,19 +24,47 @@ class Login extends Component {
         //这边写简单的验证
         this.props.dispatch(login(this.state))
     }
-
+    loginWithWechat = ()=>{
+        WeChat.isWXAppInstalled()
+        .then(( isInstalled ) => {
+            if (isInstalled){
+                let scope = 'snsapi_userinfo';
+                let state = 'wechat_sdk_demo';
+                WeChat.sendAuthRequest(scope,state)
+                .then(responseCode =>{
+                    if (responseCode.code){
+                        this.props.dispatch(loginWithWechat(responseCode.code));
+                    }else{
+                        Toast.fail('登录授权发生错误')
+                    }
+                })
+                .catch(err=>{
+                    Toast.fail('登录授权发生错误:'+ err.message)
+                })
+            }else{
+                Toast.fail('没有安装微信软件，请您安装微信之后再试')
+            }
+        });
+    }
+    componentDidMount() {
+        WeChat.registerApp('wxc32a13394d875338');
+    }
     componentWillUpdate(nextProps,nextState) {
         const {userInfo,navigation } = this.props;
         if (userInfo.isLogin !== nextProps.userInfo.isLogin && nextProps.userInfo.isLogin == true){
-            if(navigation.state.params.jumpwhere){  
-                const resetAction = NavigationActions.reset({
-                            index: 1,
-                            actions: [
-                                NavigationActions.navigate({ routeName:'HomeTab'}),  
-                                NavigationActions.navigate({ routeName:navigation.state.params.jumpwhere}),  
-                            ]
-                        })
-                        this.props.navigation.dispatch(resetAction);
+            if(navigation.state.params){  
+                if (navigation.state.params.jumpwhere){
+                    const resetAction = NavigationActions.reset({
+                        index: 1,
+                        actions: [
+                            NavigationActions.navigate({ routeName:'HomeTab'}),  
+                            NavigationActions.navigate({ routeName:navigation.state.params.jumpwhere}),  
+                        ]
+                    })
+                    this.props.navigation.dispatch(resetAction);
+                }else{
+                    navigation.goBack()
+                }
             }else{
                 navigation.goBack()
             }
@@ -58,30 +88,16 @@ class Login extends Component {
             <View
                 style={{width:ScreenWidth-40,marginTop:10}}
             >
-                <Isao
-                label={'账号'}
-                // this is applied as active border and label color
-                activeColor={'#40a9ff'}
-                // this is applied as passive border and label color
-                passiveColor={'#dadada'}
-                onChangeText={(text) => {
-                    this.setState({
-                        uname:text
-                    });
-                }}
+                <TextField
+                    label='账号'
+                    value={this.state.uname}
+                    onChangeText={ (value) => this.setState({ uname:value }) }
                 />
-                <Isao
-                label={'密码'}
-                // this is applied as active border and label color
-                activeColor={'#40a9ff'}
-                // this is applied as passive border and label color
-                passiveColor={'#dadada'}
-                secureTextEntry={true}
-                onChangeText={(text) => {
-                    this.setState({
-                        upassword:text
-                    });
-                }}
+                <TextField
+                    secureTextEntry={true}
+                    label='密码'
+                    value={this.state.upassword}
+                    onChangeText={ (value) => this.setState({ upassword:value}) }
                 />
             </View>
             <View
@@ -133,10 +149,14 @@ class Login extends Component {
             </View>
             <View style={{ flexDirection: 'row'}}>
                 <View style={{flex:0.25,alignItems:'center'}}>
-                    <Image 
-                        source={require('../constants/images/微信.png')}
-                        style={{width:35,height:35}}
-                    />
+                    <TouchableWithoutFeedback
+                        onPress={this.loginWithWechat}
+                    >
+                        <Image 
+                            source={require('../constants/images/微信.png')}
+                            style={{width:35,height:35}}
+                        />
+                    </TouchableWithoutFeedback>
                 </View>
                 <View style={{flex:0.25,alignItems:'center'}}>
                     <Image 

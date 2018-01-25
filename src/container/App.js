@@ -15,6 +15,9 @@ import Agreement from '../pages/AgreementView';
 import GiftedFormModal from '../pages/GiftedFormModal';
 import OrderInfo from '../pages/OrderInfoView';
 import OrdersView from '../pages/OrdersView';
+import BindTel from '../pages/BindTelView';
+import FeedBack from '../pages/FeedBackView';
+import ChangePassword from '../pages/ChangePasswordView';
 
 const App = StackNavigator({
     Lead: {
@@ -108,6 +111,24 @@ const App = StackNavigator({
     }, 
     Modal: { 
         screen: GiftedFormModal,
+        navigationOptions: ({ navigation }) => ({
+            header: null
+        })
+    },
+    BindTel:{
+        screen: BindTel,
+        navigationOptions: ({ navigation }) => ({
+            header: null
+        })
+    },
+    ChangePassword:{
+        screen: ChangePassword,
+        navigationOptions: ({ navigation }) => ({
+            header: null
+        })
+    },
+    FeedBack:{
+        screen: FeedBack,
         navigationOptions: ({ navigation }) => ({
             header: null
         })

@@ -10,6 +10,11 @@ const initialState = {
 
 export function personalReducer(state = initialState, action) {
     switch (action.type) {
+        case Types.Change_User_Info:
+            return {
+                ...state,
+                info:action.data
+            }
         case Types.Logout:
             global.token = '';
             return initialState

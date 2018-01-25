@@ -57,3 +57,6 @@ export const GetGeolocation='GetGeolocation';
 //上传成功
 export const Upload_Avatar_SUCCESS = 'Upload_Avatar_SUCCESS';
 
+//直接修改用户信息
+export const Change_User_Info = 'Change_User_Info';
+

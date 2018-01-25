@@ -2,20 +2,25 @@ import React, { Component } from 'react';
 import { View, Text,Image,StatusBar } from 'react-native';
 import { connect } from 'react-redux';
 import { styles } from '../constants/styles'
-import { Button } from 'antd-mobile';
-import { logout,uploadAvatar } from '../actions/personalAction';
+import { Button, Modal } from 'antd-mobile';
+import { logout,uploadAvatar,bindWechat,unbindWeChat } from '../actions/personalAction';
 import { GiftedForm, GiftedFormManager } from 'react-native-gifted-form';
 import { NavigationBar, ListRow,ActionSheet } from 'teaset';
 import ImagePicker from 'react-native-image-crop-picker';
+import * as WeChat from 'react-native-wechat';
 import moment from 'moment';
 import momentLocale from 'moment/locale/zh-cn';
 moment.updateLocale('zh-cn',momentLocale);
+const antdAlert = Modal.alert;
+
 
 class SetUserInfo extends Component {
-    constructor(props){
-        super(props);
 
+
+    componentDidMount() {
+        WeChat.registerApp('wxc32a13394d875338');
     }
+
     logout = ()=>{
         const { dispatch,navigation } = this.props;
         navigation.goBack();
@@ -54,6 +59,42 @@ class SetUserInfo extends Component {
         this.props.dispatch(uploadAvatar({'avatar':file}));
        });
      }
+
+     openConfirm = ({title,msg,callBack})=>{
+        antdAlert(title, msg , [
+            { text: '取消'},
+            { text: '解除', onPress: callBack },
+          ])
+     }
+     unbindWechat = ()=>{
+         this.props.dispatch(unbindWeChat());
+     }
+     bindWechat = ()=>{
+        if (this.props.userInfo.info.user_wechat_id !== null){
+           this.openConfirm({title:'解除微信绑定','msg':'解除绑定后将无法使用微信登陆，确认要这么做吗？',callBack:this.unbindWechat});
+        }else{
+            WeChat.isWXAppInstalled()
+            .then(( isInstalled ) => {
+                if (isInstalled){
+                    let scope = 'snsapi_userinfo';
+                    let state = 'wechat_sdk_demo';
+                    WeChat.sendAuthRequest(scope,state)
+                    .then(responseCode =>{
+                        if (responseCode.code){
+                            this.props.dispatch(bindWechat(responseCode.code));
+                        }else{
+                            Toast.fail('登录授权发生错误')
+                        }
+                    })
+                    .catch(err=>{
+                        Toast.fail('登录授权发生错误:'+ err.message)
+                    })
+                }else{
+                    Toast.fail('没有安装微信软件，请您安装微信之后再试')
+                }
+            });
+        }
+     }
     render() {
         const {userInfo,navigation} = this.props;
         if (!userInfo.isLogin) return <View></View>
@@ -64,7 +105,7 @@ class SetUserInfo extends Component {
                 backgroundColor='#40a9ff'
                 />
                 <View>
-                    <NavigationBar title='个人信息' leftView={<NavigationBar.BackButton title='Back' onPress={()=>{navigation.goBack()}}/>} />
+                    <NavigationBar title='个人信息' leftView={<NavigationBar.BackButton onPress={()=>{navigation.goBack()}}/>} />
                 </View>
                 <View style={{flex:1,marginTop:68}}>
                 <GiftedForm
@@ -102,16 +143,13 @@ class SetUserInfo extends Component {
                     clearButtonMode='while-editing'
                 />
                 </GiftedForm.ModalWidget>
-                <GiftedForm.ModalWidget
-                    title='电话'
-                    displayValue='tel'
-                >
-                <GiftedForm.SeparatorWidget />
-                <GiftedForm.TextInputWidget
-                    name='tel' // mandatory
-                    clearButtonMode='while-editing'
+                <GiftedForm.RowValueWidget  
+                    title='手机'
+                    value={userInfo.info.tel}
+                    onPress={()=>{
+                        navigation.navigate('BindTel');
+                    }}
                 />
-                </GiftedForm.ModalWidget>
                 <GiftedForm.ModalWidget
                     title='性别'
                     displayValue='sex'
@@ -156,7 +194,8 @@ class SetUserInfo extends Component {
                 <GiftedForm.RowValueWidget  
                     image={require('../constants/images/微信.png')}
                     title='绑定微信'
-                    value="未绑定"
+                    value={userInfo.info.user_wechat_id == null ? "未绑定" : "已绑定"}
+                    onPress={this.bindWechat}
                 />
                 <GiftedForm.RowValueWidget  
                     image={require('../constants/images/qq.png')}
@@ -164,14 +203,17 @@ class SetUserInfo extends Component {
                     value="绑定"
                 />
                 <GiftedForm.RowValueWidget  
-                    image={require('../constants/images/支付宝.png')}
-                    title='绑定支付宝'
+                    image={require('../constants/images/微博.png')}
+                    title='绑定微博'
                     value="未绑定"
                 />
                 <GiftedForm.SeparatorWidget />
                 <GiftedForm.RowWidget  
                     image={require('../constants/images/密码.png')}
                     title='重置密码'
+                    onPress={()=>{
+                        navigation.navigate('ChangePassword');
+                    }}
                 />
                 <GiftedForm.SeparatorWidget />
                 <Button 
@@ -182,7 +224,6 @@ class SetUserInfo extends Component {
                 
                 </View>
             </View>
-
         )
     }
 }

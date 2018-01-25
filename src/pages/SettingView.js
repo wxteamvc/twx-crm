@@ -1,9 +1,12 @@
 import React, { Component } from 'react';
-import { View, Text,StatusBar } from 'react-native';
+import { View, Text,StatusBar,ScrollView } from 'react-native';
 import { connect } from 'react-redux';
 import ToggleSwitch from 'toggle-switch-react-native';
 import { NavigationBar,ListRow,Toast} from 'teaset';
 import * as CacheManager from 'react-native-http-cache';
+import { List } from 'antd-mobile';
+
+
 
 class Setting extends Component {
     constructor(props){
@@ -40,7 +43,6 @@ class Setting extends Component {
     render() {
         const { navigation,localConfigReducer,styles} = this.props;
         const { setting } = localConfigReducer;
-        console.log(localConfigReducer)
         return (
             <View style={{flex:1}}>
                 <StatusBar
@@ -48,15 +50,24 @@ class Setting extends Component {
                 backgroundColor='#40a9ff'
                 />
                 <View>
-                    <NavigationBar title='设置' leftView={<NavigationBar.BackButton title='Back' onPress={()=>{navigation.goBack()}}/>} />
+                    <NavigationBar title='设置' leftView={<NavigationBar.BackButton onPress={()=>{navigation.goBack()}}/>} 
+                    rightView={
+                        <NavigationBar.IconButton icon={require('../constants/images/分享.png')} />
+                    }
+                    />
                 </View>
-                <View style={{flex:1,marginTop:68}}>
+                <ScrollView style={{flex:1,marginTop:68}}>
+                <List renderHeader={() => '偏好设置'}>
+                    <ListRow title='字体大小' 
+                        icon={require('../constants/images/setting/字体大小.png')}
+                        onPress={()=>{}}
+                    />
                     <ListRow title='夜间模式' 
+                        icon={require('../constants/images/setting/夜间模式.png')}
                         detail={
                             <ToggleSwitch
                             isOn={this.isOn}
                             onColor='#4CD662'
-                            size='small'
                             onToggle={(isOn) => {
                                 this.props.dispatch({
                                     type:'changeSetting',
@@ -73,17 +84,50 @@ class Setting extends Component {
                           />
                         } 
                     />
+                    <ListRow title='推送设置' 
+                        icon={require('../constants/images/setting/推送.png')}
+                        detail={
+                            <ToggleSwitch
+                            isOn={this.isOn}
+                            onColor='#4CD662'
+                            onToggle={(isOn) => {
+                              
+                            }}
+                          />
+                        } 
+                    />
+                    <ListRow title='移动网络不下载图片' 
+                        icon={require('../constants/images/setting/无图模式.png')}
+                        detail={
+                            <ToggleSwitch
+                            isOn={this.isOn}
+                            onColor='#4CD662'
+                            onToggle={(isOn) => {
+                              
+                            }}
+                          />
+                        } 
+                    />
+                    
+                </List>
+                <List renderHeader={() => '分享'}>
+                    <ListRow title='分享应用给好友' 
+                        onPress={()=>{}}
+                    />
+                </List>
+                <List renderHeader={() => '通用设置'}>
                     <ListRow title='清理缓存' 
                     detail={<Text>{setting.cacheSize}</Text>} 
                     onPress={this.clearCache}
                     />
                     <ListRow title='意见反馈' 
-                    onPress={()=>{}}
+                    onPress={()=>{navigation.navigate('FeedBack')}}
                     />
                     <ListRow title='关于我们' 
                     onPress={()=>{}}
                     />
-                </View>
+                </List>
+                </ScrollView>
             </View>
 
         )
