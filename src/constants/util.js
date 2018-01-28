@@ -5,8 +5,6 @@
 
 'use strict';
 
-import {NetInfo} from 'react-native';
-
 
 let Util = {
     /**
@@ -17,7 +15,9 @@ let Util = {
      */
     get: (url, successCallback, failCallback) => {
         fetch(url)
-        .then((response) => response.json())
+        .then((response) => {
+            console.log(response)
+            return response.json()})
         .then((responseJson) => {
             successCallback(responseJson);
         })
@@ -61,7 +61,9 @@ let Util = {
             // body: JSON.stringify(data)
         };
         fetch(url, fetchOptions)
-        .then((response) => response.json())
+        .then((response) => {
+            // console.log(response)
+            return response.json()})
         .then((responseJson) => {
             successCallback(responseJson);
         })

@@ -47,7 +47,8 @@ export function unbindWeChat(data){
 
 export function loginWithWechat(data,type=1){
     return (dispatch)=>{
-        Util.post(Urls.Login_wechat_url+'/'+data,{},
+        let register_id = global.registrationId ? global.registrationId : null;
+        Util.post(Urls.Login_wechat_url+'/'+data,{register_id},
             (respJson)=>{
                 if (respJson.code == 1){
                     dispatch({
@@ -67,10 +68,10 @@ export function loginWithWechat(data,type=1){
                 }
             },
             (error)=>{
-                console.log(error)
                 dispatch({
                     type:Types.Login_FAILED,
                 })
+                Toast.message(error.message);
             }
         )
     }
@@ -78,7 +79,8 @@ export function loginWithWechat(data,type=1){
 
 export function login(data,type=1){
     return (dispatch)=>{
-        Util.post(Urls.Login_url,data,
+        let register_id = global.registrationId ? global.registrationId : null;
+        Util.post(Urls.Login_url,{...data,register_id},
             (respJson)=>{
                 if (respJson.code == 1){
                     dispatch({
@@ -90,7 +92,7 @@ export function login(data,type=1){
                         data:respJson.data.token
                     })
                 }else{
-                    Toast.fail(respJson.msg);
+                    Toast.message(respJson.msg);
                     dispatch({
                         type:Types.Login_FAILED,
                         data:respJson.msg
@@ -98,10 +100,10 @@ export function login(data,type=1){
                 }
             },
             (error)=>{
-                console.log(error)
                 dispatch({
                     type:Types.Login_FAILED,
                 })
+                Toast.message(error.message);
             }
         )
     }
@@ -148,6 +150,7 @@ export function initPersonal(){
         })
         Util.post(Urls.UserInfo_url,{},
             (respJson) =>{
+                console.log(respJson)
                 if (respJson.code == 1){
                     dispatch({
                         type:Types.UserInfo_SUCCESS,

@@ -1,24 +1,23 @@
-import * as Types from "./actionTypes";
+import * as Types from './actionTypes';
 import * as Urls from "../constants/urls";
 import Util from "../constants/util";
 import { Toast } from 'teaset';
 
-
-export function getCustomerList(){
+export function getFormOptions(){
     return (dispatch) =>{
         dispatch({
-            type:Types.CustomerList_BEGIN
+            type:Types.Get_Task_Form_BEGIN
         })
-        Util.post(Urls.CustomerList_url,{},
-            (respJson) =>{
+        Util.post(Urls.Get_task_form_options,{},
+             (respJson) =>{
                 if (respJson.code == 1){
                     dispatch({
-                        type:Types.CustomerList_SUCCESS,
+                        type:Types.Get_Task_Form_SUCCESS,
                         data:respJson.data
                     })
                 }else{
                     dispatch({
-                        type:Types.CustomerList_SUCCESS,
+                        type:Types.Get_Task_Form_FAILED,
                         data:respJson.data
                      })
                      Toast.fail(respJson.msg);
@@ -26,29 +25,29 @@ export function getCustomerList(){
             },
             (error)=>{
                 dispatch({
-                    type:Types.CustomerList_FAILED,
+                    type:Types.Get_Task_Form_FAILED,
                 })
-                Toast.fail(error.message);
+                Toast.fail(error.msg);
             }
         )
     }
 }
 
-export function getCustomerInfo(customerId){
+export function getTaskList(){
     return (dispatch) =>{
         dispatch({
-            type:Types.CustomerInfo_BEGIN
+            type:Types.Get_Task_List_BEGIN
         })
-        Util.post(Urls.CustomerInfo_url+'/'+customerId,{},
-            (respJson) =>{
+        Util.post(Urls.TASKLIST_URL,{},
+             (respJson) =>{
                 if (respJson.code == 1){
                     dispatch({
-                        type:Types.CustomerInfo_SUCCESS,
+                        type:Types.Get_Task_List_SUCCESS,
                         data:respJson.data
                     })
                 }else{
                     dispatch({
-                        type:Types.CustomerInfo_SUCCESS,
+                        type:Types.Get_Task_List_FAILED,
                         data:respJson.data
                      })
                      Toast.fail(respJson.msg);
@@ -56,9 +55,9 @@ export function getCustomerInfo(customerId){
             },
             (error)=>{
                 dispatch({
-                    type:Types.CustomerInfo_FAILED,
+                    type:Types.Get_Task_List_FAILED,
                 })
-                Toast.fail(error.message);
+                Toast.fail(error.msg);
             }
         )
     }

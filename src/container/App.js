@@ -19,6 +19,10 @@ import BindTel from '../pages/BindTelView';
 import FeedBack from '../pages/FeedBackView';
 import ChangePassword from '../pages/ChangePasswordView';
 import RepayView from '../pages/RepayView';
+import Tasks from '../pages/TasksView';
+import AssignedTask from '../pages/AssignedTaskView';
+import TaskList from '../pages/TaskListView';
+import CompanyHome from '../pages/CompanyHomeView';
 
 const App = StackNavigator({
     Lead: {
@@ -138,6 +142,30 @@ const App = StackNavigator({
     },
     FeedBack:{
         screen: FeedBack,
+        navigationOptions: ({ navigation }) => ({
+            header: null
+        })
+    },
+    Tasks:{
+        screen: Tasks,
+        navigationOptions: ({ navigation }) => ({
+            header: null
+        })
+    },
+    TaskList:{
+        screen: TaskList,
+        navigationOptions: ({ navigation }) => ({
+            header: null
+        })
+    },
+    AssignedTask:{
+        screen: AssignedTask,
+        navigationOptions: ({ navigation }) => ({
+            header: null
+        })
+    },
+    CompanyHome:{
+        screen: CompanyHome,
         navigationOptions: ({ navigation }) => ({
             header: null
         })

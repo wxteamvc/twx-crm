@@ -80,7 +80,11 @@ class Login extends Component {
                 translucent={false}
                 backgroundColor='#40a9ff'
             />
-            <NavigationBar title='用户登陆' leftView={<NavigationBar.BackButton title='Back' onPress={()=>{navigation.goBack()}}/>} />
+            <NavigationBar title='用户登陆' 
+                leftView={<NavigationBar.BackButton 
+                onPress={()=>{navigation.goBack()}}/>} 
+                rightView={<Text style={{fontSize:18,color:'#fff',marginRight:10}}>注册</Text>}
+            />
             <View style={{width:ScreenWidth-40,marginTop:80}}>
                 <Text style={[styles.fontsize22,{fontWeight: '500'}]}>登 录</Text>
                 <Text style={[styles.fontsize12,{ color: '#ccc'}]}>使用此账号登录以使用更多服务</Text>
@@ -146,6 +150,7 @@ class Login extends Component {
                 <View style={{flex:1,alignItems: 'center',opacity:0.5}}><Text>快捷登陆</Text></View>
                 <View style={{flex:1,backgroundColor:'gray',height:1,marginRight:10,opacity:0.1}}></View>
             </View>
+            </View>
             <View style={{ flexDirection: 'row'}}>
                 <View style={{flex:0.25,alignItems:'center'}}>
                     <TouchableWithoutFeedback
@@ -157,22 +162,13 @@ class Login extends Component {
                         />
                     </TouchableWithoutFeedback>
                 </View>
-                <View style={{ flexDirection: 'row' }}>
-                    <View style={{ flex: 0.25, alignItems: 'center' }}>
-                        <Image
-                            source={require('../constants/images/微信.png')}
-                            style={{ width: 35, height: 35 }}
-                        />
-                    </View>
-                    <View style={{ flex: 0.25, alignItems: 'center' }}>
-                        <Image
-                            source={require('../constants/images/qq.png')}
-                            style={{ width: 35, height: 35 }}
-                        />
-                    </View>
+                <View style={{ flex: 0.25, alignItems: 'center' }}>
+                    <Image
+                        source={require('../constants/images/qq.png')}
+                        style={{ width: 35, height: 35 }}
+                    />
                 </View>
-            </View>
-            </View>
+            </View>   
         </View>
         )
     }

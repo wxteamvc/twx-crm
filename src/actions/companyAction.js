@@ -27,7 +27,7 @@ export function getCompanyList(geo={},url=false){
                 dispatch({
                     type:Types.CompanyList_FAILED,
                 })
-                Toast.fail(error.msg);
+                Toast.fail(error.message);
             }
         )
     }

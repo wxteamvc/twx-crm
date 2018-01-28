@@ -17,6 +17,8 @@ import { Card, WhiteSpace, Grid, List, } from 'antd-mobile';
 import { PullView } from 'react-native-pull';
 import { initPersonal } from '../actions/personalAction';
 import Loading from '../components/loading';
+import { styles } from '../constants/styles';
+
 
 class Personal extends Component {
     constructor(props) {
@@ -30,9 +32,17 @@ class Personal extends Component {
 
     componentDidMount() {
         let { token } = this.props.localConfigReducer;
-        if (token !== "") {
+        if (token !== ''){
             global.token = token;
             this.props.dispatch(initPersonal());
+        }
+        
+    }
+    componentDidUpdate(){
+        let { token } = this.props.localConfigReducer;
+        if (global.token !== token){
+             global.token = token;
+             this.props.dispatch(initPersonal());
         }
     }
     onPullRelease = (resolve) => {
@@ -73,11 +83,9 @@ class Personal extends Component {
         listData.map((items, index) => {
             list.push(
                 <View key={index}>
-                    <Card full>
-                        <Card.Body>
-                            {renderItem(items)}
-                        </Card.Body>
-                    </Card>
+                    <List>
+                        {renderItem(items)}    
+                    </List>
                     <WhiteSpace size="lg" />
                 </View>
             )
@@ -86,9 +94,9 @@ class Personal extends Component {
             let row = [];
             items.map((item, index) => {
                 row.push(
-                    <ListRow key={index} title={item.title} detail='Detail'
+                    <ListRow key={index} title={item.title} detail={item.detail ? item.detail : null}
                         icon={item.icon}
-                        accessory='indicator'
+                        accessory='indicator' 
                     />)
             })
             return row;
@@ -96,7 +104,14 @@ class Personal extends Component {
 
         return list;
     }
-
+    renderGrid = (dataItem)=>{
+        return (
+                <View style={[styles.flex_center,{marginTop:10}]}>
+                    <Image source={dataItem.icon} style={{ width: 35, height: 35 }} />
+                    <Text style={styles.fontsize10}>{dataItem.name}</Text>
+                </View>
+            )
+    }
     render() {
         let { initData, userInfo, navigation } = this.props;
         const rightView = (
@@ -120,24 +135,31 @@ class Personal extends Component {
             </Card>
         );
         const data = [
-            { name: '订单管理', gourl: 'Orders' },
-            { name: '客户管理', gourl: 'Orders' },
-            { name: '还款管理', gourl: 'Repay' },
-            { name: '过账管理', gourl: 'Orders' },
-            { name: '通知管理', gourl: 'Orders' },
+            { name: '公司主页', gourl: 'CompanyHome',icon:require('../constants/images/personal/主页.png')},
+            { name: '订单管理', gourl: 'Orders',icon:require('../constants/images/personal/订单.png')},
+            { name: '客户管理', gourl: 'Orders',icon:require('../constants/images/personal/客户.png')},
+            { name: '还款管理', gourl: 'Repay',icon:require('../constants/images/personal/还款3.png')},
+            { name: '通知管理', gourl: 'Orders',icon:require('../constants/images/personal/通知.png')},
+            { name: '项目发布', gourl: 'Orders',icon:require('../constants/images/personal/信息发布.png')},
+            { name: '指派任务', gourl: 'Tasks',icon:require('../constants/images/personal/任务.png')},
+            { name: '账单管理', gourl: 'Orders',icon:require('../constants/images/personal/账单.png')},
+            { name: '消费记录', gourl: 'Orders',icon:require('../constants/images/personal/消费.png')},
+            { name: '公司设置', gourl: 'Orders',icon:require('../constants/images/personal/设置.png')},
         ];
         const listData = [
             [
-                { title: '个人消息', icon: require('../constants/images/个人消息.png') },
-                { title: '个人消息', icon: require('../constants/images/个人消息.png') },
-                { title: '个人消息', icon: require('../constants/images/个人消息.png') },
-                { title: '个人消息', icon: require('../constants/images/个人消息.png') },
+                { title: '我的订单', icon: require('../constants/images/personal/订单1.png') },
+                { title: '我的关注', icon: require('../constants/images/personal/关注.png') },
+                { title: '个人消息', icon: require('../constants/images/personal/消息.png') },
+                { title: '浏览记录', icon: require('../constants/images/personal/足迹1.png') },
             ],
             [
-                { title: '个人消息', icon: require('../constants/images/个人消息.png') },
-                { title: '个人消息', icon: require('../constants/images/个人消息.png') },
-                { title: '个人消息', icon: require('../constants/images/个人消息.png') },
-                { title: '个人消息', icon: require('../constants/images/个人消息.png') },
+                { title: '联系我们', icon: require('../constants/images/personal/联系我们.png') },
+                { title: '成为公司用户', icon: require('../constants/images/personal/公司.png') },
+            ],
+            [
+                { title: '企业服务'},
+                { title: '协议及申明'},
             ]
 
         ];
@@ -175,19 +197,19 @@ class Personal extends Component {
                         />
                     </Card>
                     {userInfo.isLogin && userInfo.info.rid <= 2 ? headerBottom : false}
-                    <WhiteSpace size="lg" />
-                    <View style={{ backgroundColor: "#fff" }}>
+                    <List>
                         <Grid data={data}
-                            columnNum={3}
-                            renderItem={dataItem => (
-                                <TouchableOpacity onPress={() => this.props.navigation.navigate(dataItem.gourl)}>
-                                    <Text>{dataItem.name}</Text>
-                                </TouchableOpacity>
-
-                            )}
+                            columnNum={5}
+                            carouselMaxRow={1}
+                            isCarousel={true}
+                            infinite={true}
+                            renderItem={this.renderGrid}
+                            hasLine={false}
+                            onClick={(dataItem,index)=>{
+                                navigation.navigate(dataItem.gourl)
+                            }}
                         />
-                    </View>
-
+                    </List>
                     <WhiteSpace size="lg" />
                     {this.renderListRow(listData)}
                 </PullView>

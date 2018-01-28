@@ -5,6 +5,7 @@ import { homeReducer } from './homeReducer';
 import { personalReducer } from './personalReducer';
 import { customerReducer } from './customerReducer';
 import { companyReducer } from './companyReducer';
+import { tasksReducer } from './tasksReducer';
 
 const rootReducer = combineReducers({
     initReducer,
@@ -12,7 +13,8 @@ const rootReducer = combineReducers({
     homeReducer,
     personalReducer,
     customerReducer,
-    companyReducer
+    companyReducer,
+    tasksReducer
 })
 
 export default rootReducer;

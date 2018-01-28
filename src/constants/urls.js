@@ -3,6 +3,8 @@
 export const DOMAIN = 'http://www.wxdevelop.com';
 //服务器api地址
 export const BASIC_URL = DOMAIN + "/laravel-cms/public/api";
+//发送jpush注册号
+export const Add_jpush = BASIC_URL + '/addJpush';
 //登陆
 export const Login_url = BASIC_URL + '/login';
 //微信登陆
@@ -35,3 +37,12 @@ export const Bind_tel = BASIC_URL + '/bindTel';
 
 //提交反馈意见
 export const Submit_feed_back = BASIC_URL + '/submitFeedBack';
+
+//获取任务列表
+export const TASKLIST_URL =  BASIC_URL + '/getTasks';
+
+//获取任务表单数据
+export const Get_task_form_options =  BASIC_URL + '/getTaskFormOptions';
+
+//提交任务表单
+export const Submit_task =  BASIC_URL + '/addAssignedTask';

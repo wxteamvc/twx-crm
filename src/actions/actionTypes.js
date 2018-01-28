@@ -5,7 +5,6 @@ export const Home_SUCCESS = 'Home_SUCCESS';
 //首页内容获取失败的动作
 export const Home_FAILED = 'Home_FAILED';
 
-
 //登陆账户开始
 export const Login_BEGIN='Login_BEGIN';
 //登陆账号成功
@@ -39,10 +38,6 @@ export const CustomerInfo_SUCCESS='CustomerInfo_SUCCESS';
 //获取客户详情失败
 export const CustomerInfo_FAILED='CustomerInfo_FAILED';
 
-
-
-
-
 //获取公司列表信息开始
 export const CompanyList_BEGIN='CompanyList_BEGIN';
 //获取公司列表信息成功
@@ -59,4 +54,19 @@ export const Upload_Avatar_SUCCESS = 'Upload_Avatar_SUCCESS';
 
 //直接修改用户信息
 export const Change_User_Info = 'Change_User_Info';
+
+//获取任务表单信息开始
+export const Get_Task_Form_BEGIN = 'Get_Task_Form_BEGIN';
+//获取任务表单信息成功
+export const Get_Task_Form_SUCCESS = 'Get_Task_Form_SUCCESS';
+//获取任务表单信息失败
+export const Get_Task_Form_FAILED = 'Get_Task_Form_FAILED';
+
+//获取任务开始
+export const Get_Task_List_BEGIN = 'Get_Task_List_BEGIN';
+//获取任务成功
+export const Get_Task_List_SUCCESS = 'Get_Task_List_SUCCESS';
+//获取任务失败
+export const Get_Task_List_FAILED = 'Get_Task_List_FAILED';
+
 

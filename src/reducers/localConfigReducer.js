@@ -1,5 +1,6 @@
 import { styles } from '../constants/styles';
 import { stylesNight } from '../constants/stylesNight';
+import {DeviceEventEmitter} from 'react-native';
 
 const initialState = {
     token: '',
@@ -85,6 +86,7 @@ export function localConfigReducer(state = initialState, action) {
                 captchaTime: action.data
             }  
         case 'changeToken':
+            DeviceEventEmitter.emit('my_login',{token:action.data})
             return {
                 ...state,
                 token: action.data

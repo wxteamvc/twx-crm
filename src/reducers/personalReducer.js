@@ -16,17 +16,14 @@ export function personalReducer(state = initialState, action) {
                 info:action.data
             }
         case Types.Logout:
-            global.token = '';
             return initialState
         case Types.Login_SUCCESS:
-            global.token = action.data.token;
             return {
                 ...state,
                 isLogin: true,
                 info: action.data,
             }
         case Types.Login_FAILED:
-            global.token = '';
             return {
                 ...initialState,
                 errorMsg: action.data
@@ -42,7 +39,6 @@ export function personalReducer(state = initialState, action) {
                 status: 'doing',
             }
         case Types.UserInfo_SUCCESS:
-            global.token = action.data.token;
             return {
                 ...state,
                 isLogin: true,
@@ -50,7 +46,6 @@ export function personalReducer(state = initialState, action) {
                 info: action.data
             }
         case Types.UserInfo_FAILED:
-            global.token = '';
             return initialState
         default:
             return state;
