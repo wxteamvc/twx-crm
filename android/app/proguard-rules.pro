@@ -72,3 +72,7 @@
 -keep class com.facebook.cache.disk.DiskStorageCache {
    private boolean maybeUpdateFileCacheSize();
 }
+
+-keep class com.tencent.mm.sdk.** {
+   *;
+}

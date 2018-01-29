@@ -2,6 +2,7 @@ package com.kehu;
 
 import android.app.Application;
 
+import com.theweflex.react.WeChatPackage;
 import cn.reactnative.httpcache.HttpCachePackage;
 import com.facebook.react.ReactApplication;
 import com.reactnative.ivpusic.imagepicker.PickerPackage;
@@ -11,10 +12,15 @@ import com.facebook.react.ReactPackage;
 import com.facebook.react.shell.MainReactPackage;
 import com.facebook.soloader.SoLoader;
 import com.imagepicker.ImagePickerPackage;
+import cn.jpush.reactnativejpush.JPushPackage;
+import com.react.rnspinkit.RNSpinkitPackage;
 import java.util.Arrays;
 import java.util.List;
 
+
 public class MainApplication extends Application implements ReactApplication {
+  private boolean SHUTDOWN_TOAST = false;
+  private boolean SHUTDOWN_LOG = false;
 
   private final ReactNativeHost mReactNativeHost = new ReactNativeHost(this) {
     @Override
@@ -29,7 +35,10 @@ public class MainApplication extends Application implements ReactApplication {
             new PickerPackage(),
             new RNDeviceInfo(),
             new ImagePickerPackage(),
-            new HttpCachePackage()
+            new HttpCachePackage(),
+            new WeChatPackage(),
+            new JPushPackage(SHUTDOWN_TOAST, SHUTDOWN_LOG),
+            new RNSpinkitPackage()
       );
     }
 

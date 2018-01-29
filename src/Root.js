@@ -3,15 +3,51 @@ import { Provider } from 'react-redux';
 import configureStore from './store/ConfigureStore';
 import store from './store/ConfigureStore';
 import App from './container/App';
-import { NetInfo, AppState } from 'react-native';
+import { NetInfo, AppState,DeviceEventEmitter } from 'react-native';
 import * as Types from "./actions/actionTypes";
 import DeviceInfo from 'react-native-device-info';
+import JPushModule from 'jpush-react-native';
+import util from './constants/util';
+import * as urls from './constants/urls';
+global.token = '';
 
-
+const receiveCustomMsgEvent = 'receivePushMsg'
+const receiveNotificationEvent = 'receiveNotification'
+const openNotificationEvent = 'openNotification'
+const getRegistrationIdEvent = 'getRegistrationId'
 
 export default class Root extends Component {
     componentDidMount() {
-        global.token = '';
+        //监听是否登录
+        DeviceEventEmitter.addListener('my_login',this._handUserLogin)
+        // JPushModule.initPush();
+        //监听推送信息
+        JPushModule.notifyJSDidLoad((resultCode) => {
+            if (resultCode === 0) {
+                
+            }
+        });
+        JPushModule.getRegistrationID(registrationId => {
+            global.registrationId = registrationId;
+            let url = urls.Add_jpush+'/'+registrationId;
+            util.post(url,{},
+            resp=>{
+                // console.log(resp)
+            },
+            error=>{
+                // console.log(error)
+            })
+        })
+        JPushModule.addReceiveNotificationListener((map) => {
+            console.log("alertContent: " + map.alertContent);
+            console.log("extras: " + map.extras);
+            // var extra = JSON.parse(map.extras);
+            // console.log(extra.key + ": " + extra.value);
+        });
+        JPushModule.addReceiveOpenNotificationListener((map) => {
+            console.log("Opening notification!");
+            console.log("map.extra: " + map.key);
+        });
         //获取手机相关信息
         this._getMobileInfo();
         //监听网络状况
@@ -25,12 +61,17 @@ export default class Root extends Component {
     }
     
     componentWillUnmount() {
+        DeviceEventEmitter.removeListener('my_login',this._handUserLogin);
+        JPushModule.removeReceiveNotificationListener(receiveNotificationEvent);
+        JPushModule.removeReceiveOpenNotificationListener(openNotificationEvent);
         NetInfo.isConnected.removeEventListener('connectionChange', this._handleConnectivityChange);
         NetInfo.removeEventListener('connectionChange',this._handleFirstConnectivityChange);
         AppState.removeEventListener('change', this._handleAppStateChange);
         navigator.geolocation.clearWatch(this.watchID);
     }
-
+    _handUserLogin = (e)=>{
+        global.token = e.token;
+    }
     _getMobileInfo = ()=>{
         let mobileInfo = {
             PhoneNumber: DeviceInfo.getPhoneNumber(),
