@@ -24,6 +24,8 @@ import AssignedTask from '../pages/AssignedTaskView';
 import TaskList from '../pages/TaskListView';
 import CompanyHome from '../pages/CompanyHomeView';
 
+import UserChat from '../pages/chat/UserChatView';
+
 const App = StackNavigator({
     Lead: {
         screen: Lead,
@@ -166,6 +168,12 @@ const App = StackNavigator({
     },
     CompanyHome:{
         screen: CompanyHome,
+        navigationOptions: ({ navigation }) => ({
+            header: null
+        })
+    },
+    UserChat:{
+        screen: UserChat,
         navigationOptions: ({ navigation }) => ({
             header: null
         })
