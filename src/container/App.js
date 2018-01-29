@@ -24,6 +24,7 @@ import AssignedTask from '../pages/AssignedTaskView';
 import TaskList from '../pages/TaskListView';
 import CompanyHome from '../pages/CompanyHomeView';
 
+
 const App = StackNavigator({
     Lead: {
         screen: Lead,

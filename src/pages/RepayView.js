@@ -17,6 +17,7 @@ import {
     Image,
     Keyboard,
     ScrollView,
+    TextInput
 } from 'react-native';
 import { connect } from 'react-redux';
 import { WhiteSpace, Icon, InputItem, Button, Tabs } from 'antd-mobile';
@@ -24,7 +25,8 @@ import { styles } from '../constants/styles';
 import { ScreenHeight, StatusBarHeight, ScreenWidth } from '../constants/global';
 import { createForm } from 'rc-form';
 import TabsScrollView from '../components/tabsScrollView';
-import SearchOrder from '../components/searchOrders';
+import AllOrders from '../components/allOrders';
+import Collapsible from '../components/Accordion/Collapsible';
 
 class RepayView extends Component {
     constructor(props) {
@@ -37,31 +39,42 @@ class RepayView extends Component {
 
     tabs = [
         { title: '本周待还' },
-        { title: '搜索还款' },
         { title: '全部订单' }
     ];
 
-    data = {
-        Monday: [1, 2, 3],
-        Tuesday: [1, 2, 3],
-        Wednesday: [1, 2, 3],
-        Thursday: [1, 2, 3],
-        Friday: [1, 2, 3],
-        Saturday: [1, 2, 3],
-        Sunday: [1, 2, 3],
+    data = [
+        { key: '星期一', data: [1, 2, 3] },
+        { key: '星期二', data: [1, 2, 3] },
+        { key: '星期三', data: [1, 2, 3] },
+        { key: '星期四', data: [1, 2, 3] },
+        { key: '星期五', data: [1, 2, 3] },
+        { key: '星期六', data: [1, 2, 3] },
+        { key: '星期天', data: [1, 2, 3] },
+    ]
+
+    getText = (text) => {
+        this.setState({
+            searchText: text,
+        })
+    }
+
+    jump = () => {
+        if (this.state.searchText) {
+            alert('我是搜索')
+        } else {
+            alert('请输入搜索条件')
+        }
     }
 
     render() {
         return (
             <View style={{ flex: 1 }}>
-                <Tabs tabs={this.tabs}
+                <Tabs
+                    tabs={this.tabs}
                     initalPage={0}
                 >
                     <TabsScrollView data={this.data} {...this.props} />
-                    <SearchOrder />
-                    <View>
-                        <Text>我是第三页</Text>
-                    </View>
+                    <AllOrders {...this.props} />
                 </Tabs>
             </View>
         )

@@ -20,7 +20,7 @@ const initialState = {
         {
             name: '审批订单',
             selected: true,
-            icon: require('../constants/images/审批订单.png')
+            icon: require('../constants/images/审批订单.png'),
         },
         {
             name: '工作日志',
