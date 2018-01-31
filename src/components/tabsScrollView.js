@@ -24,7 +24,6 @@ export default class TabsScrollView extends Component {
             componentLayout: {},
             type: '',
             doOnScroll: true,
-            // top: 0                       //控制哪个子组件悬浮在ScrollView顶部
         }
     }
 
@@ -33,18 +32,10 @@ export default class TabsScrollView extends Component {
         this.initType = initType ? initType : 0;  //暂时不能设置初始在哪个页面
         this.keyList = [];
         for (const key in data) {
-            this.keyList.push(key)
+            this.keyList.push(data[key].key)
         }
         this.setState({ type: this.keyList[this.initType] })
     }
-
-    // componentWillUpdate(nextProps, nextState) {
-    // if (this.state.type != nextState.type) {
-    //     let num = this.keyList.indexOf(nextState.type);
-    //     num = num + num * 1
-    //     this.setState({ top: num })
-    // }
-    // }
 
 
     gety = (e, type) => {
@@ -90,24 +81,24 @@ export default class TabsScrollView extends Component {
             leftList.push(                 //渲染左边部分
                 <TouchableOpacity key={key}
                     onPress={() => {
-                        this.scrollTo(key)
+                        this.scrollTo(data[key].key)
                     }}
                     style={[styles.flex_center, { paddingTop: 10, paddingBottom: 10 }]}
                 >
-                    <Text style={[styles.fontsize12, { color: this.state.type == key ? '#000' : '#ccc' }]}>2018-1-25</Text>
-                    <Text style={[styles.fontsize10, { color: this.state.type == key ? '#000' : '#ccc' }]}>({key})</Text>
+                    <Text style={[styles.fontsize12, { color: this.state.type == data[key].key ? '#000' : '#ccc' }]}>2018-1-25</Text>
+                    <Text style={[styles.fontsize10, { color: this.state.type == data[key].key ? '#000' : '#ccc' }]}>({data[key].key})</Text>
                 </TouchableOpacity>
             );
 
             rightList.push(             //渲染右边边部分
                 <View
                     key={key}
-                    onLayout={({ nativeEvent: e }) => this.gety(e, key)}
+                    onLayout={({ nativeEvent: e }) => this.gety(e, data[key].key)}
                 >
                     <View style={{ padding: 10 }}>
-                        <Text style={styles.fontsize12}>{key}</Text>
+                        <Text style={styles.fontsize12}>{data[key].key}</Text>
                     </View>
-                    {this.renderList(data[key])}
+                    {this.renderList(data[key].data)}
                 </View>
             )
         }
