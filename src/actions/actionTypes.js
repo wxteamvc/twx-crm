@@ -1,23 +1,23 @@
 //正在获取首页内容的动作
-export const Home_BEGIN= 'Home_BEGIN';
+export const Home_BEGIN = 'Home_BEGIN';
 //首页内容获取完成的动作
 export const Home_SUCCESS = 'Home_SUCCESS';
 //首页内容获取失败的动作
 export const Home_FAILED = 'Home_FAILED';
 
 //登陆账户开始
-export const Login_BEGIN='Login_BEGIN';
+export const Login_BEGIN = 'Login_BEGIN';
 //登陆账号成功
-export const Login_SUCCESS='Login_SUCCESS';
+export const Login_SUCCESS = 'Login_SUCCESS';
 //登陆账号失败
-export const Login_FAILED='Login_FAILED';
+export const Login_FAILED = 'Login_FAILED';
 
 //获取用户信息开始
-export const UserInfo_BEGIN='UserInfo_BEGIN';
+export const UserInfo_BEGIN = 'UserInfo_BEGIN';
 //获取用户信息成功
-export const UserInfo_SUCCESS='UserInfo_SUCCESS';
+export const UserInfo_SUCCESS = 'UserInfo_SUCCESS';
 //登陆用户失败
-export const UserInfo_FAILED='UserInfo_FAILED';
+export const UserInfo_FAILED = 'UserInfo_FAILED';
 //保存请求时的Token
 export const Change_TOKEN = 'changeToken';
 
@@ -25,28 +25,28 @@ export const Change_TOKEN = 'changeToken';
 export const Logout = 'Logout';
 
 //获取客户列表信息开始
-export const CustomerList_BEGIN='CustomerList_BEGIN';
+export const CustomerList_BEGIN = 'CustomerList_BEGIN';
 //获取客户列表信息成功
-export const CustomerList_SUCCESS='CustomerList_SUCCESS';
+export const CustomerList_SUCCESS = 'CustomerList_SUCCESS';
 //获取客户列表失败
-export const CustomerList_FAILED='CustomerList_FAILED';
+export const CustomerList_FAILED = 'CustomerList_FAILED';
 
 //获取客户详情信息开始
-export const CustomerInfo_BEGIN='CustomerInfo_BEGIN';
+export const CustomerInfo_BEGIN = 'CustomerInfo_BEGIN';
 //获取客户详情信息成功
-export const CustomerInfo_SUCCESS='CustomerInfo_SUCCESS';
+export const CustomerInfo_SUCCESS = 'CustomerInfo_SUCCESS';
 //获取客户详情失败
-export const CustomerInfo_FAILED='CustomerInfo_FAILED';
+export const CustomerInfo_FAILED = 'CustomerInfo_FAILED';
 
 //获取公司列表信息开始
-export const CompanyList_BEGIN='CompanyList_BEGIN';
+export const CompanyList_BEGIN = 'CompanyList_BEGIN';
 //获取公司列表信息成功
-export const CompanyList_SUCCESS='CompanyList_SUCCESS';
+export const CompanyList_SUCCESS = 'CompanyList_SUCCESS';
 //获取公司列表失败
-export const CompanyList_FAILED='CompanyList_FAILED';
+export const CompanyList_FAILED = 'CompanyList_FAILED';
 
 //获取用户坐标
-export const GetGeolocation='GetGeolocation';
+export const GetGeolocation = 'GetGeolocation';
 
 
 //上传成功
@@ -69,4 +69,9 @@ export const Get_Task_List_SUCCESS = 'Get_Task_List_SUCCESS';
 //获取任务失败
 export const Get_Task_List_FAILED = 'Get_Task_List_FAILED';
 
-
+//获取公司订单列表开始
+export const OrderList_BEGIN = 'OrderList_BEGIN';
+//获取公司订单列表成功
+export const OrderList_SUCCESS = 'OrderList_SUCCESS';
+//获取公司订单列表失败
+export const OrderList_FAILED = 'OrderList_FAILED';

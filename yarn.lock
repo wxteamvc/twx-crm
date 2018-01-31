@@ -3820,6 +3820,12 @@ react-native-accordion@^1.0.1:
   dependencies:
     react-tween-state "0.0.5"
 
+react-native-action-button@^2.8.4:
+  version "2.8.4"
+  resolved "http://registry.npm.taobao.org/react-native-action-button/download/react-native-action-button-2.8.4.tgz#6c5ef988f6dc129a1e2d65e964dc38373a653b4f"
+  dependencies:
+    prop-types "^15.5.10"
+
 react-native-animatable@^1.2.3, react-native-animatable@^1.2.4:
   version "1.2.4"
   resolved "http://registry.npm.taobao.org/react-native-animatable/download/react-native-animatable-1.2.4.tgz#b5fb7657e8f6edadbc26697057a327fb920b3039"

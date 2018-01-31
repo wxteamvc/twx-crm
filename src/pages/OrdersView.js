@@ -8,28 +8,73 @@ import {
     FlatList,
     Image,
     Keyboard,
+    ProgressBarAndroid
 } from 'react-native';
 import { connect } from 'react-redux';
 import { WhiteSpace, Icon, InputItem, Button } from 'antd-mobile';
+import moment from 'moment';
 import { styles } from '../constants/styles';
 import { ScreenHeight, StatusBarHeight, ScreenWidth } from '../constants/global';
 import { createForm } from 'rc-form';
+import { getOrderList } from '../actions/ordersAction';
+import * as Types from "../actions/actionTypes";
+import Collapsible from '../components/Accordion/Collapsible';
+
 
 class OrdersView extends Component {
     constructor(props) {
         super(props)
         this.state = {
-            is_get_typeHeight: false,
-            is_get_searchHeight: false,
-            typeHeight: new Animated.Value(0),
-            searchHeight: new Animated.Value(0),
-            showType: true,
-            showSearch: true,
-            type: '已通过的订单'
+            type: '全部订单',
+            showCollapsible: null
         }
     }
 
+    componentDidMount() {
+        this.props.dispatch(getOrderList())
+
+    }
+
+    componentWillUnmount() {
+        const { resetFields } = this.props.form
+        this.props.dispatch({
+            type: Types.OrderList_FAILED
+        })
+        resetFields()
+    }
+
+    setShowCollapsible = (key) => {
+        const { showCollapsible } = this.state;
+        if (showCollapsible == key) {
+            return null;
+        } else {
+            return key;
+        }
+    }
+
+    getElseList = () => {
+        const { data } = this.props.ordersList;
+        if (data.next_page_url) {
+            this.props.dispatch(getOrderList(data.next_page_url))
+        }
+    }
+
+    renderFaltListBottom = () => {
+        const { ordersList } = this.props;
+        if (ordersList.data.current_page == ordersList.data.last_page) {
+            return (
+                <View style={[styles.flex_center, { paddingTop: 5, paddingBottom: 5 }]}><Text style={styles.fontsize12}>已经到底了哦~~</Text></View>
+            )
+        } else {
+            return (
+                <View style={[styles.flex_center, { paddingTop: 5, paddingBottom: 5 }]}><Text style={styles.fontsize12}>加载中...</Text></View>
+            )
+        }
+    }
+
+
     data = [
+        { value: 100, label: '全部订单' },
         { value: 0, label: '被驳回的订单' },
         { value: 1, label: '待审核的订单' },
         { value: 2, label: '已通过的订单' },
@@ -46,41 +91,6 @@ class OrdersView extends Component {
     ]
 
 
-    getHeight = (e, key) => {
-        if (!this.state['is_get_' + key]) {
-            this[key] = e.layout.height;
-            this.setState({ ['is_get_' + key]: true })
-        }
-    }
-
-    menuButtonOnPress = (key1, key2) => {
-        if (this.state[key1]) {
-            this.showView(key2)
-        } else {
-            this.hideView(key2)
-        }
-        this.setState({ [key1]: !this.state[key1] });
-    }
-
-    showView = (key) => {
-        Animated.timing(this.state[key], {
-            toValue: this[key],
-            duration: 300,
-            easing: Easing.linear,// 线性的渐变函数
-        }).start();
-    }
-
-    hideView = (key) => {
-        const { resetFields } = this.props.form;
-        Animated.timing(this.state[key], {
-            toValue: 0,
-            duration: 300,
-            easing: Easing.linear,// 线性的渐变函数
-        }).start(() => {
-            resetFields();
-            Keyboard.dismiss()
-        });
-    }
 
     submitSearch = () => {
         const { validateFields } = this.props.form;
@@ -93,120 +103,107 @@ class OrdersView extends Component {
     }
 
     render() {
-        const { is_get_typeHeight, is_get_searchHeight, showType, showSearch, type } = this.state;
+        const { showCollapsible, type } = this.state;
         const { getFieldProps, getFieldsValue } = this.props.form;
-        const typeViewStyles = {
-            height: this.state.typeHeight,
-        };
-        const searchViewStyles = {
-            height: this.state.searchHeight
-        };
-
+        const { ordersList } = this.props;
         return (
-            <View style={{ flex: 1  }}>
+            <View style={{ flex: 1 }}>
                 <View style={[styles.OrdersView_menu_container]}>
                     <View style={[styles.flex_row_columncenter, styles.OrdersView_menu_header]}>
                         <TouchableOpacity
                             activeOpacity={1}
                             onPress={() => {
-                                this.state.searchHeight.setValue(0)
-                                this.setState({ showSearch: true })
-                                this.menuButtonOnPress('showType', 'typeHeight')
+                                this.setState({
+                                    showCollapsible: this.setShowCollapsible('type')
+                                })
                             }}
                             style={[styles.flex_row_center, styles.OrdersView_menu_left]}
                         >
                             <Text style={[styles.fontsize12, { marginRight: 5 }]}>{type}</Text>
-                            {showType ? <Icon type={"\uE606"} size={10} color={'#ccc'} /> : <Icon type={"\uE607"} size={10} color={'#ccc'} />}
+                            {showCollapsible == 'type' ? <Icon type={"\uE607"} size={10} color={'#ccc'} /> : <Icon type={"\uE606"} size={10} color={'#ccc'} />}
                         </TouchableOpacity>
                         <TouchableOpacity
                             activeOpacity={1}
                             onPress={() => {
-                                this.state.typeHeight.setValue(0)
-                                this.setState({ showType: true })
-                                this.menuButtonOnPress('showSearch', 'searchHeight')
+                                this.setState({
+                                    showCollapsible: this.setShowCollapsible('search')
+                                })
                             }}
                             style={[styles.flex_row_center, { flex: 1 }]}
                         >
                             <Text style={[styles.fontsize12, { marginRight: 5 }]}>搜索</Text>
-                            {showSearch ? <Icon type={"\uE606"} size={10} color={'#ccc'} /> : <Icon type={"\uE607"} size={10} color={'#ccc'} />}
+                            {showCollapsible == 'search' ? <Icon type={"\uE607"} size={10} color={'#ccc'} /> : <Icon type={"\uE606"} size={10} color={'#ccc'} />}
                         </TouchableOpacity>
                     </View>
-                    <Animated.View onLayout={({ nativeEvent: e }) => this.getHeight(e, 'typeHeight')}
-                        style={[is_get_typeHeight ? typeViewStyles : { opacity: 0 }, { backgroundColor: '#fff' }]}
+                    <Collapsible
+                        collapsed={this.state.showCollapsible !== 'type'}
                     >
-                        {this.data.map((item, index) => {
-                            return (
-                                <TouchableOpacity
-                                    key={index}
-                                    style={[styles.OrdersView_menu_content_typeView, styles.flex_row_columncenter, { backgroundColor: type == item.label ? '#ccc' : '#fff' }]}
-                                    onPress={() => {
-                                        this.hideView('typeHeight')
-                                        this.setState({ type: item.label, showType: !this.state.showType })
-                                    }}
-                                >
-                                    <View style={[styles.flex_center, { flex: 0.5, paddingRight: 15 }]}>
-                                        <Text style={styles.fontsize12}>{item.label}</Text>
+                        <View style={{ width: ScreenWidth, backgroundColor: '#fff' }}>
+                            {this.data.map((item, index) => {
+                                return (
+                                    <View key={index} style={[styles.flex_row_columncenter, { backgroundColor: this.state.type == item.label ? '#E9E9EF' : '#fff' }]}>
+                                        <TouchableOpacity
+                                            style={[styles.flex_center, styles.OrdersView_menu_content_typeView_item]}
+                                            onPress={() => this.setState({ type: item.label, showCollapsible: null })}
+                                        >
+                                            <Text style={styles.fontsize12}>{item.label}</Text>
+                                        </TouchableOpacity>
                                     </View>
 
-                                    {type == item.label ?
-                                        <View style={[styles.flex_row_end, { flex: 0.4 }]}>
-                                            <Icon type={'\uE630'} color={'green'} size={15} />
-                                        </View>
-                                        : null}
-                                </TouchableOpacity>
-                            )
-                        })}
-                    </Animated.View>
-                    <Animated.View onLayout={({ nativeEvent: e }) => this.getHeight(e, 'searchHeight')}
-                        style={[is_get_searchHeight ? searchViewStyles : { opacity: 0 }, { backgroundColor: '#fff' }]}
-                    >
-                        {
-                            this.searchdata.map((item, index) => {
-                                return (
-                                    <InputItem
-                                        key={index}
-                                        {...getFieldProps(item.key) }
-                                        type={item.keyboard ? item.keyboard : null}
-                                    >
-                                        <Text style={[styles.fontsize12]}>{item.title}</Text>
-                                    </InputItem>
                                 )
-                            })
-                        }
-                        <WhiteSpace />
-                        <View style={styles.flex_row_center}>
-                            <Button type="primary" style={{ flex: 0.3 }} size={'small'} 
-                            onClick={this.submitSearch}
-                            >
-                            搜索
-                            </Button>
+                            })}
                         </View>
-                        <WhiteSpace />
-                    </Animated.View>
-                    {showType == false || showSearch == false ?
+                    </Collapsible>
+                    <Collapsible
+                        collapsed={this.state.showCollapsible !== 'search'}
+                    >
+                        <View style={{ width: ScreenWidth, backgroundColor: '#fff' }}>
+                            {
+                                this.searchdata.map((item, index) => {
+                                    return (
+                                        <InputItem
+                                            key={index}
+                                            {...getFieldProps(item.key) }
+                                            type={item.keyboard ? item.keyboard : null}
+                                        >
+                                            <Text style={[styles.fontsize12]}>{item.title}</Text>
+                                        </InputItem>
+                                    )
+                                })
+                            }
+                            <WhiteSpace />
+                            <View style={[styles.flex_row_center, { paddingBottom: 5 }]}>
+                                <Button type="primary" style={{ flex: 0.3 }} size={'small'}
+                                    onClick={this.submitSearch}
+                                >
+                                    搜索
+                                    </Button>
+                            </View>
+                        </View>
+                    </Collapsible>
+                    {showCollapsible != null ?
                         <TouchableOpacity
-                            activeOpacity={1}
-                            style={{ height: ScreenHeight, width: ScreenWidth, backgroundColor: 'rgba(0,0,0,0.5)' }}
-                            onPress={() => {
-                                this.hideView('typeHeight');
-                                this.hideView('searchHeight');
-                                this.setState({ showType: true, showSearch: true })
-                            }}
-                        >
-                        </TouchableOpacity> :
+                            onPress={() => this.setState({ showCollapsible: null })}
+                            style={{ backgroundColor: 'rgba(0,0,0,0.5)', height: ScreenHeight }}
+                        ></TouchableOpacity> :
                         null}
                 </View>
                 <View style={styles.OrdersView_content_container}>
-                    <WhiteSpace />
                     <FlatList
-                        data={[1, 2, 3]}
+                        data={ordersList.data.data}
+                        ListHeaderComponent={() => <WhiteSpace size="sm" />}
+                        ListFooterComponent={ordersList.status=='done'?this.renderFaltListBottom:null}
                         renderItem={this.renderItem}
                         keyExtractor={(item, index) => index}
-                        ItemSeparatorComponent={() => <WhiteSpace size="lg" />}
+                        ItemSeparatorComponent={() => <WhiteSpace size="sm" />}
+                        onEndReached={this.getElseList}
+                        onEndReachedThreshold={0.5}
                     />
                 </View>
             </View>
         )
+
+
     }
 
     renderItem = ({ item, index }) => {
@@ -217,34 +214,32 @@ class OrdersView extends Component {
                 onPress={() => this.props.navigation.navigate('OrderInfo', { order_id: item.order_id })}
             >
                 <View style={[styles.flex_row_between, styles.OrderListPage_item_header]}>
-                    <View style={[styles.flex_row_columncenter]}>
-                        <Image source={require('../constants/images/单号.png')} style={styles.OrderListPage_item_header_img} />
-                        <Text style={styles.fontsize12}>单号 : 1000201807070001</Text>
+                    <View style={[styles.flex_row_columncenter, styles.OrderListPage_item_header_left]}>
+                        <Text style={styles.fontsize12}>单号 : {item.order_id}</Text>
                     </View>
-                    <Text style={[styles.fontsize10, { color: '#ccc' }]}>放款时间 : 2017-12-25</Text>
+                    {item.steps >= 2 ? <Text style={[styles.fontsize10, { color: '#ccc' }]}>放款时间 : {moment(parseInt(item.loan_time) * 1000).format('l')}</Text> : null}
                 </View>
                 <View style={[styles.OrderListPage_item_content]}>
-                    <View style={styles.flex_row_columncenter}>
+                    <View style={[styles.flex_row_columncenter, { paddingLeft: 15, paddingRight: 15 }]}>
                         <View style={[styles.flex_row_columncenter, { flex: 1 }]}>
-                            <Text style={[styles.fontsize10]} numberOfLines={1}>客户姓名:冠希</Text>
+                            <Text style={[styles.fontsize10]} numberOfLines={1}>客户姓名:{item.customer_cname}</Text>
                         </View>
                         <View style={[styles.flex_row_columncenter, { flex: 1 }]}>
-                            <Text style={[styles.fontsize10]} numberOfLines={1}>身份证号:320288196605054565</Text>
-                        </View>
-                    </View>
-                    <WhiteSpace size={'sm'} />
-                    <View style={styles.flex_row_columncenter}>
-                        <View style={[styles.flex_row_columncenter, { flex: 1 }]}>
-                            <Text style={[styles.fontsize10]} numberOfLines={1}>放款金额:￥10000</Text>
-                        </View>
-                        <View style={[styles.flex_row_columncenter, { flex: 1 }]}>
-                            <Text style={[styles.fontsize10]} numberOfLines={1}>已还金额:￥2000</Text>
+                            <Text style={[styles.fontsize10]} numberOfLines={1}>身份证号:{item.customer_card_id}</Text>
                         </View>
                     </View>
+                    {item.steps >= 2 ?
+                        <View style={[styles.flex_row_columncenter, { paddingLeft: 15, paddingRight: 15, marginTop: 10 }]}>
+                            <View style={[styles.flex_row_columncenter, { flex: 1 }]}>
+                                <Text style={[styles.fontsize10]} numberOfLines={1}>放款金额:￥{item.loan}</Text>
+                            </View>
+                            <View style={[styles.flex_row_columncenter, { flex: 1 }]}>
+                                <Text style={[styles.fontsize10]} numberOfLines={1}>已还金额:￥{item.balance}</Text>
+                            </View>
+                        </View> : null}
                 </View>
-                <View style={[styles.flex_row_between, styles.OrderListPage_item_footer]}>
-                    <Text style={[styles.fontsize10, { color: '#ccc' }]}>所属公司:新昌咨询(还是死数据 等后台传回)</Text>
-                    <Text style={[styles.fontsize10, { color: '#ccc' }]}>录入人:冰魂ex</Text>
+                <View style={[styles.flex_row_end, styles.OrderListPage_item_footer]}>
+                    <Text style={[styles.fontsize10, { color: '#ccc' }]}>录入人:{item.input_name}</Text>
                 </View>
             </TouchableOpacity>
         )
@@ -254,7 +249,7 @@ class OrdersView extends Component {
 
 function mapStateToProps(state) {
     return {
-        initData: state.initReducer
+        ordersList: state.ordersReducer.list,
     }
 }
 

@@ -6,6 +6,7 @@ import { personalReducer } from './personalReducer';
 import { customerReducer } from './customerReducer';
 import { companyReducer } from './companyReducer';
 import { tasksReducer } from './tasksReducer';
+import { ordersReducer } from './ordersReducer';
 
 const rootReducer = combineReducers({
     initReducer,
@@ -14,7 +15,8 @@ const rootReducer = combineReducers({
     personalReducer,
     customerReducer,
     companyReducer,
-    tasksReducer
+    tasksReducer,
+    ordersReducer,
 })
 
 export default rootReducer;

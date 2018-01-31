@@ -46,3 +46,6 @@ export const Get_task_form_options =  BASIC_URL + '/getTaskFormOptions';
 
 //提交任务表单
 export const Submit_task =  BASIC_URL + '/addAssignedTask';
+
+//请求订单列表
+export const Get_orderList =  BASIC_URL + '/getOrderList';

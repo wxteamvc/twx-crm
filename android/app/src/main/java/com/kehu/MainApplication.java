@@ -5,6 +5,7 @@ import android.app.Application;
 import com.theweflex.react.WeChatPackage;
 import cn.reactnative.httpcache.HttpCachePackage;
 import com.facebook.react.ReactApplication;
+import com.oblador.vectoricons.VectorIconsPackage;
 import com.reactnative.ivpusic.imagepicker.PickerPackage;
 import com.learnium.RNDeviceInfo.RNDeviceInfo;
 import com.facebook.react.ReactNativeHost;
@@ -33,6 +34,7 @@ public class MainApplication extends Application implements ReactApplication {
     protected List<ReactPackage> getPackages() {
       return Arrays.<ReactPackage>asList(
           new MainReactPackage(),
+            new VectorIconsPackage(),
             new PickerPackage(),
             new RNDeviceInfo(),
             new HttpCachePackage(),
