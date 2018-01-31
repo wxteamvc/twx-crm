@@ -9,8 +9,10 @@ import DeviceInfo from 'react-native-device-info';
 import JPushModule from 'jpush-react-native';
 import util from './constants/util';
 import * as urls from './constants/urls';
-global.token = '';
+import Tchat from './constants/Tchat';
 
+global.token = '';
+const tchat = false;
 const receiveCustomMsgEvent = 'receivePushMsg'
 const receiveNotificationEvent = 'receiveNotification'
 const openNotificationEvent = 'openNotification'
@@ -21,6 +23,7 @@ export default class Root extends Component {
         //监听是否登录
         DeviceEventEmitter.addListener('my_login',this._handUserLogin)
         // JPushModule.initPush();
+
         //监听推送信息
         JPushModule.notifyJSDidLoad((resultCode) => {
             if (resultCode === 0) {
@@ -41,8 +44,6 @@ export default class Root extends Component {
         JPushModule.addReceiveNotificationListener((map) => {
             console.log("alertContent: " + map.alertContent);
             console.log("extras: " + map.extras);
-            // var extra = JSON.parse(map.extras);
-            // console.log(extra.key + ": " + extra.value);
         });
         JPushModule.addReceiveOpenNotificationListener((map) => {
             console.log("Opening notification!");
@@ -62,6 +63,7 @@ export default class Root extends Component {
     
     componentWillUnmount() {
         DeviceEventEmitter.removeListener('my_login',this._handUserLogin);
+        DeviceEventEmitter.removeListener('connect_socket',this._handConnectSocket);
         JPushModule.removeReceiveNotificationListener(receiveNotificationEvent);
         JPushModule.removeReceiveOpenNotificationListener(openNotificationEvent);
         NetInfo.isConnected.removeEventListener('connectionChange', this._handleConnectivityChange);
@@ -70,7 +72,9 @@ export default class Root extends Component {
         navigator.geolocation.clearWatch(this.watchID);
     }
     _handUserLogin = (e)=>{
-        global.token = e.token;
+        if (global.token !=  e.token){
+            global.token = e.token;
+        }
     }
     _getMobileInfo = ()=>{
         let mobileInfo = {
@@ -84,7 +88,48 @@ export default class Root extends Component {
         this.storeDispatch('inputMobileInfo',mobileInfo);
     }
     _handleConnectivityChange = (isConnected) => {
+        //监听是否连接服务器
+        if (isConnected){
+            DeviceEventEmitter.addListener('connect_socket',this._handConnectSocket);
+        }else{
+            DeviceEventEmitter.removeListener('connect_socket',this._handConnectSocket);
+        }
         this.storeDispatch('listenerNetInfo', isConnected);
+    }
+    connect_socket = ()=>{
+        tchat = Tchat.init('www.wxdevelop.com',12000);
+        tchat.addWebSocketOnOpenListener(()=>{
+            let sendData = JSON.stringify({type:'login',data:global.token});
+            tchat.send(sendData);
+        })
+        tchat.addWebSocketOnErrorListener((e)=>{
+            console.log(e.message)
+        })
+        tchat.addWebSocketOnMessageListener((e)=>{
+            let data = JSON.parse(e.data)
+            let storeAll = store.getState();
+            let { id } = storeAll.personalReducer.info;
+            if (data.target == id){
+                data.target = data.data.to;
+                this.storeDispatch('mergeChatList',data);
+            }else{
+                this.storeDispatch('addChatList',data);
+                this.storeDispatch('mergeChatList',data);
+            }
+        })
+        tchat.addWebSocketOnCloseListener((e)=>{
+            console.log('关闭链接')
+        })
+    }
+    _handConnectSocket = (e)=>{
+        console.log(e)
+        if (e.connect == false && tchat){
+            tchat = tchat.close();
+        }
+        if (e.connect && !tchat){
+            console.log('开始监听服务器')
+            this.connect_socket()
+        }
     }
     _handleFirstConnectivityChange = (connectionInfo)=>{
         this.storeDispatch('listenerNetMode', connectionInfo);
@@ -93,14 +138,6 @@ export default class Root extends Component {
         this.storeDispatch('listenerAppState', nextAppState);
     }
     _handleGetGeolocation() {
-        // navigator.geolocation.getCurrentPosition((position) => {
-        //     this.storeDispatch(Types.GetGeolocation, position)
-        // },
-        //     (error) => {
-        //         alert(error.message)
-        //     },
-        //     // {enableHighAccuracy: true, timeout: 20000, maximumAge: 1000}
-        // )
         this.watchID = navigator.geolocation.watchPosition((position) => {
             this.storeDispatch(Types.GetGeolocation, position)
         });

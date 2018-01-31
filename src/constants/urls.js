@@ -46,3 +46,8 @@ export const Get_task_form_options =  BASIC_URL + '/getTaskFormOptions';
 
 //提交任务表单
 export const Submit_task =  BASIC_URL + '/addAssignedTask';
+
+//获取客服id
+export const GetContactId_url =  BASIC_URL + '/getContacts';
+//发送聊天消息
+export const SendMsg_url =  BASIC_URL + '/sendMsg';

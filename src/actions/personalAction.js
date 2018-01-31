@@ -3,6 +3,7 @@ import * as Urls from "../constants/urls";
 import Util from "../constants/util";
 import { Toast } from 'teaset';
 
+
 export function bindWechat(data){
     return (dispatch)=>{
         Util.post(Urls.Bind_wechat+'/'+data,{},
@@ -47,29 +48,33 @@ export function unbindWeChat(data){
 
 export function loginWithWechat(data,type=1){
     return (dispatch)=>{
+        dispatch({
+            type:Types.UserInfo_BEGIN
+        })
         let register_id = global.registrationId ? global.registrationId : null;
         Util.post(Urls.Login_wechat_url+'/'+data,{register_id},
             (respJson)=>{
+                let token = '';
                 if (respJson.code == 1){
                     dispatch({
-                        type:Types.Login_SUCCESS,
+                        type:Types.UserInfo_SUCCESS,
                         data:respJson.data
                     })
-                    dispatch({
-                        type:Types.Change_TOKEN,
-                        data:respJson.data.token
-                    })
+                    token = respJson.data.token;
                 }else{
-                    Toast.message(respJson.msg);
                     dispatch({
-                        type:Types.Login_FAILED,
-                        data:respJson.msg
+                        type:Types.UserInfo_FAILED,
                     })
+                    Toast.fail(respJson.msg);
                 }
+                dispatch({
+                    type:Types.Change_TOKEN,
+                    data:token
+                })
             },
             (error)=>{
                 dispatch({
-                    type:Types.Login_FAILED,
+                    type:Types.UserInfo_FAILED,
                 })
                 Toast.message(error.message);
             }
@@ -79,29 +84,69 @@ export function loginWithWechat(data,type=1){
 
 export function login(data,type=1){
     return (dispatch)=>{
+        dispatch({
+            type:Types.UserInfo_BEGIN
+        })
         let register_id = global.registrationId ? global.registrationId : null;
         Util.post(Urls.Login_url,{...data,register_id},
             (respJson)=>{
+                console.log(respJson)
+                let token = '';
                 if (respJson.code == 1){
                     dispatch({
-                        type:Types.Login_SUCCESS,
+                        type:Types.UserInfo_SUCCESS,
                         data:respJson.data
                     })
-                    dispatch({
-                        type:Types.Change_TOKEN,
-                        data:respJson.data.token
-                    })
+                    token = respJson.data.token;
                 }else{
-                    Toast.message(respJson.msg);
                     dispatch({
-                        type:Types.Login_FAILED,
-                        data:respJson.msg
+                        type:Types.UserInfo_FAILED,
                     })
+                    Toast.fail(respJson.msg);
                 }
+                dispatch({
+                    type:Types.Change_TOKEN,
+                    data:token 
+                })
             },
             (error)=>{
                 dispatch({
-                    type:Types.Login_FAILED,
+                    type:Types.UserInfo_FAILED,
+                })
+                Toast.message(error.message);
+            }
+        )
+    }
+}
+
+export function initPersonal(){
+    return (dispatch) =>{
+        dispatch({
+            type:Types.UserInfo_BEGIN
+        })
+        Util.post(Urls.UserInfo_url,{},
+            (respJson) =>{
+                let token = '';
+                if (respJson.code == 1){
+                    dispatch({
+                        type:Types.UserInfo_SUCCESS,
+                        data:respJson.data
+                    })
+                   token = respJson.data.token;
+                }else{
+                    dispatch({
+                        type:Types.UserInfo_FAILED,
+                    })
+                    Toast.fail(respJson.msg);
+                }
+                dispatch({
+                    type:Types.Change_TOKEN,
+                    data:token
+                })
+            },
+            (error)=>{
+                dispatch({
+                    type:Types.UserInfo_FAILED,
                 })
                 Toast.message(error.message);
             }
@@ -140,43 +185,5 @@ export function uploadAvatar(data){
             }
         )
 
-    }
-}
-
-export function initPersonal(){
-    return (dispatch) =>{
-        dispatch({
-            type:Types.UserInfo_BEGIN
-        })
-        Util.post(Urls.UserInfo_url,{},
-            (respJson) =>{
-                console.log(respJson)
-                if (respJson.code == 1){
-                    dispatch({
-                        type:Types.UserInfo_SUCCESS,
-                        data:respJson.data
-                    })
-                }else{
-                    dispatch({
-                        type:Types.UserInfo_FAILED,
-                    })
-                    dispatch({
-                        type:Types.Change_TOKEN,
-                        data:''
-                    })
-                    Toast.fail(respJson.msg);
-                }
-            },
-            (error)=>{
-                dispatch({
-                    type:Types.UserInfo_FAILED,
-                })
-                dispatch({
-                    type:Types.Change_TOKEN,
-                    data:''
-                })
-                Toast.fail(error.message);
-            }
-        )
     }
 }

@@ -1,4 +1,5 @@
 import * as Types from "../actions/actionTypes";
+import {DeviceEventEmitter} from 'react-native';
 
 const initialState = {
     isLogin: false,
@@ -16,18 +17,8 @@ export function personalReducer(state = initialState, action) {
                 info:action.data
             }
         case Types.Logout:
+            DeviceEventEmitter.emit('connect_socket',{connect:false})
             return initialState
-        case Types.Login_SUCCESS:
-            return {
-                ...state,
-                isLogin: true,
-                info: action.data,
-            }
-        case Types.Login_FAILED:
-            return {
-                ...initialState,
-                errorMsg: action.data
-            }
         case Types.Upload_Avatar_SUCCESS:
             return {
                 ...state,
@@ -39,6 +30,7 @@ export function personalReducer(state = initialState, action) {
                 status: 'doing',
             }
         case Types.UserInfo_SUCCESS:
+            DeviceEventEmitter.emit('connect_socket',{connect:true})
             return {
                 ...state,
                 isLogin: true,
@@ -46,6 +38,7 @@ export function personalReducer(state = initialState, action) {
                 info: action.data
             }
         case Types.UserInfo_FAILED:
+            DeviceEventEmitter.emit('connect_socket',{connect:false})
             return initialState
         default:
             return state;
