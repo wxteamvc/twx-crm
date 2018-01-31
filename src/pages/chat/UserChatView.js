@@ -19,7 +19,11 @@ import ReactNative ,{
 import { connect } from 'react-redux';
 import RNFS from 'react-native-fs';
 import { NavigationBar,Toast } from 'teaset';
-import IMUI from 'aurora-imui-react-native'
+import IMUI from 'aurora-imui-react-native';
+import * as Urls from "../../constants/urls";
+import Util from "../../constants/util";
+
+
 var InputView = IMUI.ChatInput
 var MessageListView = IMUI.MessageList
 const AuroraIController = IMUI.AuroraIMUIController
@@ -31,15 +35,15 @@ var themsgid = 1
 
 function constructNormalMessage() {
 
-  var message = {}
+  let message = {}
   message.msgId = themsgid.toString()
   themsgid += 1
-  message.status = "send_failed"   //send_going 正在发送 send_succeed发送成功 send_failed发送消息失败
+  message.status = "send_going"   //send_going 正在发送 send_succeed发送成功 send_failed发送消息失败
   message.isOutgoing = true
   message.timeString = ""
   var user = {
     userId: "",
-    displayName: "replace your nickname",
+    displayName: "我的名字",
     avatarPath: "ironman"
   }
   user.avatarPath = RNFS.MainBundlePath + '/default_header.png'
@@ -79,14 +83,59 @@ class UserChat extends Component {
     this.updateLayout = this.updateLayout.bind(this);
   }
 
+  componentWillUnmount() {
+
+    AuroraIController.removeMessageListDidLoadListener(MessageListDidLoadEvent)
+  }
+
   componentDidMount() {
+    const { chatWith } = this.props.navigation.state.params;
+    const { chatList } = this.props;
+    console.log(chatList)
+    if (chatList[chatWith]){
+      let newChatList = chatList[chatWith].slice(-10);
+      newChatList.reverse();
+      let messageList = [];
+      newChatList.map((data,index)=>{
+        var message = constructNormalMessage();
+        message.msgId = data.id;
+        message.status = 'send_succeed';
+        message.isOutgoing = false;
+        message.text = data.msg;
+        message.fromUser.avatarPath = data.avatar;
+        message.fromUser.userId = data.from.toString();
+        message.fromUser.displayName = data.to_name;
+        message.msgType = data.type;
+        messageList.push(message);
+      })
+      AuroraIController.insertMessagesToTop(messageList);
+    }
 
     this.resetMenu()
     AuroraIController.addMessageListDidLoadListener(() => {
       this.getHistoryMessage()
     });
   }
-
+  componentDidUpdate() {
+    const { chatWith } = this.props.navigation.state.params;
+    const { chatList} = this.props;
+    if(chatList.newMessage != null){
+      const { data } = chatList.newMessage;
+      console.log(data)
+      if (chatWith == chatList.newMessage.target){
+        var message = constructNormalMessage();
+        message.msgId = data.id;
+        message.status = 'send_succeed';
+        message.isOutgoing = false;
+        message.text = data.msg;
+        message.fromUser.avatarPath = data.avatar;
+        message.fromUser.userId = data.from.toString();
+        message.fromUser.displayName = data.to_name;
+        message.msgType = data.type;
+        AuroraIController.appendMessages([message])
+      }
+    }
+  }
   //页面初始化的时候执行 ---- 获取历史消息在这边
   getHistoryMessage() {
     var messages = []
@@ -119,7 +168,6 @@ class UserChat extends Component {
   }
 
   onInputViewSizeChange = (size) => {
-    console.log("height: " + size.height)
     if (this.state.inputLayoutHeight != size.height) {
       this.setState({
         inputLayoutHeight: size.height,
@@ -127,10 +175,6 @@ class UserChat extends Component {
         messageListLayout: { flex:1, width: window.width, margin: 0 }
       })
     }
-  }
-
-  componentWillUnmount() {
-    AuroraIController.removeMessageListDidLoadListener(MessageListDidLoadEvent)
   }
 
   resetMenu() {
@@ -191,6 +235,7 @@ class UserChat extends Component {
   }
 
   onStatusViewClick = (message) => {
+    console.log(message)
       //这边应该写点击重发
       alert('消息重发，如果消息发送就把状态改成send_succeed')
     message.status = 'send_succeed'
@@ -209,43 +254,57 @@ class UserChat extends Component {
   //上拉刷新消息-----也相当于获取以前的消息
   onPullToRefresh = () => {
     console.log("on pull to refresh")
-    var messages = []
-    for (var i = 0; i < 5; i++) {
-      var message = constructNormalMessage()
-      // if (index%2 == 0) {
-      message.msgType = "text"
-      message.text = "" + i
-      // }
+    // var messages = []
+    // for (var i = 0; i < 5; i++) {
+    //   var message = constructNormalMessage()
+    //   // if (index%2 == 0) {
+    //   message.msgType = "text"
+    //   message.text = "" + i
+    //   // }
 
-      if (i % 3 == 0) {
-        message.msgType = "event"
-        message.text = "" + i
-      }
+    //   if (i % 3 == 0) {
+    //     message.msgType = "event"
+    //     message.text = "" + i
+    //   }
 
-      AuroraIController.insertMessagesToTop([message])
-    }
-    // AuroraIController.insertMessagesToTop(messages)
-    this.refs["MessageList"].refreshComplete()
+    //   AuroraIController.insertMessagesToTop([message])
+    // }
+    // // AuroraIController.insertMessagesToTop(messages)
+    // this.refs["MessageList"].refreshComplete()
   }
 
   onSendText = (text) => {
-    var message = constructNormalMessage()
-    var evenmessage = constructNormalMessage()
-
+    const { chatWith } = this.props.navigation.state.params;
+    let message = constructNormalMessage()
     message.msgType = 'text'
     message.text = text
-
     AuroraIController.appendMessages([message])
+    //构造对象存储
+    Util.post(Urls.SendMsg_url+"/text",{to:chatWith,msg:text},
+      (respJson) =>{
+          if (respJson.code == 1){
+            // message.msgId = respJson.data;
+            let newMsg = Object.assign({},message)
+              newMsg.status = "send_successed";
+              AuroraIController.updateMessage(newMsg)
+          }else{
+            Toast.message(respJson.msg)
+          }
+      },
+      (error)=>{
+         console.log(error.message);
+      } 
+    )
   }
 
   onTakePicture = (mediaPath) => {
 
-    var message = constructNormalMessage()
-    message.msgType = 'image'
-    message.mediaPath = mediaPath
-    AuroraIController.appendMessages([message])
-    this.resetMenu()
-    AuroraIController.scrollToBottom(true)
+    // var message = constructNormalMessage()
+    // message.msgType = 'image'
+    // message.mediaPath = mediaPath
+    // AuroraIController.appendMessages([message])
+    // this.resetMenu()
+    // AuroraIController.scrollToBottom(true)
   }
 
   onStartRecordVoice = (e) => {
@@ -253,12 +312,12 @@ class UserChat extends Component {
   }
 
   onFinishRecordVoice = (mediaPath, duration) => {
-    var message = constructNormalMessage()
-    message.msgType = "voice"
-    message.mediaPath = mediaPath
-    message.timeString = "safsdfa"
-    message.duration = duration
-    AuroraIController.appendMessages([message])
+    // var message = constructNormalMessage()
+    // message.msgType = "voice"
+    // message.mediaPath = mediaPath
+    // message.timeString = "safsdfa"
+    // message.duration = duration
+    // AuroraIController.appendMessages([message])
   }
 
   onCancelRecordVoice = () => {
@@ -290,21 +349,21 @@ class UserChat extends Component {
      * 
      * 代码用例不做裁剪操作。
      */
-    for (index in mediaFiles) {
-      var message = constructNormalMessage()
-      if (mediaFiles[index].mediaType == "image") {
-        message.msgType = "image"
-      } else {
-        message.msgType = "video"
-        message.duration = mediaFiles[index].duration
-      }
+    // for (index in mediaFiles) {
+    //   var message = constructNormalMessage()
+    //   if (mediaFiles[index].mediaType == "image") {
+    //     message.msgType = "image"
+    //   } else {
+    //     message.msgType = "video"
+    //     message.duration = mediaFiles[index].duration
+    //   }
       
-      message.mediaPath = mediaFiles[index].mediaPath
-      message.timeString = "8:00"
-      AuroraIController.appendMessages([message])
-      AuroraIController.scrollToBottom(true)
-    }
-    this.resetMenu()
+    //   message.mediaPath = mediaFiles[index].mediaPath
+    //   message.timeString = "8:00"
+    //   AuroraIController.appendMessages([message])
+    //   AuroraIController.scrollToBottom(true)
+    // }
+    // this.resetMenu()
   }
 
   onSwitchToMicrophoneMode = () => {
@@ -349,7 +408,7 @@ class UserChat extends Component {
         <View style={this.state.navigationBar}
           ref="NavigatorView">
          
-          <Button
+          {/* <Button
             style={styles.sendCustomBtn}
             title="Custom Message"
             onPress={() => {
@@ -389,7 +448,7 @@ class UserChat extends Component {
                 AuroraIController.appendMessages([message]);
               }
             }}>
-          </Button>
+          </Button> */}
         </View>
         <MessageListView style={this.state.messageListLayout}
           ref="MessageList"
@@ -401,7 +460,7 @@ class UserChat extends Component {
           onBeginDragMessageList={this.onBeginDragMessageList}
           onPullToRefresh={this.onPullToRefresh}
           avatarSize={{ width: 40, height: 40 }}
-          sendBubbleTextSize={18}
+          sendBubbleTextSize={14}
           sendBubbleTextColor={"#000000"}
           sendBubblePadding={{ left: 10, top: 10, right: 15, bottom: 10 }}
         />
@@ -462,6 +521,7 @@ function mapStateToProps(state) {
     return {
         initInfo: state.initReducer,
         userInfo: state.personalReducer,
+        chatList: state.myChatReducer,
     }
 }
 

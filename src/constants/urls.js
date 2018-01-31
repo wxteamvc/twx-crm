@@ -49,3 +49,7 @@ export const Submit_task =  BASIC_URL + '/addAssignedTask';
 
 //请求订单列表
 export const Get_orderList =  BASIC_URL + '/getOrderList';
+//获取客服id
+export const GetContactId_url =  BASIC_URL + '/getContacts';
+//发送聊天消息
+export const SendMsg_url =  BASIC_URL + '/sendMsg';
