@@ -144,6 +144,7 @@ class Personal extends Component {
             { name: '指派任务', gourl: 'Tasks',icon:require('../constants/images/personal/任务.png')},
             { name: '账单管理', gourl: 'Orders',icon:require('../constants/images/personal/账单.png')},
             { name: '消费记录', gourl: 'UserChat',icon:require('../constants/images/personal/消费.png'),extra:{chatWith:9}},
+            { name: '消费记录', gourl: 'UserChat',icon:require('../constants/images/personal/消费.png'),extra:{chatWith:7}},
             { name: '公司设置', gourl: 'Orders',icon:require('../constants/images/personal/设置.png')},
         ];
         const listData = [

@@ -22,7 +22,9 @@ import { NavigationBar,Toast } from 'teaset';
 import IMUI from 'aurora-imui-react-native';
 import * as Urls from "../../constants/urls";
 import Util from "../../constants/util";
-
+import moment from 'moment';
+import momentLocale from 'moment/locale/zh-cn';
+moment.updateLocale('zh-cn',momentLocale);
 
 var InputView = IMUI.ChatInput
 var MessageListView = IMUI.MessageList
@@ -33,24 +35,7 @@ const MessageListDidLoadEvent = "IMUIMessageListDidLoad"
 
 var themsgid = 1
 
-function constructNormalMessage() {
 
-  let message = {}
-  message.msgId = themsgid.toString()
-  themsgid += 1
-  message.status = "send_going"   //send_going 正在发送 send_succeed发送成功 send_failed发送消息失败
-  message.isOutgoing = true
-  message.timeString = ""
-  var user = {
-    userId: "",
-    displayName: "我的名字",
-    avatarPath: "ironman"
-  }
-  user.avatarPath = RNFS.MainBundlePath + '/default_header.png'
-  message.fromUser = user
-
-  return message
-}
 
 class CustomVew extends Component {
   constructor(props) {
@@ -79,92 +64,100 @@ class UserChat extends Component {
       isAllowPullToRefresh: true,
       navigationBar: {}
     }
-
     this.updateLayout = this.updateLayout.bind(this);
   }
 
   componentWillUnmount() {
-
-    AuroraIController.removeMessageListDidLoadListener(MessageListDidLoadEvent)
+    AuroraIController.removeMessageListDidLoadListener(this.getHistoryMessage)
   }
 
   componentDidMount() {
-    const { chatWith } = this.props.navigation.state.params;
-    const { chatList } = this.props;
-    console.log(chatList)
-    if (chatList[chatWith]){
-      let newChatList = chatList[chatWith].slice(-10);
-      newChatList.reverse();
-      let messageList = [];
-      newChatList.map((data,index)=>{
-        var message = constructNormalMessage();
-        message.msgId = data.id;
-        message.status = 'send_succeed';
-        message.isOutgoing = false;
-        message.text = data.msg;
-        message.fromUser.avatarPath = data.avatar;
-        message.fromUser.userId = data.from.toString();
-        message.fromUser.displayName = data.to_name;
-        message.msgType = data.type;
-        messageList.push(message);
-      })
-      AuroraIController.insertMessagesToTop(messageList);
-    }
-
+    this.begin = 0;
     this.resetMenu()
-    AuroraIController.addMessageListDidLoadListener(() => {
-      this.getHistoryMessage()
-    });
+    AuroraIController.addMessageListDidLoadListener(
+      this.getHistoryMessage
+    );
   }
   componentDidUpdate() {
     const { chatWith } = this.props.navigation.state.params;
-    const { chatList} = this.props;
-    if(chatList.newMessage != null){
+    const { chatList } = this.props;
+    const { newMessage } = chatList;
+
+    if(chatList.newMessage != null && chatWith == newMessage.data.from ){
       const { data } = chatList.newMessage;
-      console.log(data)
-      if (chatWith == chatList.newMessage.target){
-        var message = constructNormalMessage();
-        message.msgId = data.id;
-        message.status = 'send_succeed';
-        message.isOutgoing = false;
-        message.text = data.msg;
-        message.fromUser.avatarPath = data.avatar;
-        message.fromUser.userId = data.from.toString();
-        message.fromUser.displayName = data.to_name;
-        message.msgType = data.type;
-        AuroraIController.appendMessages([message])
-      }
+      var message = this.constructNormalMessage(data);
+      AuroraIController.appendMessages([message])
     }
   }
+
+  onSendText = (text) => {
+    const { chatWith } = this.props.navigation.state.params;
+    let message = this.constructNormalMessage({msg:text})
+    AuroraIController.appendMessages([message])
+    //构造对象存储
+    Util.post(Urls.SendMsg_url+"/text",{to:chatWith,msg:text},
+      (respJson) =>{
+          let newMsg = Object.assign({},message)
+          if (respJson.code == 1){
+              newMsg.status = "send_successed";
+          }else{
+            newMsg.status = "send_failed";
+            Toast.message(respJson.msg)
+          }
+          AuroraIController.updateMessage(newMsg)
+      },
+      (error)=>{
+         console.log(error.message);
+      } 
+    )
+  }
+
+  constructNormalMessage = (data) =>{
+      const { info } = this.props.userInfo;
+      let message = {}
+      message.msgId = data.id ?  data.id:themsgid.toString();
+      themsgid += 1
+      message.status = data.status ? data.status:"send_going";   //send_going send_succeed send_failed
+      message.isOutgoing = (info.id != data.to) ? true :false;
+      message.msgType = data.type ? data.type :'text';
+      if (message.msgType == 'event_time'){
+        message.msgType = 'event';
+        message.text = moment(data.msg*1000).calendar();
+      }else{
+        message.text = data.msg;
+      }
+      message.timeString = ""
+      var user = {
+        userId: message.isOutgoing ? info.id.toString() : data.to,
+        displayName: message.isOutgoing ? info.nickname :data.to_name,
+        avatarPath: "ironman"
+      }
+      if (message.isOutgoing){
+        user.avatarPath = info.avatar_path ? info.avatar_path : RNFS.MainBundlePath + '/default_header.png'
+      }else{
+        user.avatarPath = data.avatar ? data.avatar : RNFS.MainBundlePath + '/default_header.png'
+      }
+      message.fromUser = user
+      return message
+    }
+
+
+
   //页面初始化的时候执行 ---- 获取历史消息在这边
-  getHistoryMessage() {
-    var messages = []
-    // for (var i = 0; i < 1; i++) {
-    //   var message = constructNormalMessage()
-    //   // message.msgType = "text"
-    //   // message.text = "" + i
-    //   // if (i%2 == 0)  {
-    //   //   message.isOutgoing = false
-    //   // }
-    //   var message = constructNormalMessage()
-    //   message.msgType = 'text'
-
-    //   if (Platform.OS === "ios") {
-    //     message.content = `
-    //     <h5>This is a custom message. </h5>
-    //     <img src="file://${RNFS.MainBundlePath}/default_header.png"/>
-    //     `
-    //   } else {
-    //     message.content = `<h5>This is a custom message. </h5>
-    //     <img src="file://${RNFS.MainBundlePath}/default_header.png"/>`
-    //   }
-    //   message.contentSize = { 'height': 100, 'width': 200 }
-    //   message.extras = { "extras": "fdfsf" }
-    //   AuroraIController.appendMessages([message])
-    //   AuroraIController.scrollToBottom(true)
-
-    //   AuroraIController.insertMessagesToTop([message])
-    // }
+  getHistoryMessage = ()=> {
+    const { chatWith } = this.props.navigation.state.params;
+    const { chatList } = this.props;
+    if (chatList[chatWith]){
+      console.log(this.begin)
+      let historyChatList = chatList[chatWith].slice(this.begin,this.begin+10);
+      console.log(historyChatList)
+        historyChatList.map((data,index)=>{
+          var message = this.constructNormalMessage(data);
+          AuroraIController.insertMessagesToTop([message]);
+          this.begin > 0 ? false:AuroraIController.scrollToBottom(true)
+        })
+        this.begin = historyChatList.length;
+    }
   }
 
   onInputViewSizeChange = (size) => {
@@ -253,7 +246,8 @@ class UserChat extends Component {
 
   //上拉刷新消息-----也相当于获取以前的消息
   onPullToRefresh = () => {
-    console.log("on pull to refresh")
+    this.getHistoryMessage();
+    this.refs["MessageList"].refreshComplete()
     // var messages = []
     // for (var i = 0; i < 5; i++) {
     //   var message = constructNormalMessage()
@@ -271,30 +265,6 @@ class UserChat extends Component {
     // }
     // // AuroraIController.insertMessagesToTop(messages)
     // this.refs["MessageList"].refreshComplete()
-  }
-
-  onSendText = (text) => {
-    const { chatWith } = this.props.navigation.state.params;
-    let message = constructNormalMessage()
-    message.msgType = 'text'
-    message.text = text
-    AuroraIController.appendMessages([message])
-    //构造对象存储
-    Util.post(Urls.SendMsg_url+"/text",{to:chatWith,msg:text},
-      (respJson) =>{
-          if (respJson.code == 1){
-            // message.msgId = respJson.data;
-            let newMsg = Object.assign({},message)
-              newMsg.status = "send_successed";
-              AuroraIController.updateMessage(newMsg)
-          }else{
-            Toast.message(respJson.msg)
-          }
-      },
-      (error)=>{
-         console.log(error.message);
-      } 
-    )
   }
 
   onTakePicture = (mediaPath) => {

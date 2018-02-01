@@ -12,7 +12,7 @@ const store = createStoreWithMiddleware(rootReducer,autoRehydrate())
 
 persistStore(store,{
     storage:AsyncStorage,
-    whitelist:['localConfigReducer']
+    whitelist:['localConfigReducer','myChatReducer']
 });
 
 export default store;
