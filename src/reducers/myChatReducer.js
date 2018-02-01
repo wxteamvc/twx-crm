@@ -4,22 +4,28 @@ const myChatState = {
 export function myChatReducer(state = myChatState, action) {
     switch (action.type) {
         case 'mergeChatList':
-            let newChat=[];
-            if (state[action.data.target]){
-                newChat = state[action.data.target].concat(action.data.data)
+            let { data } = action.data
+            if (action.data.type == 'receive'){
+                return {
+                    ...state,
+                    newMessage:null,
+                    [data.from]:state[data.from] ? [data].concat(state[data.from]) : [data]
+                }
             }else{
-                newChat =[action.data.data]
+                return {
+                    ...state,
+                    newMessage:null,
+                    [data.to]:state[data.to] ? [data].concat(state[data.to]) : [data]
+                }
             }
-            return {
-                ...state,
-                newMessage:null,
-                [action.data.target]:newChat
-            }
+           
         case 'addChatList':
             return {
                 ...state,
                 newMessage:action.data
             }
+        case 'cleanChat':
+            return myChatState
         default:
             return state;
     }

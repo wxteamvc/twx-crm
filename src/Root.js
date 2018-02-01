@@ -107,22 +107,14 @@ export default class Root extends Component {
         })
         tchat.addWebSocketOnMessageListener((e)=>{
             let data = JSON.parse(e.data)
-            let storeAll = store.getState();
-            let { id } = storeAll.personalReducer.info;
-            if (data.target == id){
-                data.target = data.data.to;
-                this.storeDispatch('mergeChatList',data);
-            }else{
-                this.storeDispatch('addChatList',data);
-                this.storeDispatch('mergeChatList',data);
-            }
+            data.type == 'receive' ? this.storeDispatch('addChatList',data):false;
+            this.storeDispatch('mergeChatList',data);
         })
         tchat.addWebSocketOnCloseListener((e)=>{
             console.log('关闭链接')
         })
     }
     _handConnectSocket = (e)=>{
-        console.log(e)
         if (e.connect == false && tchat){
             tchat = tchat.close();
         }
