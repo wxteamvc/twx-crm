@@ -75,3 +75,11 @@ export const OrderList_BEGIN = 'OrderList_BEGIN';
 export const OrderList_SUCCESS = 'OrderList_SUCCESS';
 //获取公司订单列表失败
 export const OrderList_FAILED = 'OrderList_FAILED';
+
+
+//获取订单详细信息开始
+export const OrderInfo_BEGIN = 'OrderInfo_BEGIN';
+//获取订单详细信息成功
+export const OrderInfo_SUCCESS = 'OrderInfo_SUCCESS';
+//获取订单详细信息失败
+export const OrderInfo_FAILED = 'OrderInfo_FAILED';

@@ -8,31 +8,31 @@ import { connect } from 'react-redux';
 import { getCustomerList } from '../actions/customerAction';
 import * as Animatable from 'react-native-animatable';
 import { NavigationActions } from 'react-navigation';
+import * as Types from "../actions/actionTypes";
 
 class CustomerList extends Component {
     constructor(props) {
         super(props)
     }
- 
-   
-   componentWillMount() {
-    // if (this.props.isLogin) {
-        this.props.dispatch(
-            getCustomerList()
-        )
-    // } else {
-    //     const resetAction = NavigationActions.reset({
-    //         index: 1,
-    //         actions: [
-    //             NavigationActions.navigate({ routeName: 'HomeTab'}),
-    //             NavigationActions.navigate({ routeName: 'Login' }),
-               
-    //         ]
-    //     })
-    //     this.props.navigation.dispatch(resetAction);
-    // }
-   }
-   
+
+
+    componentWillMount() {
+        this.props.dispatch(getCustomerList())
+    }
+
+
+    getElseList = () => {
+        const { list } = this.props;
+        if (list.next_page_url) {
+            this.props.dispatch(getCustomerList(list.next_page_url))
+        }
+    }
+
+    componentWillUnmount() {
+        this.props.dispatch({
+            type: Types.CustomerList_FAILED
+        })
+    }
 
     renderBody = (item, key) => {
         return (
@@ -71,16 +71,16 @@ class CustomerList extends Component {
                     </Text>
                 </View>
                 <WhiteSpace size={'sm'} />
-                <View style={[styles.flex_row_between]}>
+                {/* <View style={[styles.flex_row_between]}>
                     <Text style={[styles.fontsize12, { color: '#ccc' }]}>所属公司 : 新昌咨询(死数据)</Text>
                     <Text style={[styles.fontsize12, { color: '#ccc' }]}>贷款总额 : &yen; 5000&nbsp;&nbsp;&nbsp;&nbsp;回款总额 : &yen; 5000(死数据)</Text>
-                </View>
+                </View> */}
             </TouchableOpacity>
         )
     }
 
-    render() {
-        if (this.props.list.status == 'done'&&this.props.list.data.length!=0) {
+    render() {  
+        if (this.props.list.isReady){
             return (
                 <View style={{ flex: 1 }}>
                     <StatusBar
@@ -91,13 +91,16 @@ class CustomerList extends Component {
                     <Accordion
                         sections={this.props.list.data}
                         renderMainBody={this.renderBody}
+                        ItemSeparatorComponent={() => <WhiteSpace size='md' />}
+                        onEndReached={this.getElseList}
+                        onEndReachedThreshold={0.5}
                         renderHeader={(section, key, isShow) => (
-                            <View style={[styles.flex_center, { padding: 10 }]}>
+                            <View style={[styles.flex_center, styles.item_accordion_btn]}>
                                 {isShow ? <Icon type={'up'} size={15} color={'#ccc'} /> : <Icon type={'down'} size={15} color={'#ccc'} />}
                             </View>
                         )}
                         renderContent={(section) => (
-                            <View>
+                            <View style={styles.item_accordion_content}>
                                 <Text>我是内容</Text>
                             </View>
                         )}

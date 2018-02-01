@@ -4,12 +4,12 @@ import Util from "../constants/util";
 import { Toast } from 'teaset';
 
 
-export function getCustomerList(){
+export function getCustomerList(nextUrl=false){
     return (dispatch) =>{
         dispatch({
             type:Types.CustomerList_BEGIN
         })
-        Util.post(Urls.CustomerList_url,{},
+        Util.post(nextUrl?nextUrl:Urls.CustomerList_url,{},
             (respJson) =>{
                 if (respJson.code == 1){
                     dispatch({

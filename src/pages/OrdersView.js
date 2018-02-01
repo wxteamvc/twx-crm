@@ -17,6 +17,7 @@ import { styles } from '../constants/styles';
 import { ScreenHeight, StatusBarHeight, ScreenWidth } from '../constants/global';
 import { createForm } from 'rc-form';
 import { getOrderList } from '../actions/ordersAction';
+import Placeholder from 'rn-placeholder';
 import * as Types from "../actions/actionTypes";
 import Collapsible from '../components/Accordion/Collapsible';
 
@@ -70,6 +71,25 @@ class OrdersView extends Component {
                 <View style={[styles.flex_center, { paddingTop: 5, paddingBottom: 5 }]}><Text style={styles.fontsize12}>加载中...</Text></View>
             )
         }
+    }
+
+    renderPlaceholder = () => {
+        const arr = [1, 2, 3, 4, 5];
+        const list = [];
+        arr.map((item, index) => {
+            list.push(
+                <Placeholder.ImageContent
+                    key={index}
+                    size={80}
+                    lineNumber={6}
+                    lineSpacing={5}
+                    lastLineWidth="30%"
+                    onReady={this.props.ordersList.isReady}
+                >
+                </Placeholder.ImageContent>
+            )
+        })
+        return list;
     }
 
 
@@ -189,10 +209,11 @@ class OrdersView extends Component {
                         null}
                 </View>
                 <View style={styles.OrdersView_content_container}>
+                    {this.renderPlaceholder()}
                     <FlatList
                         data={ordersList.data.data}
                         ListHeaderComponent={() => <WhiteSpace size="sm" />}
-                        ListFooterComponent={ordersList.status=='done'?this.renderFaltListBottom:null}
+                        ListFooterComponent={ordersList.status == 'done' ? this.renderFaltListBottom : null}
                         renderItem={this.renderItem}
                         keyExtractor={(item, index) => index}
                         ItemSeparatorComponent={() => <WhiteSpace size="sm" />}
@@ -211,13 +232,15 @@ class OrdersView extends Component {
             <TouchableOpacity
                 style={[styles.OrderListPage_item_body]}
                 activeOpacity={1}
-                onPress={() => this.props.navigation.navigate('OrderInfo', { order_id: item.order_id })}
+                onPress={() => this.props.navigation.navigate('OrderInfo', { id: item.id })}
             >
                 <View style={[styles.flex_row_between, styles.OrderListPage_item_header]}>
                     <View style={[styles.flex_row_columncenter, styles.OrderListPage_item_header_left]}>
                         <Text style={styles.fontsize12}>单号 : {item.order_id}</Text>
                     </View>
-                    {item.steps >= 2 ? <Text style={[styles.fontsize10, { color: '#ccc' }]}>放款时间 : {moment(parseInt(item.loan_time) * 1000).format('l')}</Text> : null}
+                    {item.steps >= 2 ? <Text style={[styles.fontsize10, { color: '#ccc' }]}>放款时间 : {moment(parseInt(item.loan_time) * 1000).format('l')}</Text> :
+                        <Text style={[styles.fontsize10, { color: '#ccc' }]}>申请时间 : {moment(parseInt(item.applydate) * 1000).format('l')}</Text>
+                    }
                 </View>
                 <View style={[styles.OrderListPage_item_content]}>
                     <View style={[styles.flex_row_columncenter, { paddingLeft: 15, paddingRight: 15 }]}>

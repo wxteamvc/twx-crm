@@ -26,14 +26,14 @@ import CompanyHome from '../pages/CompanyHomeView';
 import UserChat from '../pages/chat/UserChatView';
 
 const App = StackNavigator({
-    Lead: {
-        screen: Lead,
-        navigationOptions: ({ navigation }) => {
-            return ({
-                header: null
-            })
-        }
-    },
+    // Lead: {
+    //     screen: Lead,
+    //     navigationOptions: ({ navigation }) => {
+    //         return ({
+    //             header: null
+    //         })
+    //     }
+    // },
     HomeTab: {
         screen: HomeTab,
         navigationOptions: ({ navigation }) => {
