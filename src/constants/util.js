@@ -5,7 +5,6 @@
 
 'use strict';
 
-
 let Util = {
     /**
      * http get 请求简单封装
