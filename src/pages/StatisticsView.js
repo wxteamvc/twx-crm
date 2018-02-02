@@ -6,12 +6,13 @@ import {
 } from 'react-native';
 import { connect } from 'react-redux';
 
-class Statistics extends Component{
-    render(){
-        let {initData} = this.props;
+
+class Statistics extends Component {
+    render() {
+        let { initData } = this.props;
         return (
-            <View>
-               <Text>我是统计</Text>   
+            <View style={{flex:1}}>
+                <Text>我是统计</Text>
             </View>
 
         )
@@ -19,9 +20,9 @@ class Statistics extends Component{
 }
 
 
-function mapStateToProps(state){
+function mapStateToProps(state) {
     return {
-        initData:state.initReducer
+        initData: state.initReducer
     }
 }
 export default connect(mapStateToProps)(Statistics);

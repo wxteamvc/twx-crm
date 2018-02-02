@@ -19,14 +19,13 @@ import Orders from '../components/customerOrders'
 class CustomerInfo extends Component {
     componentWillMount() {
         const { userInfo,navigation } = this.props;
-        if (userInfo.isLogin === false) navigation.navigate('Login');
+        // if (userInfo.isLogin === false) navigation.navigate('Login');
         this.props.dispatch(getCustomerInfo(navigation.state.params.id));
         
     }
     
     render() {
         const{data} =this.props.info;
-        console.log(data)
         const tabs = [
             { title: <Text>所有订单</Text> },
             { title: <Text>详细资料</Text> },
@@ -44,7 +43,7 @@ class CustomerInfo extends Component {
                     stickyHeaderHeight={50}
                     parallaxHeaderHeight={150}
                     backgroundSpeed={10}
-                    // showsVerticalScrollIndicator={false}
+                    showsVerticalScrollIndicator={false}
                     style={{flex:1}}
                     renderForeground={
                         () =>

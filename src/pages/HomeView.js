@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
-import { View, Text, Image, ScrollView, FlatList, StatusBar,Platform,BackHandler } from 'react-native';
-import { Grid, WhiteSpace, Carousel, Flex } from 'antd-mobile';
+import { View, Text, Image, ScrollView, FlatList, StatusBar, Platform, BackHandler ,TouchableOpacity} from 'react-native';
+import { Grid, WhiteSpace, Carousel, Flex ,WingBlank,Icon} from 'antd-mobile';
 import { styles } from '../constants/styles'
 import { ScreenWidth } from '../constants/global';
 import { connect } from 'react-redux';
@@ -9,7 +9,7 @@ import Notices from '../components/notices';
 
 class Home extends Component {
     componentDidMount() {
-        if (Platform.OS === 'android'){
+        if (Platform.OS === 'android') {
             BackHandler.addEventListener('hardwareBackPress', this.onBackAndroid);
         }
     }
@@ -19,16 +19,16 @@ class Home extends Component {
             BackHandler.removeEventListener('hardwareBackPress', this.onBackAndroid);
         }
     }
-    
-    onBackAndroid = ()=>{
-        
+
+    onBackAndroid = () => {
+
     }
 
     renderCarouselItem = () => {
         const { banner } = this.props.home;
         const items = banner.map((item, index) => {
             return (
-                <Image resizeMode={'cover'} source={{ uri: item }} style={{ width: ScreenWidth, height: 150 }} key={index} />
+                <Image resizeMode={'cover'} source={{ uri: item }} style={{ width: ScreenWidth, height: 180 }} key={index} />
             )
         })
         return items
@@ -48,76 +48,37 @@ class Home extends Component {
         )
     }
 
-    render() { 
-        const { modules, home , isLogin} = this.props;
-        const { home_top, notices, home_activity } = home;
-        const selectModules = [];
-        modules.map(function (item) {
-            if (item.selected) {
-                selectModules.push(item)
-            }
-        })
-        selectModules.push(
-            {
-                name: '更多',
-                icon: require('../constants/images/更多.png'),
-                goUrl: 'EditModules'
-            },
+    renderActivityList = ({ item }) => {
+        return (
+            <View style={[styles.flex_row_columncenter, styles.companyHome_content_activity_listItem_body]}>
+                <View style={{ flexDirection: 'row' }}>
+                    <View style={[styles.flex_center, { flex: 0.2 }]}>
+                        <Image
+                            style={{ height: 50, width: 50 }}
+                            source={item.img ? { uri: item.img } : require('../constants/images/activity.png')}
+                        />
+                    </View>
+                    <View style={{ flex: 0.03 }}></View>
+                    <View style={{ flex: 0.7 }}>
+                        <Text style={[styles.fontsize12, { color: '#000' }]}>{item.title}</Text>
+                        <WhiteSpace size={'xs'} />
+                        <Text style={styles.fontsize10} numberOfLines={1}>{item.content}</Text>
+                    </View>
+                </View>
+            </View>
         )
+    }
+
+    render() {
+        const { modules, home, isLogin } = this.props;
+        const { notices, activityData, home_activity } = home;
         return (
             <View style={{ flex: 1 }}>
                 <StatusBar
-                    translucent={false}
-                    backgroundColor='#40a9ff'
+                    translucent={true}
+                    backgroundColor='rgba(0,0,0,0.3)'
                 />
                 <ScrollView showsVerticalScrollIndicator={false}>
-                    <View style={[styles.home_top, styles.flex_column_end]}>
-                        <View style={[styles.home_top_content]}>
-                            <Grid data={home_top}
-                                columnNum={4}
-                                hasLine={false}
-                                onClick={(item, index) => {
-                                    this.props.navigation.navigate(item.goUrl)
-                                }}
-                                itemStyle={styles.flex_center}
-                                renderItem={(dataItem, index) => {
-                                    return (
-                                        <View style={styles.flex_center}>
-                                            <Image source={dataItem.icon} style={{ width: 30, height: 30, }} />
-                                            <Text style={[styles.fontsize10, { color: '#fff' }]}>{dataItem.name}</Text>
-                                        </View>
-                                    )
-                                }}
-                            />
-                        </View>
-                    </View>
-                    <View style={{ backgroundColor: '#fff' }}>
-                        <Grid data={selectModules}
-                            columnNum={4}
-                            isCarousel={true}
-                            carouselMaxRow={2}
-                            hasLine={false}
-                            onClick={(item, index) => {
-                                if(isLogin){
-                                    this.props.navigation.navigate(item.goUrl)
-                                }else{
-                                    this.props.navigation.navigate('Login',{jumpwhere:item.goUrl})
-                                }     
-                            }}
-                            itemStyle={styles.flex_center}
-                            renderItem={(dataItem, index) => {
-                                return (
-                                    <View style={styles.flex_center}>
-                                        <Image source={dataItem.icon} style={{ width: 30, height: 30 }} />
-                                        <Text style={styles.fontsize10}>{dataItem.name}</Text>
-                                    </View>
-                                )
-                            }}
-                        />
-                    </View>
-                    <WhiteSpace size={'sm'} />
-                    <Notices data={notices} imageSize={30} callBack={(item) => { alert('我要去' + item.goUrl) }} />
-                    <WhiteSpace size={'sm'} />
                     <Carousel
                         dots={false}
                         autoplay={true}
@@ -125,6 +86,8 @@ class Home extends Component {
                     >
                         {this.renderCarouselItem()}
                     </Carousel>
+                    <WhiteSpace size={'sm'} />
+                    <Notices data={notices} imageSize={30} callBack={(item) => { alert('我要去' + item.goUrl) }} />
                     <WhiteSpace size={'sm'} />
                     <FlatList
                         style={{ backgroundColor: '#fff' }}
@@ -140,6 +103,24 @@ class Home extends Component {
                         keyExtractor={(item, index) => index}
                         renderItem={this.renderFlatListItem}
                     />
+                    <WhiteSpace size={'sm'} />
+                    <FlatList
+                        style={{ backgroundColor: '#fff' }}
+                        ListHeaderComponent={
+                            <View style={[styles.flex_row_between, styles.home_activity_title]}>
+                                <View style={[styles.home_activity_title_View, { borderColor: '#CC0000' }]}>
+                                    <Text style={styles.fontsize10}>精彩活动</Text>
+                                </View>
+                                <TouchableOpacity style={styles.flex_row_columncenter} activeOpacity={1} onPress={() => alert('查看更多')}>
+                                    <Text style={styles.fontsize10}>更多</Text>
+                                    <WingBlank size={'sm'}><Icon type={'right'} size={10} color={'#ccc'}/></WingBlank>
+                                </TouchableOpacity>
+                            </View>
+                        }
+                        data={activityData}
+                        keyExtractor={(item, index) => index}
+                        renderItem={this.renderActivityList}
+                    />
 
                 </ScrollView>
             </View>
@@ -152,7 +133,7 @@ function mapStateToProps(state) {
     return {
         modules: state.localConfigReducer.modules,
         home: state.homeReducer,
-        init:state.initReducer,
+        init: state.initReducer,
         isLogin: state.personalReducer.isLogin,
     }
 }

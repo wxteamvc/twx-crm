@@ -54,12 +54,13 @@ class CustomerList extends Component {
                 <View style={[{ paddingLeft: 20, paddingRight: 20 }]}>
                     <WhiteSpace size={'sm'} />
                     <View style={[styles.flex_row_columncenter]}>
-                        <View style={[{ flex: 1 }, styles.flex_row_columncenter]}>
+                        <View style={[{ flex:0.45 }, styles.flex_row_columncenter]}>
                             <Text numberOfLines={1} style={styles.fontsize12}>
                                 就职公司 : {item.company ? item.company : '未填写'}
                             </Text>
                         </View>
-                        <View style={[{ flex: 1 }, styles.flex_row_columncenter]}>
+                        <View style={{flex:0.1}}></View>
+                        <View style={[{ flex: 0.45 }, styles.flex_row_columncenter]}>
                             <Text numberOfLines={1} style={styles.fontsize12}>
                                 公司职务 : {item.job ? item.job : '未填写'}
                             </Text>
@@ -79,7 +80,7 @@ class CustomerList extends Component {
         )
     }
 
-    render() {  
+    render() { 
         if (this.props.list.isReady){
             return (
                 <View style={{ flex: 1 }}>

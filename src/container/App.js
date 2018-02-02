@@ -24,6 +24,7 @@ import AssignedTask from '../pages/AssignedTaskView';
 import TaskList from '../pages/TaskListView';
 import CompanyHome from '../pages/CompanyHomeView';
 import UserChat from '../pages/chat/UserChatView';
+import ImageView from '../pages/ImageView';
 
 const App = StackNavigator({
     // Lead: {
@@ -34,6 +35,7 @@ const App = StackNavigator({
     //         })
     //     }
     // },
+
     HomeTab: {
         screen: HomeTab,
         navigationOptions: ({ navigation }) => {
@@ -86,8 +88,8 @@ const App = StackNavigator({
             header: null
         })
     },
-    SetUserInfo:{
-        screen:SetUserInfo,
+    SetUserInfo: {
+        screen: SetUserInfo,
         navigationOptions: ({ navigation }) => ({
             header: null
         })
@@ -114,7 +116,7 @@ const App = StackNavigator({
                 backgroundColor: '#40a9ff'
             },
         }),
-    }, 
+    },
     Repay: {
         screen: RepayView,
         navigationOptions: ({ navigation }) => ({
@@ -122,72 +124,80 @@ const App = StackNavigator({
                 backgroundColor: '#40a9ff'
             },
         }),
-    }, 
-    Modal: { 
+    },
+    Modal: {
         screen: GiftedFormModal,
         navigationOptions: ({ navigation }) => ({
             header: null
         })
     },
-    BindTel:{
+    BindTel: {
         screen: BindTel,
         navigationOptions: ({ navigation }) => ({
             header: null
         })
     },
-    ChangePassword:{
+    ChangePassword: {
         screen: ChangePassword,
         navigationOptions: ({ navigation }) => ({
             header: null
         })
     },
-    FeedBack:{
+    FeedBack: {
         screen: FeedBack,
         navigationOptions: ({ navigation }) => ({
             header: null
         })
     },
-    Tasks:{
+    Tasks: {
         screen: Tasks,
         navigationOptions: ({ navigation }) => ({
             header: null
         })
     },
-    TaskList:{
+    TaskList: {
         screen: TaskList,
         navigationOptions: ({ navigation }) => ({
             header: null
         })
     },
-    AssignedTask:{
+    AssignedTask: {
         screen: AssignedTask,
         navigationOptions: ({ navigation }) => ({
             header: null
         })
     },
-    CompanyHome:{
+    CompanyHome: {
         screen: CompanyHome,
         navigationOptions: ({ navigation }) => ({
             header: null
         })
     },
-    UserChat:{
+    UserChat: {
         screen: UserChat,
         navigationOptions: ({ navigation }) => ({
             header: null
         })
+    },
+    ImageView: {
+        screen: ImageView,
+        navigationOptions: ({ navigation }) => {
+            return ({
+                header: null
+            })
+        }
+    },
+},
+    {
+        transitionConfig: () => ({
+            screenInterpolator: CardStackStyleInterpolator.forHorizontal,
+            transitionSpec: {
+                duration: 250,
+                easing: Easing.ease,
+                timing: Animated.timing,
+            },
+        }),
     }
-}, 
-{
-     transitionConfig: () => ({
-        screenInterpolator: CardStackStyleInterpolator.forHorizontal,
-        transitionSpec: {
-          duration: 250,
-          easing: Easing.ease,
-          timing: Animated.timing,
-        },
-  }),
-}
 )
 
 

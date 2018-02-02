@@ -4,29 +4,29 @@ import Util from "../constants/util";
 import { Toast } from 'teaset';
 
 
-export function getCustomerList(nextUrl=false){
-    return (dispatch) =>{
+export function getCustomerList(nextUrl = false) {
+    return (dispatch) => {
         dispatch({
-            type:Types.CustomerList_BEGIN
+            type: Types.CustomerList_BEGIN
         })
-        Util.post(nextUrl?nextUrl:Urls.CustomerList_url,{},
-            (respJson) =>{
-                if (respJson.code == 1){
+        Util.post(nextUrl ? nextUrl : Urls.CustomerList_url, {},
+            (respJson) => {
+                if (respJson.code == 1) {
                     dispatch({
-                        type:Types.CustomerList_SUCCESS,
-                        data:respJson.data
+                        type: Types.CustomerList_SUCCESS,
+                        data: respJson.data
                     })
-                }else{
-                    dispatch({
-                        type:Types.CustomerList_SUCCESS,
-                        data:respJson.data
-                     })
-                     Toast.fail(respJson.msg);
+                } else {
+                    // dispatch({
+                    //     type:Types.CustomerList_SUCCESS,
+                    //     data:respJson.data
+                    //  })
+                    Toast.fail(respJson.msg);
                 }
             },
-            (error)=>{
+            (error) => {
                 dispatch({
-                    type:Types.CustomerList_FAILED,
+                    type: Types.CustomerList_FAILED,
                 })
                 Toast.fail(error.message);
             }
@@ -34,29 +34,29 @@ export function getCustomerList(nextUrl=false){
     }
 }
 
-export function getCustomerInfo(customerId){
-    return (dispatch) =>{
+export function getCustomerInfo(customerId) {
+    return (dispatch) => {
         dispatch({
-            type:Types.CustomerInfo_BEGIN
+            type: Types.CustomerInfo_BEGIN
         })
-        Util.post(Urls.CustomerInfo_url+'/'+customerId,{},
-            (respJson) =>{
-                if (respJson.code == 1){
+        Util.post(Urls.CustomerInfo_url + '/' + customerId, {},
+            (respJson) => {
+                if (respJson.code == 1) {
                     dispatch({
-                        type:Types.CustomerInfo_SUCCESS,
-                        data:respJson.data
+                        type: Types.CustomerInfo_SUCCESS,
+                        data: respJson.data
                     })
-                }else{
-                    dispatch({
-                        type:Types.CustomerInfo_SUCCESS,
-                        data:respJson.data
-                     })
-                     Toast.fail(respJson.msg);
+                } else {
+                    // dispatch({
+                    //     type:Types.CustomerInfo_SUCCESS,
+                    //     data:respJson.data
+                    //  })
+                    Toast.fail(respJson.msg);
                 }
             },
-            (error)=>{
+            (error) => {
                 dispatch({
-                    type:Types.CustomerInfo_FAILED,
+                    type: Types.CustomerInfo_FAILED,
                 })
                 Toast.fail(error.message);
             }

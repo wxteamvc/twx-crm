@@ -10,7 +10,7 @@ import {
     Linking
 } from 'react-native';
 import { connect } from 'react-redux';
-import { List, InputItem, Toast, WhiteSpace, Button, Picker } from 'antd-mobile';
+import { List, InputItem, Toast, WhiteSpace, Button, Picker, WingBlank } from 'antd-mobile';
 import { styles } from '../constants/styles';
 import { ScreenHeight, StatusBarHeight, ScreenWidth } from '../constants/global';
 import * as Animatable from 'react-native-animatable';
@@ -61,7 +61,7 @@ export default class OrderInfo extends Component {
                 <View style={styles.companyHome_content_synopsis_body}>
                     <View style={styles.companyHome_content_synopsis_content}>
                         <View style={[styles.flex_row_columncenter, styles.order_info_rowItem_body]}>
-                            <View style={{ flex: 0.5 }}>
+                            <View style={[{ flex: 0.5 }]}>
                                 <Text style={[styles.fontsize12]}>客户姓名:&nbsp;{data.customer.cname}</Text>
                             </View>
                             <View style={{ flex: 0.5 }}>
@@ -84,7 +84,7 @@ export default class OrderInfo extends Component {
                                     onPress={() => Linking.openURL(`tel:${data.customer.phone}`)}
                                 >
                                     <Animatable.View animation="tada" iterationCount="infinite" duration={5000}>
-                                        <Image source={require('../constants/images/电话-1.png')} style={{ width: 20, height: 20 }} resizeMode={'contain'} />
+                                        <Image source={require('../constants/images/电话-1.png')} style={{ width: 20, height: 20 }} />
                                     </Animatable.View>
                                 </TouchableOpacity>
                                 <TouchableOpacity
@@ -93,7 +93,7 @@ export default class OrderInfo extends Component {
                                     onPress={() => Linking.openURL(`smsto:${data.customer.phone}`)}
                                 >
                                     <Animatable.View animation="tada" iterationCount="infinite" duration={9000}>
-                                        <Image source={require('../constants/images/短信(绿色).png')} style={{ width: 20, height: 20 }} resizeMode={'contain'} />
+                                        <Image source={require('../constants/images/短信(绿色).png')} style={{ width: 20, height: 20 }} />
                                     </Animatable.View>
                                 </TouchableOpacity>
                             </View>

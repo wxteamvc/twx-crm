@@ -11,7 +11,7 @@ import {
     ProgressBarAndroid
 } from 'react-native';
 import { connect } from 'react-redux';
-import { WhiteSpace, Icon, InputItem, Button } from 'antd-mobile';
+import { WhiteSpace, Icon, InputItem, Button, WingBlank } from 'antd-mobile';
 import moment from 'moment';
 import { styles } from '../constants/styles';
 import { ScreenHeight, StatusBarHeight, ScreenWidth } from '../constants/global';
@@ -20,7 +20,7 @@ import { getOrderList } from '../actions/ordersAction';
 import Placeholder from 'rn-placeholder';
 import * as Types from "../actions/actionTypes";
 import Collapsible from '../components/Accordion/Collapsible';
-
+import * as Animatable from 'react-native-animatable';
 
 class OrdersView extends Component {
     constructor(props) {
@@ -246,6 +246,16 @@ class OrdersView extends Component {
                     <View style={[styles.flex_row_columncenter, { paddingLeft: 15, paddingRight: 15 }]}>
                         <View style={[styles.flex_row_columncenter, { flex: 1 }]}>
                             <Text style={[styles.fontsize10]} numberOfLines={1}>客户姓名:{item.customer_cname}</Text>
+                            <WingBlank size={'md'}>
+                                <TouchableOpacity
+                                    activeOpacity={1}
+                                    onPress={() => {
+                                        this.props.navigation.navigate('CustomerInfo', { id: item.customer_id })
+                                    }}
+                                >
+                                    <Image source={require('../constants/images/个人信息.png')} style={{ width: 20, height: 20 }} />
+                                </TouchableOpacity>
+                            </WingBlank>
                         </View>
                         <View style={[styles.flex_row_columncenter, { flex: 1 }]}>
                             <Text style={[styles.fontsize10]} numberOfLines={1}>身份证号:{item.customer_card_id}</Text>

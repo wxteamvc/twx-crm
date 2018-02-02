@@ -3930,6 +3930,16 @@ react-native-image-crop-picker@^0.19.1:
   version "0.19.1"
   resolved "http://registry.npm.taobao.org/react-native-image-crop-picker/download/react-native-image-crop-picker-0.19.1.tgz#29ac98104b89e623501d5bcf476ada875679cce8"
 
+react-native-image-pan-zoom@^2.0.16:
+  version "2.0.16"
+  resolved "http://registry.npm.taobao.org/react-native-image-pan-zoom/download/react-native-image-pan-zoom-2.0.16.tgz#84cf96b530da73141d25f10e1ee26c862444d4d2"
+
+react-native-image-zoom-viewer@^2.0.19:
+  version "2.0.19"
+  resolved "http://registry.npm.taobao.org/react-native-image-zoom-viewer/download/react-native-image-zoom-viewer-2.0.19.tgz#7d247c7e013bffbbbc94be3e37591a6f3618ca0b"
+  dependencies:
+    react-native-image-pan-zoom "^2.0.16"
+
 react-native-material-textfield@^0.12.0:
   version "0.12.0"
   resolved "http://registry.npm.taobao.org/react-native-material-textfield/download/react-native-material-textfield-0.12.0.tgz#3fba19d76ab89f67052c81e082152fc243d82a3f"

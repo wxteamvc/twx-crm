@@ -1,8 +1,8 @@
 const homeState = {
     banner: [
-        'https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1515153670945&di=c738cb8388b3a3a67831b0969534e88d&imgtype=0&src=http%3A%2F%2Fwww.bjzfyr.com%2Fuploads%2Fallimg%2F160303%2F1-160303150U6361.jpg',
-        'https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1515153700130&di=0b346abd8593cdfbd0954124e18c0a65&imgtype=0&src=http%3A%2F%2Fpic.qiantucdn.com%2F58pic%2F19%2F71%2F16%2F00m58PICphT_1024.jpg',
-        'https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1515153732575&di=8b43e1bd98ac25b4ec10a6f48a5b0513&imgtype=0&src=http%3A%2F%2Fimgsrc.baidu.com%2Fimgad%2Fpic%2Fitem%2Fcc11728b4710b912159922dbc9fdfc03924522bf.jpg'
+        'https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1517567190889&di=9d35f2f8a897f2564cd831916897b914&imgtype=0&src=http%3A%2F%2Fimg2.3lian.com%2F2014%2Ff2%2F188%2Fd%2F104.jpg',
+        'https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1517567223850&di=ae7e3e83311d4295f3e2acb80ab93101&imgtype=0&src=http%3A%2F%2Fup.enterdesk.com%2Fedpic_source%2Fcb%2F3c%2Fd0%2Fcb3cd04575b89b8dfb29ffc31d22f140.jpg',
+        'https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1517567248339&di=4b551ad695d2110c208bca8f1f8c2286&imgtype=0&src=http%3A%2F%2Fimg05.tooopen.com%2Fimages%2F20150819%2Ftooopen_sy_138946578587.jpg'
     ],
     notices: {
         icon: require('../constants/images/通告.png'),
@@ -12,6 +12,13 @@ const homeState = {
             { text: '我是第二条我是第二条我是第二条', time: '半小时前' },
         ]
     },
+
+    activityData : [
+        { title: '初学佛时,我们如何发心', content: '发乎心止乎礼' ,img:'https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1517569202355&di=b566bee4d945fde1fd671a7cecf5dcbb&imgtype=0&src=http%3A%2F%2Fimg02.tooopen.com%2Fimages%2F20151203%2Ftooopen_sy_150207099617.jpg' },
+        { title: '佛门法器知多少', content: '法器是天龙耳目,大家共同遵循的规则' ,img:'https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1517569202354&di=47ce1938ee52366e9e050714252cbcdf&imgtype=0&src=http%3A%2F%2Fpic.58pic.com%2F58pic%2F11%2F81%2F48%2F46R58PICnzD.jpg'},
+        { title: '初学佛时,我们如何发心', content: '发乎心止乎礼,法器是天龙耳目,大家共同遵循的规则,法器是天龙耳目,大家共同遵循的规则',img:'https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1517569202354&di=1ce26073943481207afc6df39cbf2b9c&imgtype=0&src=http%3A%2F%2Fimg02.tooopen.com%2Fimages%2F20151029%2Ftooopen_sy_146750127927.jpg' },
+        { title: '初学佛时,我们如何发心', content: '发乎心止乎礼' ,img:'https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1517569202352&di=19eb13615e508ab9ef31eb8a713dbdb7&imgtype=0&src=http%3A%2F%2Fpic.58pic.com%2F58pic%2F11%2F69%2F82%2F58PIC2Q58PICsY9.jpg'},
+    ],
 
     home_top: [
         { icon: require('../constants/images/录客户.png'), name: '录客户' },
