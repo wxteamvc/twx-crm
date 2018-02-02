@@ -58,3 +58,6 @@ export const GetContactId_url =  BASIC_URL + '/getContacts';
 
 //发送聊天消息
 export const SendMsg_url =  BASIC_URL + '/sendMsg';
+
+//获取聊天历史消息
+export const ChatHistory_url =  BASIC_URL + '/getChatHistory';

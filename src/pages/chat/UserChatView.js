@@ -21,6 +21,7 @@ import { NavigationBar,Toast } from 'teaset';
 import IMUI from 'aurora-imui-react-native';
 import * as Urls from "../../constants/urls";
 import Util from "../../constants/util";
+import { getScopeHistory } from "../../actions/myChatAction"
 import moment from 'moment';
 import momentLocale from 'moment/locale/zh-cn';
 moment.updateLocale('zh-cn',momentLocale);
@@ -59,6 +60,9 @@ class UserChat extends Component {
   }
 
   componentDidMount() {
+    this.props.dispatch({
+      type:'cleanChat'
+    })
     this.begin = 0;
     this.resetMenu()
     AuroraIController.addMessageListDidLoadListener(
@@ -81,11 +85,67 @@ class UserChat extends Component {
     AuroraIController.appendMessages([message])
     this.sendMsg(message);
   }
-  sendMsg = (message)=>{
+
+  onSendGalleryFiles = (mediaFiles) => {
+    for (index in mediaFiles) {
+      if (mediaFiles[index].mediaType == "image") {
+        var message = this.constructNormalMessage({type:"image",mediaPath:mediaFiles[index].mediaPath})
+        
+      } else {
+         var message = this.constructNormalMessage({type:"video",duration:mediaFiles[index].duration,mediaPath:mediaFiles[index].mediaPath})
+      }
+      AuroraIController.appendMessages([message])
+      this.sendMsg(message,mediaFiles[index].mediaType);
+      AuroraIController.scrollToBottom(true)
+    }
+    this.resetMenu()
+  }
+
+  onTakePicture = (mediaPath) => {
+    var message = this.constructNormalMessage({type:'image',mediaPath})
+    AuroraIController.appendMessages([message])
+    this.sendMsg(message,'image');
+    this.resetMenu()
+    AuroraIController.scrollToBottom(true)
+  }
+
+  onFinishRecordVoice = (mediaPath, duration) => {
+    var message = this.constructNormalMessage({type:"voice",mediaPath,duration})
+    this.sendMsg(message,'voice');
+    AuroraIController.appendMessages([message])
+  }
+
+  sendMsg = (message,type='text')=>{
     const { chatWith } = this.props.navigation.state.params;
     let newMsg = Object.assign({},message)
-    Util.post(Urls.SendMsg_url+"/text",{to:chatWith,msg:message.text},
+    let sendData = {};
+    let media = {};
+    switch(type){
+      case 'image':
+        media = {uri: `file://${message.mediaPath}`, type: 'multipart/form-data', name: message.mediaPath.substring(message.mediaPath.lastIndexOf("/")+1)};
+        sendData={
+          to:chatWith,
+          media
+        }
+      break;
+    case 'voice':
+      media = {uri: `file://${message.mediaPath}`, type: 'multipart/form-data', name: message.mediaPath.substring(message.mediaPath.lastIndexOf("/")+1)};
+      sendData={
+        to:chatWith,
+        duration:message.duration,
+        media
+      }
+    break;
+      default:
+        sendData={
+          to:chatWith,
+          msg:message.text
+        }
+      break;
+    }
+    Util.post(Urls.SendMsg_url+"/"+type,sendData,
       (respJson) =>{
+        console.log(respJson)
           if (respJson.code == 1){
               newMsg.status = "send_successed";
           }else{
@@ -114,13 +174,13 @@ class UserChat extends Component {
       }else if(message.msgType=='image'){
         message.mediaPath = data.mediaPath;
       }else if(message.msgType=='video'){
-        message.duration = data.duration;
+        message.duration = parseFloat(data.duration);
         message.mediaPath = data.mediaPath;
       }else if(message.msgType=='voice'){
-        message.duration = data.duration;
+        message.duration = parseFloat(data.duration);
         message.mediaPath = data.mediaPath;
       }else{
-        message.text = data.msg;
+        message.text = data.msg.toString();
       }
       message.timeString = ""
       var user = {
@@ -143,6 +203,7 @@ class UserChat extends Component {
   getHistoryMessage = ()=> {
     const { chatWith } = this.props.navigation.state.params;
     const { chatList } = this.props;
+    console.log(chatList)
     if (chatList[chatWith]){
         let historyChatList = chatList[chatWith].slice(this.begin,this.begin+10);
         historyChatList.map((data,index)=>{
@@ -151,8 +212,16 @@ class UserChat extends Component {
           this.begin > 0 ? false:AuroraIController.scrollToBottom(true)
         })
         this.begin += historyChatList.length;
+        let lastChat = chatList[chatWith][chatList[chatWith].length-1];
+        if ((chatList[chatWith].length - this.begin) < 10){
+          this.props.dispatch(getScopeHistory(chatWith,lastChat.id));
+        }
+    }else{
+      this.props.dispatch(getScopeHistory(chatWith));
     }
   }
+
+
 
   onInputViewSizeChange = (size) => {
     if (this.state.inputLayoutHeight != size.height) {
@@ -240,22 +309,11 @@ class UserChat extends Component {
     this.refs["MessageList"].refreshComplete()
   }
 
-  onTakePicture = (mediaPath) => {
-
-    var message = this.constructNormalMessage({type:'image',mediaPath})
-    AuroraIController.appendMessages([message])
-    this.resetMenu()
-    AuroraIController.scrollToBottom(true)
-  }
 
   onStartRecordVoice = (e) => {
     console.log("on start record voice")
   }
 
-  onFinishRecordVoice = (mediaPath, duration) => {
-    var message = this.constructNormalMessage({type:"voice",mediaPath,duration})
-    AuroraIController.appendMessages([message])
-  }
 
   onCancelRecordVoice = () => {
     console.log("on cancel record voice")
@@ -268,19 +326,6 @@ class UserChat extends Component {
   onFinishRecordVideo = (mediaPath, duration) => {
     var message = this.constructNormalMessage({type:"video",mediaPath,duration})
     AuroraIController.appendMessages([message])
-  }
-
-  onSendGalleryFiles = (mediaFiles) => {
-    for (index in mediaFiles) {
-      if (mediaFiles[index].mediaType == "image") {
-        var message = this.constructNormalMessage({type:"image",mediaPath:mediaFiles[index].mediaPath})
-      } else {
-         var message = this.constructNormalMessage({type:"video",duration:mediaFiles[index].duration,mediaPath:mediaFiles[index].mediaPath})
-      }
-      AuroraIController.appendMessages([message])
-      AuroraIController.scrollToBottom(true)
-    }
-    this.resetMenu()
   }
 
   onSwitchToMicrophoneMode = () => {

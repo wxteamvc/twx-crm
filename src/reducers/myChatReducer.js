@@ -24,6 +24,11 @@ export function myChatReducer(state = myChatState, action) {
                 ...state,
                 newMessage:action.data
             }
+        case 'addHistory':
+            return {
+                ...state,
+                [action.data.scope]:state[action.data.scope] ? state[action.data.scope].concat(action.data.data) : action.data.data
+            }
         case 'cleanChat':
             return myChatState
         default:
