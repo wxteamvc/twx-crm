@@ -2,14 +2,15 @@ import * as Types from "../actions/actionTypes";
 
 
 const customerState = {
-   
+
     list: {
-        data:[],
+        data: [],
         status: false,
+        isReady: false,
         msg: '',
     },
     info: {
-        data:{},
+        data: {},
         status: false,
         msg: '',
     },
@@ -22,19 +23,19 @@ export function customerReducer(state = customerState, action) {
         case Types.CustomerInfo_BEGIN:
             return {
                 ...state,
-                info:{
+                info: {
                     ...state.info,
                     status: 'doing',
                 }
-                
+
             }
         case Types.CustomerInfo_SUCCESS:
             return {
                 ...state,
-                info:{
+                info: {
                     ...state.info,
                     status: 'done',
-                    data: action.data        
+                    data: action.data
                 }
             }
         case Types.CustomerInfo_FAILED:
@@ -42,10 +43,10 @@ export function customerReducer(state = customerState, action) {
         case Types.CustomerList_BEGIN:
             return {
                 ...state,
-                list:{
+                list: {
                     ...state.list,
-                    status: 'doing',    
-                }   
+                    status: 'doing',
+                }
             }
         case Types.CustomerList_SUCCESS:
             return {
@@ -54,8 +55,9 @@ export function customerReducer(state = customerState, action) {
                     ...state.list,
                     ...action.data,
                     status: 'done',
-                    data:state.list.data.concat(action.data.data)
-                }         
+                    isReady: true,
+                    data: state.list.data.concat(action.data.data)
+                }
             }
         case Types.CustomerList_FAILED:
             return customerState

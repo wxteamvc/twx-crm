@@ -17,7 +17,6 @@ import ReactNative ,{
   StatusBar
 } from 'react-native'
 import { connect } from 'react-redux';
-import RNFS from 'react-native-fs';
 import { NavigationBar,Toast } from 'teaset';
 import IMUI from 'aurora-imui-react-native';
 import * as Urls from "../../constants/urls";
@@ -35,18 +34,6 @@ const MessageListDidLoadEvent = "IMUIMessageListDidLoad"
 
 var themsgid = 1
 
-
-
-class CustomVew extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-    };
-  }
-  render() {
-    return (<img src={`${RNFS.MainBundlePath}/default_header.png`}></img>)
-  }
-}
 
 class UserChat extends Component {
   constructor(props) {
@@ -82,7 +69,6 @@ class UserChat extends Component {
     const { chatWith } = this.props.navigation.state.params;
     const { chatList } = this.props;
     const { newMessage } = chatList;
-
     if(chatList.newMessage != null && chatWith == newMessage.data.from ){
       const { data } = chatList.newMessage;
       var message = this.constructNormalMessage(data);
@@ -91,13 +77,15 @@ class UserChat extends Component {
   }
 
   onSendText = (text) => {
-    const { chatWith } = this.props.navigation.state.params;
     let message = this.constructNormalMessage({msg:text})
     AuroraIController.appendMessages([message])
-    //构造对象存储
-    Util.post(Urls.SendMsg_url+"/text",{to:chatWith,msg:text},
+    this.sendMsg(message);
+  }
+  sendMsg = (message)=>{
+    const { chatWith } = this.props.navigation.state.params;
+    let newMsg = Object.assign({},message)
+    Util.post(Urls.SendMsg_url+"/text",{to:chatWith,msg:message.text},
       (respJson) =>{
-          let newMsg = Object.assign({},message)
           if (respJson.code == 1){
               newMsg.status = "send_successed";
           }else{
@@ -107,12 +95,12 @@ class UserChat extends Component {
           AuroraIController.updateMessage(newMsg)
       },
       (error)=>{
-         console.log(error.message);
+        newMsg.status = "send_failed";
+        AuroraIController.updateMessage(newMsg)
       } 
     )
   }
-
-  constructNormalMessage = (data) =>{
+  constructNormalMessage = (data={}) =>{
       const { info } = this.props.userInfo;
       let message = {}
       message.msgId = data.id ?  data.id:themsgid.toString();
@@ -123,6 +111,14 @@ class UserChat extends Component {
       if (message.msgType == 'event_time'){
         message.msgType = 'event';
         message.text = moment(data.msg*1000).calendar();
+      }else if(message.msgType=='image'){
+        message.mediaPath = data.mediaPath;
+      }else if(message.msgType=='video'){
+        message.duration = data.duration;
+        message.mediaPath = data.mediaPath;
+      }else if(message.msgType=='voice'){
+        message.duration = data.duration;
+        message.mediaPath = data.mediaPath;
       }else{
         message.text = data.msg;
       }
@@ -133,9 +129,9 @@ class UserChat extends Component {
         avatarPath: "ironman"
       }
       if (message.isOutgoing){
-        user.avatarPath = info.avatar_path ? info.avatar_path : RNFS.MainBundlePath + '/default_header.png'
+        user.avatarPath = info.avatar_path ? info.avatar_path : '/default_header.png'
       }else{
-        user.avatarPath = data.avatar ? data.avatar : RNFS.MainBundlePath + '/default_header.png'
+        user.avatarPath = data.avatar ? data.avatar : '/default_header.png'
       }
       message.fromUser = user
       return message
@@ -148,9 +144,7 @@ class UserChat extends Component {
     const { chatWith } = this.props.navigation.state.params;
     const { chatList } = this.props;
     if (chatList[chatWith]){
-      console.log(this.begin)
-      let historyChatList = chatList[chatWith].slice(this.begin,this.begin+10);
-      console.log(historyChatList)
+        let historyChatList = chatList[chatWith].slice(this.begin,this.begin+10);
         historyChatList.map((data,index)=>{
           var message = this.constructNormalMessage(data);
           AuroraIController.insertMessagesToTop([message]);
@@ -228,11 +222,7 @@ class UserChat extends Component {
   }
 
   onStatusViewClick = (message) => {
-    console.log(message)
-      //这边应该写点击重发
-      alert('消息重发，如果消息发送就把状态改成send_succeed')
-    message.status = 'send_succeed'
-    AuroraIController.updateMessage(message)
+    this.sendMsg(message);
   }
 
   onBeginDragMessageList = () => {
@@ -248,33 +238,14 @@ class UserChat extends Component {
   onPullToRefresh = () => {
     this.getHistoryMessage();
     this.refs["MessageList"].refreshComplete()
-    // var messages = []
-    // for (var i = 0; i < 5; i++) {
-    //   var message = constructNormalMessage()
-    //   // if (index%2 == 0) {
-    //   message.msgType = "text"
-    //   message.text = "" + i
-    //   // }
-
-    //   if (i % 3 == 0) {
-    //     message.msgType = "event"
-    //     message.text = "" + i
-    //   }
-
-    //   AuroraIController.insertMessagesToTop([message])
-    // }
-    // // AuroraIController.insertMessagesToTop(messages)
-    // this.refs["MessageList"].refreshComplete()
   }
 
   onTakePicture = (mediaPath) => {
 
-    // var message = constructNormalMessage()
-    // message.msgType = 'image'
-    // message.mediaPath = mediaPath
-    // AuroraIController.appendMessages([message])
-    // this.resetMenu()
-    // AuroraIController.scrollToBottom(true)
+    var message = this.constructNormalMessage({type:'image',mediaPath})
+    AuroraIController.appendMessages([message])
+    this.resetMenu()
+    AuroraIController.scrollToBottom(true)
   }
 
   onStartRecordVoice = (e) => {
@@ -282,12 +253,8 @@ class UserChat extends Component {
   }
 
   onFinishRecordVoice = (mediaPath, duration) => {
-    // var message = constructNormalMessage()
-    // message.msgType = "voice"
-    // message.mediaPath = mediaPath
-    // message.timeString = "safsdfa"
-    // message.duration = duration
-    // AuroraIController.appendMessages([message])
+    var message = this.constructNormalMessage({type:"voice",mediaPath,duration})
+    AuroraIController.appendMessages([message])
   }
 
   onCancelRecordVoice = () => {
@@ -299,41 +266,21 @@ class UserChat extends Component {
   }
 
   onFinishRecordVideo = (mediaPath, duration) => {
-    // var message = constructNormalMessage()
-
-    // message.msgType = "video"
-    // message.mediaPath = mediaPath
-    // message.duration = duration
-    // AuroraIController.appendMessages([message])
+    var message = this.constructNormalMessage({type:"video",mediaPath,duration})
+    AuroraIController.appendMessages([message])
   }
 
   onSendGalleryFiles = (mediaFiles) => {
-    /**
-     * WARN: This callback will return original image, 
-     * if insert it directly will high memory usage and blocking UI。
-     * You should crop the picture before insert to messageList。
-     * 
-     * WARN: 这里返回的是原图，直接插入大会话列表会很大且耗内存.
-     * 应该做裁剪操作后再插入到 messageListView 中，
-     * 一般的 IM SDK 会提供裁剪操作，或者开发者手动进行裁剪。
-     * 
-     * 代码用例不做裁剪操作。
-     */
-    // for (index in mediaFiles) {
-    //   var message = constructNormalMessage()
-    //   if (mediaFiles[index].mediaType == "image") {
-    //     message.msgType = "image"
-    //   } else {
-    //     message.msgType = "video"
-    //     message.duration = mediaFiles[index].duration
-    //   }
-      
-    //   message.mediaPath = mediaFiles[index].mediaPath
-    //   message.timeString = "8:00"
-    //   AuroraIController.appendMessages([message])
-    //   AuroraIController.scrollToBottom(true)
-    // }
-    // this.resetMenu()
+    for (index in mediaFiles) {
+      if (mediaFiles[index].mediaType == "image") {
+        var message = this.constructNormalMessage({type:"image",mediaPath:mediaFiles[index].mediaPath})
+      } else {
+         var message = this.constructNormalMessage({type:"video",duration:mediaFiles[index].duration,mediaPath:mediaFiles[index].mediaPath})
+      }
+      AuroraIController.appendMessages([message])
+      AuroraIController.scrollToBottom(true)
+    }
+    this.resetMenu()
   }
 
   onSwitchToMicrophoneMode = () => {
@@ -344,6 +291,7 @@ class UserChat extends Component {
     AuroraIController.scrollToBottom(true)
   }
   onSwitchToGalleryMode = () => {
+    console.log(1)
     AuroraIController.scrollToBottom(true)
   }
 
@@ -375,10 +323,9 @@ class UserChat extends Component {
             translucent={false}
             backgroundColor='#40a9ff'
             />
-        <View style={this.state.navigationBar}
+        {/* <View style={this.state.navigationBar}
           ref="NavigatorView">
-         
-          {/* <Button
+           <Button
             style={styles.sendCustomBtn}
             title="Custom Message"
             onPress={() => {
@@ -418,8 +365,8 @@ class UserChat extends Component {
                 AuroraIController.appendMessages([message]);
               }
             }}>
-          </Button> */}
-        </View>
+          </Button> 
+        </View> */}
         <MessageListView style={this.state.messageListLayout}
           ref="MessageList"
           onAvatarClick={this.onAvatarClick}
@@ -430,9 +377,9 @@ class UserChat extends Component {
           onBeginDragMessageList={this.onBeginDragMessageList}
           onPullToRefresh={this.onPullToRefresh}
           avatarSize={{ width: 40, height: 40 }}
-          sendBubbleTextSize={14}
+          sendBubbleTextSize={16}
           sendBubbleTextColor={"#000000"}
-          sendBubblePadding={{ left: 10, top: 10, right: 15, bottom: 10 }}
+          sendBubblePadding={{ left: 10, top: 0, right: 15, bottom: 0 }}
         />
         <InputView style={this.state.inputViewLayout}
           ref="ChatInput"

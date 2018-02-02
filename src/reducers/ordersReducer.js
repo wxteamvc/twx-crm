@@ -6,10 +6,12 @@ const ordersState = {
             data: [],
         },
         status: false,
+        isReady: false,
     },
     info: {
         data: {},
         status: false,
+        isReady: false,
     },
 }
 
@@ -29,14 +31,34 @@ export function ordersReducer(state = ordersState, action) {
                 list: {
                     ...state.list,
                     status: 'done',
+                    isReady: true,
                     data: {
-                        ...state.list.data,
                         ...action.data,
-                        data: state.list.data.data.cnocat(action.data.data)
+                        data: state.list.data.data.concat(action.data.data)
                     }
                 }
             }
         case Types.OrderList_FAILED:
+            return ordersState
+        case Types.OrderInfo_BEGIN:
+            return {
+                ...state,
+                info: {
+                    ...state.info,
+                    status: 'doing',
+                }
+            }
+        case Types.OrderInfo_SUCCESS:
+            return {
+                ...state,
+                info: {
+                    ...state.info,
+                    status: 'done',
+                    isReady: true,
+                    data: action.data
+                }
+            }
+        case Types.OrderInfo_FAILED:
             return ordersState
         default:
             return state;

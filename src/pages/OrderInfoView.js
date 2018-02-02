@@ -18,6 +18,7 @@ import OrderInfo from '../components/orderInfo';
 import OrderCycle from '../components/orderCycle';
 import ParallaxScrollView from 'react-native-parallax-scroll-view';
 import * as Animatable from 'react-native-animatable';
+import { getOrderInfo } from '../actions/ordersAction';
 
 class OrderInfoView extends Component {
 
@@ -25,8 +26,13 @@ class OrderInfoView extends Component {
         super(props)
         this.state = {
             type: 'info',
-            opacity: new Animated.Value(1),
+            // opacity: new Animated.Value(1),
         }
+    }
+
+    componentWillMount() {
+        const id = this.props.navigation.state.params.id;
+        this.props.dispatch(getOrderInfo(id))
     }
 
     startAnimation = (type) => {
@@ -57,16 +63,17 @@ class OrderInfoView extends Component {
     }
 
 
-    renderContent = () => {
+    renderContent = (data) => {
         if (this.state.type == 'info') {
-            return <OrderInfo />
+            return <OrderInfo {...this.props} data={data}/>
         } else {
-            return <OrderCycle />
+            return <OrderCycle {...this.props} data={data}/>
         }
     }
 
     render() {
         const { type } = this.state;
+        const { data ,isReady} = this.props.ordersInfo;
         return (
             <View style={{ flex: 1 }}>
                 <StatusBar
@@ -100,7 +107,7 @@ class OrderInfoView extends Component {
                                             />
                                         </Animatable.View>
 
-                                        <Text style={[styles.fontsize16, { color: '#fff', marginLeft: 10 }]}>单号:100002018008160002</Text>
+                                        <Text style={[styles.fontsize16, { color: '#fff', marginLeft: 10 }]}>单号:{data.order_id}</Text>
                                     </View>
                                 </View>
                             </View>
@@ -115,40 +122,30 @@ class OrderInfoView extends Component {
                                 <Icon type={'left'} color={'#fff'} />
                             </TouchableOpacity>
                             <View style={[styles.flex_center, { flex: 0.8 }]}>
-                                <Text style={[styles.fontsize16, { color: '#fff' }]}>单号:100002018008160002</Text>
+                                <Text style={[styles.fontsize16, { color: '#fff' }]}>单号:{data.order_id}</Text>
                             </View>
                         </View>
                     )}
                 >
-                    <View style={[styles.flex_row_center, { margin: 10 }]}>
+                    <View style={[styles.flex_row_center, { backgroundColor: '#fff' }]}>
                         <TouchableOpacity
                             onPress={() => {
                                 this.startAnimation('info')
                             }}
                             activeOpacity={1}
-                            style={[styles.OrderInfo_tab_btn, styles.OrderInfo_tab_Lbtn,styles.flex_center, { backgroundColor: type == 'info' ? '#2A3B61' : '#4B5DA2' }]} >
-                            <Text style={[styles.fontsize12, { color: '#fff' }]}>订单详情</Text>
+                            style={[styles.OrderInfo_tab_btn, styles.OrderInfo_tab_Lbtn, styles.flex_center, { borderBottomWidth: 2, borderColor: this.state.type == 'info' ? '#40A9FF' : 'transparent' }]}>
+                            <Text style={[styles.fontsize12, this.state.type == 'info' ? { color: '#40A9FF' } : null]}>订单详情</Text>
                         </TouchableOpacity>
                         <TouchableOpacity
                             onPress={() => {
                                 this.startAnimation('repay')
                             }}
                             activeOpacity={1}
-                            style={[styles.OrderInfo_tab_btn, styles.OrderInfo_tab_Rbtn,styles.flex_center, { backgroundColor: type == 'repay' ? '#2A3B61' : '#4B5DA2' }]}>
-                            <Text style={[styles.fontsize12, { color: '#fff' }]}>还款详情</Text>
+                            style={[styles.OrderInfo_tab_btn, styles.flex_center, { borderBottomWidth: 2, borderColor: this.state.type == 'repay' ? '#40A9FF' : 'transparent' }]}>
+                            <Text style={[styles.fontsize12, this.state.type == 'repay' ? { color: '#40A9FF' } : null]}>还款详情</Text>
                         </TouchableOpacity>
                     </View>
-                    {/* <View
-                        style={[styles.OrderInfo_content_header]}>
-                    </View> */}
-                    <Animated.View style={[styles.OrderInfo_content_container,
-                    {
-                        opacity: this.state.opacity
-                    }
-
-                    ]}>
-                        {this.renderContent()}
-                    </Animated.View>
+                    {isReady?this.renderContent(data):null}
                 </ParallaxScrollView>
             </View>
         )
@@ -160,7 +157,7 @@ class OrderInfoView extends Component {
 
 function mapStateToProps(state) {
     return {
-        initData: state.initReducer
+        ordersInfo: state.ordersReducer.info,
     }
 }
 
