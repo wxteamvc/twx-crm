@@ -156,7 +156,7 @@ class UserChat extends Component {
           AuroraIController.insertMessagesToTop([message]);
           this.begin > 0 ? false:AuroraIController.scrollToBottom(true)
         })
-        this.begin = historyChatList.length;
+        this.begin += historyChatList.length;
     }
   }
 
