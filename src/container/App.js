@@ -25,6 +25,8 @@ import TaskList from '../pages/TaskListView';
 import CompanyHome from '../pages/CompanyHomeView';
 import UserChat from '../pages/chat/UserChatView';
 import ImageView from '../pages/ImageView';
+import CompanySetting from '../pages/CompanySettingView';
+import CompanyHomeSetting from '../pages/CompanyHomeSettingView';
 
 const App = StackNavigator({
     // Lead: {
@@ -181,6 +183,22 @@ const App = StackNavigator({
     },
     ImageView: {
         screen: ImageView,
+        navigationOptions: ({ navigation }) => {
+            return ({
+                header: null
+            })
+        }
+    },
+    CompanySetting: {
+        screen: CompanySetting,
+        navigationOptions: ({ navigation }) => {
+            return ({
+                header: null
+            })
+        }
+    },
+    CompanyHomeSetting: {
+        screen: CompanyHomeSetting,
         navigationOptions: ({ navigation }) => {
             return ({
                 header: null

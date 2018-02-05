@@ -102,18 +102,9 @@ class CompanyHome extends Component {
                         () =>
                             <ImageBackground
                                 source={require('../constants/images/companybg.jpg')}
-                                style={{ width: ScreenWidth, height: 130 }}
+                                style={{ width: ScreenWidth, height: 130}}
                             >
                                 <View style={[styles.customerInfo_head_bg, { flex: 1 }]}>
-                                    {/* <View style={[styles.flex_row_between, { , paddingLeft: 10, paddingRight: 10 }]}>
-                                        <TouchableOpacity
-                                            activeOpacity={1}
-                                            onPress={() => this.props.navigation.goBack()}
-                                        >
-                                            <Icon type={'left'} color={'#fff'} />
-                                        </TouchableOpacity>
-                                    </View>
-                                    <WhiteSpace size={'sm'} /> */}
                                     <View style={[styles.flex_row_columncenter, { marginTop: 50 }]}>
                                         <View style={[styles.flex_row_columncenter, { flex: 0.6, paddingLeft: 15 }]}>
                                             <Image source={require('../constants/images/company.jpg')} style={styles.companyHome_head_avatar} />
@@ -124,6 +115,7 @@ class CompanyHome extends Component {
                                             </View>
                                         </View>
                                     </View>
+                                    
                                     <View style={styles.companyHome_head_foot}>
                                         <Text style={[styles.fontsize10, { color: '#fff' }]}>关注人数:2w</Text>
                                     </View>
@@ -181,7 +173,8 @@ class CompanyHome extends Component {
                     </View>
                 </ParallaxScrollView>
                 <ActionButton buttonColor="rgba(231,76,60,1)" size={30} offsetX={20}>
-                    <ActionButton.Item buttonColor='#9b59b6' title="联系客服" onPress={() => console.log("notes tapped!")} >
+                    <ActionButton.Item buttonColor='#9b59b6' title="联系客服" onPress={() => console.log("notes tapped!")} 
+                    onPress={()=>{navigation.navigate('UserChat',{chatWith:7})}}>
                         <Icons name={'comments-o'} size={20} color={'#fff'}/>
                     </ActionButton.Item>
                     <ActionButton.Item buttonColor='#3498db' title="提交申请" onPress={() => { }}>
