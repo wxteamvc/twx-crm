@@ -262,7 +262,7 @@ export const styles = StyleSheet.create({
         paddingTop: 10, paddingBottom: 10
     },
     companyHome_content_activity_listItem_body: {
-        paddingTop: 10, paddingBottom: 10, borderColor: '#ccc', borderBottomWidth: 0.7
+        paddingTop: 10, paddingBottom: 10, 
     },
     companyHome_content_synopsis_body: {
         paddingTop: 10
