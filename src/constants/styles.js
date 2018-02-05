@@ -256,7 +256,7 @@ export const styles = StyleSheet.create({
         width: 70, height: 70, borderRadius: 35
     },
     companyHome_head_foot: {
-        position: 'absolute', bottom: 10, right: 0, paddingLeft: 10, paddingRight: 10, backgroundColor: '#CC3300', borderBottomLeftRadius: 5, borderTopLeftRadius: 5
+        position: 'absolute', height:15,bottom: 10, right: 0, paddingLeft: 10, paddingRight: 10, backgroundColor: '#CC3300', borderBottomLeftRadius: 5, borderTopLeftRadius: 5
     },
     companyHome_content_activity_header: {  //公司活动头部样式
         paddingTop: 10, paddingBottom: 10

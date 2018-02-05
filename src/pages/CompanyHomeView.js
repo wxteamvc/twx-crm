@@ -20,6 +20,36 @@ import Icons from 'react-native-vector-icons/dist/FontAwesome';
 
 class CompanyHome extends Component {
 
+    constructor(props){
+        super(props);
+    }
+
+    componentWillMount(){
+        const { params } = this.props.navigation.state;
+        if (params){
+
+        }
+    }
+
+    pageData = {
+        topData:{
+            background:require('../constants/images/companyHome/默认背景.jpg'),
+            logo:require('../constants/images/companyHome/默认logo.jpg'),
+            title:'XX公司',
+            address:'XXX市XXX路XXX号',
+            about:'公司介绍...'
+        },
+        carouselData:[
+            { img: require('../constants/images/companyHome/模板轮播图1.jpg'), title: '开借啦开借啦', content: '免息开借啦免息开借啦' },
+            { img: require('../constants/images/companyHome/模板轮播图2.jpg'), title: '开借啦开借啦', content: '免息开借啦免息开借啦免息开借啦' },
+        ],
+        extraData:[
+            {title:'联系客服',ison:1,icon:'comments-o',color:'#9b59b6'},
+            {title:'提交申请',ison:1,icon:'pencil-square-o',color:'#3498db'},
+            {title:'预约见面',ison:1,icon:'taxi',color:'#996600'},
+            {title:'收藏公司',ison:1,icon:'star-o',color:'#1abc9c'},
+        ]
+    }
 
 
     activityData = [
@@ -29,11 +59,7 @@ class CompanyHome extends Component {
         { title: '初学佛时,我们如何发心', content: '发乎心止乎礼', count: 2000 },
     ]
 
-    lunboData = [
-        { img: 'http://p.yjbys.com/image/20160919/1474284202349030.png', title: '开借啦开借啦', content: '免息开借啦免息开借啦' },
-        { img: 'http://pic1.win4000.com/wallpaper/b/5881ae6e5e47b.jpg', title: '开借啦开借啦', content: '免息开借啦免息开借啦免息开借啦' },
-        { img: 'http://pic.90sjimg.com/back_pic/qk/back_origin_pic/00/04/01/a8e8afe94d0e1e912643537ad60dc540.jpg', title: '开借啦开借啦', content: '免息开借啦免息开借啦免息开借啦免息开借啦' },
-    ]
+
 
     renderActivityList = () => {
         const data = this.activityData;
@@ -65,14 +91,14 @@ class CompanyHome extends Component {
     }
 
     renderLunbo() {
-        const data = this.lunboData;
+        const data = this.pageData.carouselData;
         let list = [];
         for (const key in data) {
             list.push(
                 <TouchableOpacity key={key} activeOpacity={1} onPress={() => alert('我要跳去别的页面咯')}>
-                    <ImageBackground source={{ uri: data[key].img }} style={{ width: ScreenWidth, height: 100 }}>
-                        <View style={[{ flex: 1, backgroundColor: 'rgba(0,0,0,0.3)', flexDirection: 'row' }]}>
-                            <View style={{ flex: 0.7, paddingLeft: 30, paddingTop: 20 }}>
+                    <ImageBackground source={data[key].img} style={{ width: ScreenWidth, height: ScreenWidth/2 }}>
+                        <View style={[{ flex: 1, backgroundColor: 'rgba(0,0,0,0.1)', flexDirection: 'row' }]}>
+                            <View style={{position:'absolute', bottom: 30, left: 20 }}>
                                 <Text style={[styles.fontsize12, { color: '#fff' }]}>{data[key].title}</Text>
                                 <WhiteSpace size={'sm'} />
                                 <Text style={[styles.fontsize10, { color: '#fff' }]} numberOfLines={2}>{data[key].content}</Text>
@@ -88,6 +114,7 @@ class CompanyHome extends Component {
 
     render() {
         const { navigation } = this.props;
+        const { topData,extraData } = this.pageData;
         return (
             <View style={{ flex: 1 }}>
                 <ParallaxScrollView
@@ -101,17 +128,17 @@ class CompanyHome extends Component {
                     renderForeground={
                         () =>
                             <ImageBackground
-                                source={require('../constants/images/companybg.jpg')}
+                                source={topData.background}
                                 style={{ width: ScreenWidth, height: 130}}
                             >
                                 <View style={[styles.customerInfo_head_bg, { flex: 1 }]}>
                                     <View style={[styles.flex_row_columncenter, { marginTop: 50 }]}>
                                         <View style={[styles.flex_row_columncenter, { flex: 0.6, paddingLeft: 15 }]}>
-                                            <Image source={require('../constants/images/company.jpg')} style={styles.companyHome_head_avatar} />
+                                            <Image source={topData.logo} style={styles.companyHome_head_avatar} />
                                             <View style={{ marginLeft: 10, flex: 1 }}>
-                                                <Text style={[styles.fontsize12, { color: '#fff' }]}>新昌咨询</Text>
+                                                <Text style={[styles.fontsize12, { color: '#fff' }]}>{topData.title}</Text>
                                                 <WhiteSpace size={'xs'} />
-                                                <Text style={[styles.fontsize10, { color: '#fff' }]}>无锡大东方百货B座11F</Text>
+                                                <Text style={[styles.fontsize10, { color: '#fff' }]}>{topData.address}</Text>
                                             </View>
                                         </View>
                                     </View>
@@ -132,14 +159,15 @@ class CompanyHome extends Component {
                                 <Icon type={'left'} color={'#fff'} />
                             </TouchableOpacity>
                             <View style={[styles.flex_center, { flex: 0.8 }]}>
-                                <Text style={[styles.fontsize16, { color: '#fff' }]}>新昌咨询</Text>
+                                <Text style={[styles.fontsize16, { color: '#fff' }]}>{topData.title}</Text>
                             </View>
                         </View>
                     )}
                 >
+                {topData.about ? 
                     <View style={styles.companyHome_content_synopsis_body}>
                         <View style={styles.companyHome_content_synopsis_content}>
-                            <Text style={[styles.fontsize10]}>我是公司简介balabala</Text>
+                            <Text style={[styles.fontsize10]}>{topData.about}</Text>
                         </View>
                         <View style={styles.companyHome_content_synopsis_position}>
                             <View style={styles.companyHome_content_synopsis_position_title}>
@@ -147,7 +175,9 @@ class CompanyHome extends Component {
                             </View>
                             <View style={styles.companyHome_content_synopsis_position_jiao}></View>
                         </View>
-                    </View>
+                    </View>:null
+                }
+
                     <WhiteSpace size={'sm'} />
                     <Carousel
                         autoplayInterval={5000}
@@ -172,23 +202,39 @@ class CompanyHome extends Component {
                         {this.renderActivityList()}
                     </View>
                 </ParallaxScrollView>
-                <ActionButton buttonColor="rgba(231,76,60,1)" size={30} offsetX={20}>
-                    <ActionButton.Item buttonColor='#9b59b6' title="联系客服" onPress={() => console.log("notes tapped!")} 
-                    onPress={()=>{navigation.navigate('UserChat',{chatWith:7})}}>
-                        <Icons name={'comments-o'} size={20} color={'#fff'}/>
+                 {this._renderActionButton(extraData)}
+                {/* <ActionButton buttonColor="rgba(231,76,60,1)" size={30} offsetX={20}>
+                    <ActionButton.Item buttonColor='#9b59b6' title={item.title}
+                        key={index}
+                        onPress={()=>{}}>
+                        <Icons name={item.icon} size={18} color={'#fff'}/>
                     </ActionButton.Item>
-                    <ActionButton.Item buttonColor='#3498db' title="提交申请" onPress={() => { }}>
-                        <Icons name={'pencil-square-o'} size={20} color={'#fff'} />
-                    </ActionButton.Item>
-                    <ActionButton.Item buttonColor='#996600' title="预约见面" onPress={() => { }}>
-                        <Icons name={'taxi'} size={18} color={'#fff'}/>
-                    </ActionButton.Item>
-                    <ActionButton.Item buttonColor='#1abc9c' title="收藏公司" onPress={() => { }}>
-                        <Icons name={'star-o'} size={20} color={'#fff'}/>
-                    </ActionButton.Item>
-                </ActionButton>
+                </ActionButton> */}
+
             </View>
         )
+    }
+    _renderActionButton = (extraData)=>{
+        let ActionButtonlist = [];
+        if (extraData){
+            extraData.map((item,index)=>{
+                if (item.ison == 1){
+                    ActionButtonlist.push(
+                        <ActionButton.Item buttonColor={item.color} title={item.title}
+                            key={index}
+                            onPress={()=>{}}>
+                            <Icons name={item.icon} size={18} color={'#fff'}/>
+                        </ActionButton.Item>
+                    )
+                }
+            })
+            return (
+                <ActionButton buttonColor="rgba(231,76,60,1)" size={30} offsetX={20}>
+                    {ActionButtonlist}
+                </ActionButton>
+            )
+        }
+        return null;
     }
 }
 
