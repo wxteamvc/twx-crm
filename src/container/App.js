@@ -27,6 +27,8 @@ import UserChat from '../pages/chat/UserChatView';
 import ImageView from '../pages/ImageView';
 import CompanySetting from '../pages/CompanySettingView';
 import CompanyHomeSetting from '../pages/CompanyHomeSettingView';
+import Staff from '../pages/StaffView';
+
 
 const App = StackNavigator({
     // Lead: {
@@ -199,6 +201,14 @@ const App = StackNavigator({
     },
     CompanyHomeSetting: {
         screen: CompanyHomeSetting,
+        navigationOptions: ({ navigation }) => {
+            return ({
+                header: null
+            })
+        }
+    },
+    Staff: {
+        screen: Staff,
         navigationOptions: ({ navigation }) => {
             return ({
                 header: null

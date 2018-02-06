@@ -27,7 +27,7 @@ class CompanySetting extends Component {
     render() {
         const { navigation,localConfigReducer,styles} = this.props;
         const data = [
-            {title:'员工管理'},
+            {title:'员工管理',gourl:'Staff'},
             {title:'设置主页',gourl:'CompanyHomeSetting'},
         ]
         const authData = [

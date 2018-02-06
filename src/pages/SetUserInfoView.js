@@ -71,7 +71,7 @@ class SetUserInfo extends Component {
      }
      bindWechat = ()=>{
         if (this.props.userInfo.info.user_wechat_id !== null){
-           this.openConfirm({title:'解除微信绑定','msg':'解除绑定后将无法使用微信登陆，确认要这么做吗？',callBack:this.unbindWechat});
+           this.openConfirm({title:'解除微信绑定',msg:'解除绑定后将无法使用微信登陆，确认要这么做吗？',callBack:this.unbindWechat});
         }else{
             WeChat.isWXAppInstalled()
             .then(( isInstalled ) => {

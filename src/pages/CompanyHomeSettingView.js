@@ -30,12 +30,12 @@ class CompanyHomeSetting extends Component {
             ],
             carouselData:[
                 {title:'轮播图1',
-                title: '开借啦开借啦', 
+                carousel_title: '开借啦开借啦', 
                 content: '免息开借啦免息开借啦' ,
                 detail:require('../constants/images/companyHome/模板轮播图1.jpg')
                 },
                 {title:'轮播图2',
-                title: '开借啦开借啦', 
+                carousel_title: '开借啦开借啦', 
                 content: '免息开借啦免息开借啦' ,
                 detail:require('../constants/images/companyHome/模板轮播图2.jpg')
                 },

@@ -61,3 +61,10 @@ export const SendMsg_url =  BASIC_URL + '/sendMsg';
 
 //获取聊天历史消息
 export const ChatHistory_url =  BASIC_URL + '/getChatHistory';
+
+//获取员工列表
+export const StaffList_url =  BASIC_URL + '/getStaffList';
+//搜索用户
+export const SearchUser_url =  BASIC_URL + '/searchUser';
+//申请添加员工
+export const AddStaff_url =  BASIC_URL + '/addStaff';
