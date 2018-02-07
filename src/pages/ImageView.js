@@ -31,6 +31,10 @@ export default class ImageView extends Component {
                     onClick={() => {
                         this.props.navigation.goBack()
                     }}
+                    menuContext = {{
+                        saveToLocal:'保存到本地',
+                        cancel:'关闭'
+                    }}
                     enableImageZoom={true} // 是否开启手势缩放
                     index={num ? num : 0}
                     onSave={()=>alert('保存到本地')}

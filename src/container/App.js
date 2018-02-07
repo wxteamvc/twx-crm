@@ -28,6 +28,10 @@ import ImageView from '../pages/ImageView';
 import Authentication from '../pages/AuthenticationView';
 import CompanyEdit from '../pages/CompanyEditView';
 import CompanyAuthentication from '../pages/CompanyAuthenticationView';
+import CompanySetting from '../pages/CompanySettingView';
+import CompanyHomeSetting from '../pages/CompanyHomeSettingView';
+import Staff from '../pages/StaffView';
+
 
 const App = StackNavigator({
     Lead: {
@@ -213,6 +217,30 @@ const App = StackNavigator({
     },
 
     
+    CompanySetting: {
+        screen: CompanySetting,
+        navigationOptions: ({ navigation }) => {
+            return ({
+                header: null
+            })
+        }
+    },
+    CompanyHomeSetting: {
+        screen: CompanyHomeSetting,
+        navigationOptions: ({ navigation }) => {
+            return ({
+                header: null
+            })
+        }
+    },
+    Staff: {
+        screen: Staff,
+        navigationOptions: ({ navigation }) => {
+            return ({
+                header: null
+            })
+        }
+    },
 },
 
     {

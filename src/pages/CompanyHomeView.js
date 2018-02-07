@@ -26,11 +26,7 @@ class CompanyHome extends Component {
         { title: '初学佛时,我们如何发心', content: '发乎心止乎礼', count: 2000 },
     ]
 
-    lunboData = [
-        { img: 'http://p.yjbys.com/image/20160919/1474284202349030.png', title: '开借啦开借啦', content: '免息开借啦免息开借啦' },
-        { img: 'http://pic1.win4000.com/wallpaper/b/5881ae6e5e47b.jpg', title: '开借啦开借啦', content: '免息开借啦免息开借啦免息开借啦' },
-        { img: 'http://pic.90sjimg.com/back_pic/qk/back_origin_pic/00/04/01/a8e8afe94d0e1e912643537ad60dc540.jpg', title: '开借啦开借啦', content: '免息开借啦免息开借啦免息开借啦免息开借啦' },
-    ]
+
 
     renderActivityList = () => {
         const data = this.activityData;
@@ -62,7 +58,7 @@ class CompanyHome extends Component {
     }
 
     renderLunbo() {
-        const data = this.lunboData;
+        const data = this.pageData.carouselData;
         let list = [];
         for (const key in data) {
             list.push(
@@ -85,6 +81,7 @@ class CompanyHome extends Component {
 
     render() {
         const { navigation } = this.props;
+        const { topData,extraData } = this.pageData;
         return (
             <View style={{ flex: 1 }}>
                 <ParallaxScrollView
@@ -98,29 +95,21 @@ class CompanyHome extends Component {
                     renderForeground={
                         () =>
                             <ImageBackground
-                                source={require('../constants/images/companybg.jpg')}
-                                style={{ width: ScreenWidth, height: 130 }}
+                                source={topData.background}
+                                style={{ width: ScreenWidth, height: 130}}
                             >
                                 <View style={[styles.customerInfo_head_bg, { flex: 1 }]}>
-                                    {/* <View style={[styles.flex_row_between, { , paddingLeft: 10, paddingRight: 10 }]}>
-                                        <TouchableOpacity
-                                            activeOpacity={1}
-                                            onPress={() => this.props.navigation.goBack()}
-                                        >
-                                            <Icon type={'left'} color={'#fff'} />
-                                        </TouchableOpacity>
-                                    </View>
-                                    <WhiteSpace size={'sm'} /> */}
                                     <View style={[styles.flex_row_columncenter, { marginTop: 50 }]}>
                                         <View style={[styles.flex_row_columncenter, { flex: 0.6, paddingLeft: 15 }]}>
-                                            <Image source={require('../constants/images/company.jpg')} style={styles.companyHome_head_avatar} />
+                                            <Image source={topData.logo} style={styles.companyHome_head_avatar} />
                                             <View style={{ marginLeft: 10, flex: 1 }}>
-                                                <Text style={[styles.fontsize12, { color: '#fff' }]}>新昌咨询</Text>
+                                                <Text style={[styles.fontsize12, { color: '#fff' }]}>{topData.title}</Text>
                                                 <WhiteSpace size={'xs'} />
-                                                <Text style={[styles.fontsize10, { color: '#fff' }]}>无锡大东方百货B座11F</Text>
+                                                <Text style={[styles.fontsize10, { color: '#fff' }]}>{topData.address}</Text>
                                             </View>
                                         </View>
                                     </View>
+                                    
                                     <View style={styles.companyHome_head_foot}>
                                         <Text style={[styles.fontsize10, { color: '#fff' }]}>关注人数:2w</Text>
                                     </View>
@@ -137,11 +126,12 @@ class CompanyHome extends Component {
                                 <Icon type={'left'} color={'#fff'} />
                             </TouchableOpacity>
                             <View style={[styles.flex_center, { flex: 0.8 }]}>
-                                <Text style={[styles.fontsize16, { color: '#fff' }]}>新昌咨询</Text>
+                                <Text style={[styles.fontsize16, { color: '#fff' }]}>{topData.title}</Text>
                             </View>
                         </View>
                     )}
                 >
+                {topData.about ? 
                     <View style={styles.companyHome_content_synopsis_body}>
                         <View style={styles.companyHome_content_synopsis_content}>
                             <Text style={[styles.fontsize12]}>我是公司简介balabala</Text>
@@ -152,7 +142,9 @@ class CompanyHome extends Component {
                             </View>
                             <View style={styles.companyHome_content_synopsis_position_jiao}></View>
                         </View>
-                    </View>
+                    </View>:null
+                }
+
                     <WhiteSpace size={'sm'} />
                     <Carousel
                         autoplayInterval={5000}
@@ -196,6 +188,28 @@ class CompanyHome extends Component {
                 </ActionButton>
             </View>
         )
+    }
+    _renderActionButton = (extraData)=>{
+        let ActionButtonlist = [];
+        if (extraData){
+            extraData.map((item,index)=>{
+                if (item.ison == 1){
+                    ActionButtonlist.push(
+                        <ActionButton.Item buttonColor={item.color} title={item.title}
+                            key={index}
+                            onPress={()=>{}}>
+                            <Icons name={item.icon} size={18} color={'#fff'}/>
+                        </ActionButton.Item>
+                    )
+                }
+            })
+            return (
+                <ActionButton buttonColor="rgba(231,76,60,1)" size={30} offsetX={20}>
+                    {ActionButtonlist}
+                </ActionButton>
+            )
+        }
+        return null;
     }
 }
 

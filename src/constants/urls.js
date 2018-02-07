@@ -67,3 +67,9 @@ export const HomeInfo_url =  BASIC_URL + '/getAppHome';
 
 //修改公司主页内容
 export const SetCompanyHome =  BASIC_URL + '/setCompanyHome';
+//获取员工列表
+export const StaffList_url =  BASIC_URL + '/getStaffList';
+//搜索用户
+export const SearchUser_url =  BASIC_URL + '/searchUser';
+//申请添加员工
+export const AddStaff_url =  BASIC_URL + '/addStaff';
