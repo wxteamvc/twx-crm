@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View, Text, StatusBar, Image, ScrollView, FlatList, ProgressBarAndroid, Linking } from 'react-native';
+import { View, Text, StatusBar, Image, ScrollView, FlatList, ProgressBarAndroid, Linking, TouchableOpacity } from 'react-native';
 import { Icon, Grid, WhiteSpace, Carousel, Flex } from 'antd-mobile';
 import { styles } from '../constants/styles'
 import { ScreenWidth } from '../constants/global';
@@ -13,7 +13,7 @@ class CustomerList extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            isEnd:false,
+            isEnd: false,
         }
     }
 
@@ -27,42 +27,42 @@ class CustomerList extends Component {
         })
     }
 
-    getCompanyList = ()=>{
+    getCompanyList = () => {
         const { geolocation } = this.props.init.listeners;
         const { list, status } = this.props.companyReducer;
         let geo = geolocation.coords ? { lat: geolocation.coords.latitude, lng: geolocation.coords.longitude } : {};
-        let nextUrl = list.hasOwnProperty("next_page_url") ? list.next_page_url:false;
-        if (nextUrl !== null){
+        let nextUrl = list.hasOwnProperty("next_page_url") ? list.next_page_url : false;
+        if (nextUrl !== null) {
             this.props.dispatch(
-                getCompanyList(geo,nextUrl)
+                getCompanyList(geo, nextUrl)
             )
-        }else{
+        } else {
             this.setState({
-                isEnd:true
+                isEnd: true
             })
         }
     }
 
     _renderActionSheet = (contacts) => {
         let item = [];
-        function workTime(item){
-            let week = ['周日','周一','周二','周三','周四','周五','周六'];
+        function workTime(item) {
+            let week = ['周日', '周一', '周二', '周三', '周四', '周五', '周六'];
             return `${week[item.weekday.substr(0, 1)]} ~ ${week[item.weekday.substr(-1)]} ( ${item.start_time}:00 至 ${item.end_time}:00 )`;
         }
-        if(contacts.length == 0){
-            items= [{
-                title:<View style={[styles.flex_row_columncenter,{justifyContent: 'center'}]}>
-                        <Image
-                            source={require('../constants/images/睡觉.png')}
-                            style={{ height: 40, width: 40,marginRight:10 }}
-                        />
-                        <Text style={styles.fontsize16}>这个公司很懒，还没有添加联系人</Text>
-                    </View>
+        if (contacts.length == 0) {
+            items = [{
+                title: <View style={[styles.flex_row_columncenter, { justifyContent: 'center' }]}>
+                    <Image
+                        source={require('../constants/images/睡觉.png')}
+                        style={{ height: 40, width: 40, marginRight: 10 }}
+                    />
+                    <Text style={styles.fontsize16}>这个公司很懒，还没有添加联系人</Text>
+                </View>
             }]
-        }else{
+        } else {
             items = contacts.map((item, index) => {
                 let flag = item.disturb == 0 ? false : true;
-                if (flag){
+                if (flag) {
                     let date = new Date();
                     let hour = date.getHours();
                     let weekday = date.getDay();
@@ -71,42 +71,42 @@ class CustomerList extends Component {
                 let url = `tel:${item.contact_tel}`;
                 return {
                     title:
-                    <View style={[styles.flex_row_columncenter,{justifyContent: 'center'}]}>
-                        <View style={{flex:0.2,alignItems:'center'}}>
-                            <Image
-                                source={require('../constants/images/客服.png')}
-                                style={{ height: 30, width: 30 }}
-                            />
-                        </View>
-                        <View style={{flex:0.6,alignItems: 'flex-start'}}>
-                            <Text style={styles.fontsize16}>{item.contact_name}: {flag ? item.disturb_mark:item.contact_tel}</Text>
-                            <Text style={[styles.fontsize10,{color: '#ccc'}]}>工作时间: {
-                                item.disturb == 0 ? '全时间段':
-                                workTime(item)
-                            }</Text>
-                        </View>
-                        <View style={{flex:0.2,alignItems: 'center'}}>
-                        {flag ?
-                        <Image
-                            source={require('../constants/images/免打扰.png')}
-                            style={{ height: 25, width: 25 }}
-                        />:
-                        <Image
-                            source={require('../constants/images/电话-1.png')}
-                            style={{ height: 20, width: 20 }}
-                        />
-                        }
-                        </View>
-                    </View>,
+                        <View style={[styles.flex_row_columncenter, { justifyContent: 'center' }]}>
+                            <View style={{ flex: 0.2, alignItems: 'center' }}>
+                                <Image
+                                    source={require('../constants/images/客服.png')}
+                                    style={{ height: 30, width: 30 }}
+                                />
+                            </View>
+                            <View style={{ flex: 0.6, alignItems: 'flex-start' }}>
+                                <Text style={styles.fontsize16}>{item.contact_name}: {flag ? item.disturb_mark : item.contact_tel}</Text>
+                                <Text style={[styles.fontsize10, { color: '#ccc' }]}>工作时间: {
+                                    item.disturb == 0 ? '全时间段' :
+                                        workTime(item)
+                                }</Text>
+                            </View>
+                            <View style={{ flex: 0.2, alignItems: 'center' }}>
+                                {flag ?
+                                    <Image
+                                        source={require('../constants/images/免打扰.png')}
+                                        style={{ height: 25, width: 25 }}
+                                    /> :
+                                    <Image
+                                        source={require('../constants/images/电话-1.png')}
+                                        style={{ height: 20, width: 20 }}
+                                    />
+                                }
+                            </View>
+                        </View>,
                     onPress: () => {
-                        flag ? false:
-                        Linking.canOpenURL(url).then(supported => {
-                            if (!supported) {
-                                console.log('Can\'t handle url: ' + url);
-                            } else {
-                                return Linking.openURL(url);
-                            }
-                        }).catch(err => console.error('An error occurred', err));
+                        flag ? false :
+                            Linking.canOpenURL(url).then(supported => {
+                                if (!supported) {
+                                    console.log('Can\'t handle url: ' + url);
+                                } else {
+                                    return Linking.openURL(url);
+                                }
+                            }).catch(err => console.error('An error occurred', err));
                     }
                 }
             })
@@ -115,108 +115,144 @@ class CustomerList extends Component {
         ActionSheet.show(items, cancelItem);
     }
 
-    _renderItem = ({ item, index }) => {
-        function numToMoney(){
-            let sum = item.pre_count*item.pre_order_money + item.orders_sum;
-            if (sum >= 50000){
-                sum = (sum/10000).toFixed(2); 
-                return `累计${sum}万元`;
-            }else{
-                return `累计${sum}元`;
-            }
-        }
-        return (
-            <Card full>
-                <Card.Header
-                    title={
-                        <ListRow
-                            title={
-                                <View style={{ width: ScreenWidth * 0.4, marginRight: 20 }}>
-                                    <View>
-                                        <Text>
-                                            {item.company_name}
-                                            {item.recommend ?
-                                                <Image
-                                                    source={require('../constants/images/推荐.png')}
-                                                    style={{ height: 50, width: 50 }}
-                                                /> : null
-                                            }
-                                        </Text>
-                                    </View>
-                                    <View>
-                                        <Text style={styles.fontsize12}>{item.address}</Text>
-                                    </View>
-                                    <View>
-                                        <Text style={styles.fontsize10}>共借出{item.pre_count + item.orders_count}笔|{numToMoney()}</Text>
-                                    </View>
-                                </View>
-                            }
-                            detail={item.distance && item.duration ?
-                                <Text style={styles.fontsize10}>{item.distance.text}|{item.duration.text}</Text> :
-                                null
-                            }
-                        />
-                    }
-                    thumb={item.image ?
-                        <Image
-                            source={{ uri: item.image }}
-                            style={{ height: 80, width: 80 }}
-                        /> :
-                        <Image
-                            source={require('../constants/images/公司.png')}
-                            style={{ height: 80, width: 80 }}
-                        />
-                    }
+    // _renderItem = ({ item, index }) => {
+    //     function numToMoney(){
+    //         let sum = item.pre_count*item.pre_order_money + item.orders_sum;
+    //         if (sum >= 50000){
+    //             sum = (sum/10000).toFixed(2); 
+    //             return `累计${sum}万元`;
+    //         }else{
+    //             return `累计${sum}元`;
+    //         }
+    //     }
+    //     return (
+    //         <Card full>
+    //             <Card.Header
+    //                 title={
+    //                     <ListRow
+    //                         title={
+    //                             <View style={{ width: ScreenWidth * 0.4, marginRight: 20 }}>
+    //                                 <View>
+    //                                     <Text>
+    //                                         {item.company_name}
+    //                                         {item.recommend ?
+    //                                             <Image
+    //                                                 source={require('../constants/images/推荐.png')}
+    //                                                 style={{ height: 50, width: 50 }}
+    //                                             /> : null
+    //                                         }
+    //                                     </Text>
+    //                                 </View>
+    //                                 <View>
+    //                                     <Text style={styles.fontsize12}>{item.address}</Text>
+    //                                 </View>
+    //                                 <View>
+    //                                     <Text style={styles.fontsize10}>共借出{item.pre_count + item.orders_count}笔|{numToMoney()}</Text>
+    //                                 </View>
+    //                             </View>
+    //                         }
+    //                         detail={item.distance && item.duration ?
+    //                             <Text style={styles.fontsize10}>{item.distance.text}|{item.duration.text}</Text> :
+    //                             null
+    //                         }
+    //                     />
+    //                 }
+    //                 thumb={item.image ?
+    //                     <Image
+    //                         source={{ uri: item.image }}
+    //                         style={{ height: 80, width: 80 }}
+    //                     /> :
+    //                     <Image
+    //                         source={require('../constants/images/公司.png')}
+    //                         style={{ height: 80, width: 80 }}
+    //                     />
+    //                 }
 
-                />
-                <Card.Footer
-                    style={{ flexDirection: 'column' }}
-                    extra={
-                        <View style={styles.flex_row_end}>
-                            <View style={[styles.flex_row_columncenter, { flex: 0.7 }]}>
-                                <View style={[styles.flex_center, { flex: 1 }]}>
-                                    <Button title='联系我们' onPress={() => this._renderActionSheet(item.company_contacts)} />
-                                </View>
-                                {item.appointment ?
-                                    <View style={[styles.flex_center, { flex: 1 }]}>
-                                        <Button title='预约' onPress={() => alert('预约')} />
-                                    </View>
-                                    : null
-                                }
-                            </View>
+    //             />
+    //             <Card.Footer
+    //                 style={{ flexDirection: 'column' }}
+    //                 extra={
+    //                     <View style={styles.flex_row_end}>
+    //                         <View style={[styles.flex_row_columncenter, { flex: 0.7 }]}>
+    //                             <View style={[styles.flex_center, { flex: 1 }]}>
+    //                                 <Button title='联系我们' onPress={() => this._renderActionSheet(item.company_contacts)} />
+    //                             </View>
+    //                             {item.appointment ?
+    //                                 <View style={[styles.flex_center, { flex: 1 }]}>
+    //                                     <Button title='预约' onPress={() => alert('预约')} />
+    //                                 </View>
+    //                                 : null
+    //                             }
+    //                         </View>
+    //                     </View>
+    //                 }
+    //             />
+    //         </Card>
+    //     )
+    // }
+    _renderItem = ({ item, index }) => {
+        return (
+            <TouchableOpacity
+                activeOpacity={1}
+                onPress={() => this.props.navigation.navigate('CompanyHome')}
+                style={[styles.flex_row_columncenter, styles.companyHome_content_activity_listItem_body]}
+            >
+                <View style={{ flexDirection: 'row' }}>
+                    <View style={[styles.flex_center, { flex: 0.5 }]}>
+                        <Image
+                            style={{ height: 100, width: 150, borderRadius: 5 }}
+                            source={item.img ? { uri: item.img } : {
+                                uri: 'https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1517569202355&di=b566bee4d945fde1fd671a7cecf5dcbb&imgtype=0&src=http%3A%2F%2Fimg02.tooopen.com%2Fimages%2F20151203%2Ftooopen_sy_150207099617.jpg',
+                                bgImg: 'https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1517567190889&di=9d35f2f8a897f2564cd831916897b914&imgtype=0&src=http%3A%2F%2Fimg2.3lian.com%2F2014%2Ff2%2F188%2Fd%2F104.jpg'
+                            }}
+                        />
+                    </View>
+                    <View style={[styles.flex_column_between, { flex: 0.5, paddingRight: 10 }]}>
+                        <View>
+                            <Text style={[styles.fontsize14, { color: '#000' }]} numberOfLines={1}>{item.company_name}</Text>
+                            <WhiteSpace size={'xs'} />
+                            <Text style={styles.fontsize12} numberOfLines={1}>{item.address}</Text>
                         </View>
-                    }
-                />
-            </Card>
+                        <Text style={styles.fontsize12} numberOfLines={3}>我是公司简介balabala我是公司简介balabala我是公司简介balabala我是公司简介balabala我是公司简介balabala我是公司简介balabala我是公司简介balabala我是公司简介balabala我是公司简介balabala我是公司简介balabala我是公司简介balabala我是公司简介balabala我是公司简介balabala我是公司简介balabala我是公司简介balabala我是公司简介balabala我是公司简介balabala</Text>
+                    </View>
+                </View>
+                <View style={[styles.flex_row_columncenter, { position: 'absolute', top: 10, right: 10, }]}>
+                    <Text style={[styles.fontsize10]}>{item.uid}米</Text>
+                </View>
+            </TouchableOpacity>
         )
+
+
     }
-    _renderFoot = ()=>{
-        if (this.state.isEnd){
-            return (<View style={[styles.flex_row_columncenter,{height:50}]}>
-            <View style={{flex:1,backgroundColor:'gray',height:1,marginLeft:10 ,opacity:0.1}}></View>
-            <View style={{flex:1,alignItems: 'center',opacity:0.5}}><Text>我是有底线的</Text></View>
-            <View style={{flex:1,backgroundColor:'gray',height:1,marginRight:10,opacity:0.1}}></View>
-        </View>)
-        }else{
-            if (this.props.companyReducer.status == 'doing'){
-                return (<View style={{height:50,justifyContent: 'center',}}>
-                <ProgressBarAndroid styleAttr="SmallInverse" />
+    _renderFoot = () => {
+        if (this.state.isEnd) {
+            return (<View style={[styles.flex_row_columncenter, { height: 50 }]}>
+                <View style={{ flex: 1, backgroundColor: 'gray', height: 1, marginLeft: 10, opacity: 0.1 }}></View>
+                <View style={{ flex: 1, alignItems: 'center', opacity: 0.5 }}><Text>我是有底线的</Text></View>
+                <View style={{ flex: 1, backgroundColor: 'gray', height: 1, marginRight: 10, opacity: 0.1 }}></View>
             </View>)
-            }else{
+        } else {
+            if (this.props.companyReducer.status == 'doing') {
+                return (<View style={{ height: 50, justifyContent: 'center', }}>
+                    <ProgressBarAndroid styleAttr="SmallInverse" />
+                </View>)
+            } else {
                 return null;
             }
         }
     }
     render() {
         const { list, status } = this.props.companyReducer;
+        console.log(list.data)
         return (
-            <View style={{ flex: 1 }}>                    
+            <View style={{ flex: 1 }}>
                 <StatusBar
                     translucent={false}
                     backgroundColor='#40a9ff'
                 />
 
                 <FlatList
+                    style={{ backgroundColor: '#fff' }}
                     ListFooterComponent={this._renderFoot()}
                     initialNumToRender={5}
                     data={list.data}

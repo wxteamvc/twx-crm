@@ -61,3 +61,9 @@ export const SendMsg_url =  BASIC_URL + '/sendMsg';
 
 //获取聊天历史消息
 export const ChatHistory_url =  BASIC_URL + '/getChatHistory';
+
+//获取首页数据
+export const HomeInfo_url =  BASIC_URL + '/getAppHome';
+
+//修改公司主页内容
+export const SetCompanyHome =  BASIC_URL + '/setCompanyHome';

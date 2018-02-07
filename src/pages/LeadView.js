@@ -8,6 +8,9 @@ import { connect } from 'react-redux';
 import { NavigationActions } from 'react-navigation';
 import AppIntroSlider from 'react-native-app-intro-slider';
 import { StyleSheet } from 'react-native';
+import { getHomeInfo } from '../actions/homeAction';
+
+
 
 const styles = StyleSheet.create({
   image: {
@@ -16,6 +19,11 @@ const styles = StyleSheet.create({
   }
 });
 class Lead extends Component {
+  
+    componentDidMount() {
+        this.props.dispatch(getHomeInfo())
+    } 
+
     // state = {
     //     seconds: 1
     // }

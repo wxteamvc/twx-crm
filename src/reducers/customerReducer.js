@@ -27,7 +27,6 @@ export function customerReducer(state = customerState, action) {
                     ...state.info,
                     status: 'doing',
                 }
-
             }
         case Types.CustomerInfo_SUCCESS:
             return {

@@ -3,17 +3,37 @@ import { fontSizeScaler, ScreenHeight, StatusBarHeight, ScreenWidth } from '../c
 export const styles = StyleSheet.create({
 
     //````````````````````````通用````````````````````````````````
+    //横向排列
+    flex_row: {
+        flexDirection: 'row'
+    },
+    //纵向排列
+    flex_column: {
+        flexDirection: 'column'
+    },
     //垂直布局垂直靠下
     flex_column_end: {
         flexDirection: 'column', justifyContent: 'flex-end',
+    },
+    //垂直布局垂直居中
+    flex_column_columncenter: {
+        flexDirection: 'column', justifyContent: 'center',
     },
     //垂直布局水平居中
     flex_column_rowcenter: {
         flexDirection: 'column', alignItems: 'center',
     },
+    //垂直布局两端对齐
+    flex_column_between: {
+        flexDirection: 'column', justifyContent: 'space-between',
+    },
     //水平布局双向居中
     flex_row_center: {
         flexDirection: 'row', justifyContent: 'center', alignItems: 'center',
+    },
+    //垂直布局双向居中
+    flex_column_center: {
+        flexDirection: 'column', justifyContent: 'center', alignItems: 'center',
     },
     //水平布局垂直居中
     flex_row_columncenter: {
@@ -100,20 +120,36 @@ export const styles = StyleSheet.create({
     },
     //首页活动列表容器
     home_activity_title: {
-        padding: 10, borderColor: '#ccc', borderBottomWidth: 0.3
+        padding: 10, borderColor: '#ccc', borderBottomWidth: 0.3, backgroundColor: '#fff'
     },
     //首页活动列表标题
     home_activity_title_View: {
         paddingLeft: 5, borderColor: '#40A9FF', borderLeftWidth: 3,
     },
+    //首页服务列表item
+    home_serve_title_item: {
+        padding: 10, borderColor: '#ccc', borderWidth: 0.5, flex: 1
+    },
     //首页活动列表item
     home_activity_title_item: {
-        flex: 1, paddingTop: 5, paddingBottom: 5, borderColor: '#ccc', borderBottomWidth: 0.5, borderRightWidth: 0.5
+        padding: 10, borderColor: '#ccc', borderWidth: 0.5, borderRadius: 5, paddingBottom: 5, width: 100
+    },
+    home_activity_title_item_btn: {
+        padding: 3, paddingLeft: 15, paddingRight: 15, backgroundColor: '#40a9ff', borderRadius: 5
+    },
+    home_activity_title_item_top: {
+        height: 30, width: 100, position: 'absolute', top: 0, right: 0, backgroundColor: 'rgba(0,0,0,0.5)', borderTopLeftRadius: 5, borderTopRightRadius: 5
+    },
+    home_activity_title_item_img_container: {
+        padding: 5, backgroundColor: '#fff', borderRadius: 33
+    },
+    home_activity_title_item_img_img: {
+        width: 60, height: 60, borderRadius: 30
     },
     //````````````````````````客户列表页面````````````````````````````````
     //列表元素身体样式
     item_body: {
-        marginLeft: 5, marginRight: 5, paddingBottom: 10, borderColor: '#ccc', borderBottomWidth: 0.5,backgroundColor:'#fff',borderTopLeftRadius: 10, borderTopRightRadius: 10
+        marginLeft: 5, marginRight: 5, paddingBottom: 10, borderColor: '#ccc', borderBottomWidth: 0.5, backgroundColor: '#fff', borderTopLeftRadius: 10, borderTopRightRadius: 10
     },
     //列表元素头部样式
     item_header: {
@@ -123,10 +159,10 @@ export const styles = StyleSheet.create({
         width: 20, height: 20
     },
     item_accordion_btn: {  //点击展开按钮样式
-        padding: 10 ,backgroundColor:'#fff',marginLeft:5, marginRight: 5
+        padding: 10, backgroundColor: '#fff', marginLeft: 5, marginRight: 5
     },
     item_accordion_content: {  //展开部分样式
-        backgroundColor:'#fff',marginLeft:5, marginRight: 5
+        backgroundColor: '#fff', marginLeft: 5, marginRight: 5
     },
     //````````````````````````客户详细信息页面````````````````````````````````
     //头部背景样式
@@ -153,22 +189,22 @@ export const styles = StyleSheet.create({
     },
     //```````````````````````客户订单列表组件样式·······················
     OrderListPage_item_body: {
-        backgroundColor: '#fff',paddingLeft:10,paddingRight:10
+        backgroundColor: '#fff', paddingLeft: 10, paddingRight: 10
     },
     OrderListPage_item_header: {
-        paddingTop: 5,paddingBottom:5, borderColor: '#ccc', borderBottomWidth: 0.5
+        paddingTop: 5, paddingBottom: 5, borderColor: '#ccc', borderBottomWidth: 0.5
     },
     OrderListPage_item_header_left: {
-        paddingLeft:10,borderColor:'#FF7D87',borderLeftWidth:3
+        paddingLeft: 10, borderColor: '#FF7D87', borderLeftWidth: 3
     },
     OrderListPage_item_header_img: {
         width: 15, height: 15, borderRadius: 7.5, marginRight: 10
     },
     OrderListPage_item_content: {
-        paddingTop: 5,paddingBottom:5, paddingBottom: 10, paddingTop: 10,borderColor: '#ccc', borderBottomWidth: 0.5
+        paddingTop: 5, paddingBottom: 5, paddingBottom: 10, paddingTop: 10, borderColor: '#ccc', borderBottomWidth: 0.5
     },
     OrderListPage_item_footer: {
-        paddingTop: 5,paddingBottom:5
+        paddingTop: 5, paddingBottom: 5
     },
     //```````````````````````客户联系人组件样式·······················
     CustomerContacts_item_body: {
@@ -198,27 +234,27 @@ export const styles = StyleSheet.create({
         padding: 10, flex: 1
     },
     OrderInfo_tab_Lbtn: {
-       marginRight:10
+        marginRight: 10
     },
     OrderInfo_content_header: {
         height: 20, marginTop: 10, marginLeft: 20, marginRight: 20, backgroundColor: '#2A3B61', borderTopLeftRadius: 5, borderTopRightRadius: 5
     },
     OrderInfo_content_container: {
-     borderRadius: 5, marginLeft: 10, marginRight: 10
+        borderRadius: 5, marginLeft: 10, marginRight: 10
     },
     //```````````````````````订单详情组件样式·······················
     order_info_head: {
         backgroundColor: '#445596', padding: 15, paddingTop: 20, paddingBottom: 20, borderTopLeftRadius: 5, borderTopRightRadius: 5
     },
     order_info_rowItem_body: {
-        padding: 10, borderColor: '#ccc', borderBottomWidth: 0.7,paddingLeft:0,paddingRight:0
+        padding: 10, borderColor: '#ccc', borderBottomWidth: 0.7, paddingLeft: 0, paddingRight: 0
     },
     //```````````````````````订单周期组件样式·······················
     order_cycle_container: {
-        flex: 1,marginLeft:5,marginRight:5
+        flex: 1, marginLeft: 5, marginRight: 5
     },
     order_cycle_listItem: {
-        paddingLeft: 10, paddingRight: 10,backgroundColor:'#fff'
+        paddingLeft: 10, paddingRight: 10, backgroundColor: '#fff'
     },
     order_cycle_whitespace: {
         height: 5, backgroundColor: '#E9E9EF',
@@ -237,7 +273,7 @@ export const styles = StyleSheet.create({
     },
     //```````````````````````订单管理页面样式·······················
     OrdersView_menu_container: {
-        position: 'absolute', top: 0, zIndex: 20, width: ScreenWidth,borderColor: '#ccc', borderBottomWidth: 0.7
+        position: 'absolute', top: 0, zIndex: 20, width: ScreenWidth, borderColor: '#ccc', borderBottomWidth: 0.7
     },
     OrdersView_menu_header: {
         width: ScreenWidth, height: 40, backgroundColor: '#fff'
@@ -246,7 +282,7 @@ export const styles = StyleSheet.create({
         flex: 1, borderColor: '#ccc', borderRightWidth: 1
     },
     OrdersView_menu_content_typeView_item: {
-        paddingTop:5,paddingBottom:5 , flex:0.5
+        paddingTop: 5, paddingBottom: 5, flex: 0.5
     },
     OrdersView_content_container: {
         flex: 1, zIndex: 1, marginTop: 40,
@@ -262,7 +298,7 @@ export const styles = StyleSheet.create({
         paddingTop: 10, paddingBottom: 10
     },
     companyHome_content_activity_listItem_body: {
-        paddingTop: 10, paddingBottom: 10, 
+        paddingTop: 10, paddingBottom: 10,
     },
     companyHome_content_synopsis_body: {
         paddingTop: 10
@@ -277,7 +313,25 @@ export const styles = StyleSheet.create({
         backgroundColor: '#FF7D87', padding: 3, paddingLeft: 10, paddingRight: 10
     },
     companyHome_content_synopsis_position_jiao: {
-        borderBottomWidth:5,borderBottomColor:'#993300',borderTopWidth:5,borderTopColor:'transparent',borderRightColor:'transparent',borderRightWidth:5,position: 'relative',top:-17
+        borderBottomWidth: 5, borderBottomColor: '#993300', borderTopWidth: 5, borderTopColor: 'transparent', borderRightColor: 'transparent', borderRightWidth: 5, position: 'relative', top: -17
     },
-
+    //```````````````````````公司认证页面样式·······················
+    CompanyAuthentication_input_container:{
+        backgroundColor: '#fff', paddingLeft: 10, borderColor: '#ccc', borderBottomWidth: 0.5 
+    },
+    CompanyAuthentication_input:{
+        padding: 5, flex: 0.6
+    },
+    CompanyAuthentication_upload_container:{
+        backgroundColor: '#fff', height: 150 
+    },
+    CompanyAuthentication_upload_img_container:{
+        width: 100, height: 100, backgroundColor: '#E9E9EF' 
+    },
+    CompanyAuthentication_upload_img_default:{
+        width: 40, height: 40
+    },
+    CompanyAuthentication_upload_img_photo:{
+        width: 100, height: 100
+    },
 })  

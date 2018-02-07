@@ -19,9 +19,6 @@ import ActionButton from 'react-native-action-button';
 import Icons from 'react-native-vector-icons/dist/FontAwesome';
 
 class CompanyHome extends Component {
-
-
-
     activityData = [
         { title: '初学佛时,我们如何发心', content: '发乎心止乎礼', count: 2000 },
         { title: '佛门法器知多少', content: '法器是天龙耳目,大家共同遵循的规则', count: 2000 },
@@ -70,12 +67,12 @@ class CompanyHome extends Component {
         for (const key in data) {
             list.push(
                 <TouchableOpacity key={key} activeOpacity={1} onPress={() => alert('我要跳去别的页面咯')}>
-                    <ImageBackground source={{ uri: data[key].img }} style={{ width: ScreenWidth, height: 100 }}>
+                    <ImageBackground source={{ uri: data[key].img }} style={{ width: ScreenWidth, height: parseInt(ScreenWidth / 3) }}>
                         <View style={[{ flex: 1, backgroundColor: 'rgba(0,0,0,0.3)', flexDirection: 'row' }]}>
                             <View style={{ flex: 0.7, paddingLeft: 30, paddingTop: 20 }}>
-                                <Text style={[styles.fontsize12, { color: '#fff' }]}>{data[key].title}</Text>
+                                <Text style={[styles.fontsize14, { color: '#fff' }]}>{data[key].title}</Text>
                                 <WhiteSpace size={'sm'} />
-                                <Text style={[styles.fontsize10, { color: '#fff' }]} numberOfLines={2}>{data[key].content}</Text>
+                                <Text style={[styles.fontsize12, { color: '#fff' }]} numberOfLines={2}>{data[key].content}</Text>
                             </View>
                         </View>
                     </ImageBackground>
@@ -147,7 +144,7 @@ class CompanyHome extends Component {
                 >
                     <View style={styles.companyHome_content_synopsis_body}>
                         <View style={styles.companyHome_content_synopsis_content}>
-                            <Text style={[styles.fontsize10]}>我是公司简介balabala</Text>
+                            <Text style={[styles.fontsize12]}>我是公司简介balabala</Text>
                         </View>
                         <View style={styles.companyHome_content_synopsis_position}>
                             <View style={styles.companyHome_content_synopsis_position_title}>
@@ -181,17 +178,20 @@ class CompanyHome extends Component {
                     </View>
                 </ParallaxScrollView>
                 <ActionButton buttonColor="rgba(231,76,60,1)" size={30} offsetX={20}>
+                    <ActionButton.Item buttonColor='#1abc9c' title="编辑界面" onPress={() => {this.props.navigation.navigate('CompanyEdit') }}>
+                        <Icons name={'heart'} size={20} color={'#fff'} />
+                    </ActionButton.Item>
                     <ActionButton.Item buttonColor='#9b59b6' title="联系客服" onPress={() => console.log("notes tapped!")} >
-                        <Icons name={'comments-o'} size={20} color={'#fff'}/>
+                        <Icons name={'comments-o'} size={20} color={'#fff'} />
                     </ActionButton.Item>
                     <ActionButton.Item buttonColor='#3498db' title="提交申请" onPress={() => { }}>
                         <Icons name={'pencil-square-o'} size={20} color={'#fff'} />
                     </ActionButton.Item>
                     <ActionButton.Item buttonColor='#996600' title="预约见面" onPress={() => { }}>
-                        <Icons name={'taxi'} size={18} color={'#fff'}/>
+                        <Icons name={'taxi'} size={18} color={'#fff'} />
                     </ActionButton.Item>
-                    <ActionButton.Item buttonColor='#1abc9c' title="收藏公司" onPress={() => { }}>
-                        <Icons name={'star-o'} size={20} color={'#fff'}/>
+                    <ActionButton.Item buttonColor='#1abc9c' title="关注" onPress={() => { }}>
+                        <Icons name={'heart'} size={20} color={'#fff'} />
                     </ActionButton.Item>
                 </ActionButton>
             </View>

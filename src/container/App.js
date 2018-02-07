@@ -25,16 +25,19 @@ import TaskList from '../pages/TaskListView';
 import CompanyHome from '../pages/CompanyHomeView';
 import UserChat from '../pages/chat/UserChatView';
 import ImageView from '../pages/ImageView';
+import Authentication from '../pages/AuthenticationView';
+import CompanyEdit from '../pages/CompanyEditView';
+import CompanyAuthentication from '../pages/CompanyAuthenticationView';
 
 const App = StackNavigator({
-    // Lead: {
-    //     screen: Lead,
-    //     navigationOptions: ({ navigation }) => {
-    //         return ({
-    //             header: null
-    //         })
-    //     }
-    // },
+    Lead: {
+        screen: Lead,
+        navigationOptions: ({ navigation }) => {
+            return ({
+                header: null
+            })
+        }
+    },
 
     HomeTab: {
         screen: HomeTab,
@@ -187,7 +190,31 @@ const App = StackNavigator({
             })
         }
     },
+    Authentication: {
+        screen: Authentication,
+        navigationOptions: ({ navigation }) => {
+            return ({
+            })
+        }
+    },
+    CompanyEdit: {
+        screen: CompanyEdit,
+        navigationOptions: ({ navigation }) => {
+            return ({
+            })
+        }
+    },
+    CompanyAuthentication: {
+        screen: CompanyAuthentication,
+        navigationOptions: ({ navigation }) => {
+            return ({
+            })
+        }
+    },
+
+    
 },
+
     {
         transitionConfig: () => ({
             screenInterpolator: CardStackStyleInterpolator.forHorizontal,

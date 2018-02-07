@@ -114,7 +114,7 @@ class Personal extends Component {
     }
     render() {
         let { initData, userInfo, navigation } = this.props;
-        console.log(userInfo)
+        // console.log(userInfo)
         const rightView = (
             <NavigationBar.IconButton
                 onPress={() => {
@@ -146,6 +146,7 @@ class Personal extends Component {
             { name: '账单管理', gourl: 'Orders',icon:require('../constants/images/personal/账单.png')},
             { name: '消费记录', gourl: 'UserChat',icon:require('../constants/images/personal/消费.png'),extra:{chatWith:7}},
             { name: '公司设置', gourl: 'Orders',icon:require('../constants/images/personal/设置.png')},
+            { name: '认证服务', gourl: 'Authentication',icon:require('../constants/images/personal/账单.png')},
             { name: '更多', gourl: 'EditModules',icon:require('../constants/images/personal/设置.png')},
         ];
         const listData = [
