@@ -26,6 +26,12 @@ class CompanyHome extends Component {
         { title: '初学佛时,我们如何发心', content: '发乎心止乎礼', count: 2000 },
     ]
 
+    banner = [
+        { img: 'http://p.yjbys.com/image/20160919/1474284202349030.png', title: '开借啦开借啦', content: '免息开借啦免息开借啦' },
+        { img: 'http://pic1.win4000.com/wallpaper/b/5881ae6e5e47b.jpg', title: '开借啦开借啦', content: '免息开借啦免息开借啦免息开借啦' },
+        { img: 'http://pic.90sjimg.com/back_pic/qk/back_origin_pic/00/04/01/a8e8afe94d0e1e912643537ad60dc540.jpg', title: '开借啦开借啦', content: '免息开借啦免息开借啦免息开借啦免息开借啦' },
+    ]
+
 
 
     renderActivityList = () => {
@@ -58,7 +64,7 @@ class CompanyHome extends Component {
     }
 
     renderLunbo() {
-        const data = this.pageData.carouselData;
+        const data = this.banner;
         let list = [];
         for (const key in data) {
             list.push(
@@ -81,7 +87,13 @@ class CompanyHome extends Component {
 
     render() {
         const { navigation } = this.props;
-        const { topData,extraData } = this.pageData;
+        const topData = {
+            background: 'http://pic.90sjimg.com/back_pic/qk/back_origin_pic/00/04/01/a8e8afe94d0e1e912643537ad60dc540.jpg',
+            log: 'http://pic.90sjimg.com/back_pic/qk/back_origin_pic/00/04/01/a8e8afe94d0e1e912643537ad60dc540.jpg',
+            title: '新昌咨询',
+            address: '无锡市大东方百货B座'
+        }
+
         return (
             <View style={{ flex: 1 }}>
                 <ParallaxScrollView
@@ -95,13 +107,13 @@ class CompanyHome extends Component {
                     renderForeground={
                         () =>
                             <ImageBackground
-                                source={topData.background}
-                                style={{ width: ScreenWidth, height: 130}}
+                                source={{ uri: topData.background }}
+                                style={{ width: ScreenWidth, height: 130 }}
                             >
                                 <View style={[styles.customerInfo_head_bg, { flex: 1 }]}>
                                     <View style={[styles.flex_row_columncenter, { marginTop: 50 }]}>
                                         <View style={[styles.flex_row_columncenter, { flex: 0.6, paddingLeft: 15 }]}>
-                                            <Image source={topData.logo} style={styles.companyHome_head_avatar} />
+                                            <Image source={require('../constants/images/infobackground.jpg')} style={styles.companyHome_head_avatar} />
                                             <View style={{ marginLeft: 10, flex: 1 }}>
                                                 <Text style={[styles.fontsize12, { color: '#fff' }]}>{topData.title}</Text>
                                                 <WhiteSpace size={'xs'} />
@@ -109,7 +121,7 @@ class CompanyHome extends Component {
                                             </View>
                                         </View>
                                     </View>
-                                    
+
                                     <View style={styles.companyHome_head_foot}>
                                         <Text style={[styles.fontsize10, { color: '#fff' }]}>关注人数:2w</Text>
                                     </View>
@@ -131,19 +143,19 @@ class CompanyHome extends Component {
                         </View>
                     )}
                 >
-                {topData.about ? 
-                    <View style={styles.companyHome_content_synopsis_body}>
-                        <View style={styles.companyHome_content_synopsis_content}>
-                            <Text style={[styles.fontsize12]}>我是公司简介balabala</Text>
-                        </View>
-                        <View style={styles.companyHome_content_synopsis_position}>
-                            <View style={styles.companyHome_content_synopsis_position_title}>
-                                <Text style={[styles.fontsize12, { color: '#fff' }]}>公司简介</Text>
+                    {topData.about ?
+                        <View style={styles.companyHome_content_synopsis_body}>
+                            <View style={styles.companyHome_content_synopsis_content}>
+                                <Text style={[styles.fontsize12]}>我是公司简介balabala</Text>
                             </View>
-                            <View style={styles.companyHome_content_synopsis_position_jiao}></View>
-                        </View>
-                    </View>:null
-                }
+                            <View style={styles.companyHome_content_synopsis_position}>
+                                <View style={styles.companyHome_content_synopsis_position_title}>
+                                    <Text style={[styles.fontsize12, { color: '#fff' }]}>公司简介</Text>
+                                </View>
+                                <View style={styles.companyHome_content_synopsis_position_jiao}></View>
+                            </View>
+                        </View> : null
+                    }
 
                     <WhiteSpace size={'sm'} />
                     <Carousel
@@ -170,7 +182,7 @@ class CompanyHome extends Component {
                     </View>
                 </ParallaxScrollView>
                 <ActionButton buttonColor="rgba(231,76,60,1)" size={30} offsetX={20}>
-                    <ActionButton.Item buttonColor='#1abc9c' title="编辑界面" onPress={() => {this.props.navigation.navigate('CompanyEdit') }}>
+                    <ActionButton.Item buttonColor='#1abc9c' title="编辑界面" onPress={() => { this.props.navigation.navigate('CompanyEdit') }}>
                         <Icons name={'heart'} size={20} color={'#fff'} />
                     </ActionButton.Item>
                     <ActionButton.Item buttonColor='#9b59b6' title="联系客服" onPress={() => console.log("notes tapped!")} >
@@ -189,16 +201,16 @@ class CompanyHome extends Component {
             </View>
         )
     }
-    _renderActionButton = (extraData)=>{
+    _renderActionButton = (extraData) => {
         let ActionButtonlist = [];
-        if (extraData){
-            extraData.map((item,index)=>{
-                if (item.ison == 1){
+        if (extraData) {
+            extraData.map((item, index) => {
+                if (item.ison == 1) {
                     ActionButtonlist.push(
                         <ActionButton.Item buttonColor={item.color} title={item.title}
                             key={index}
-                            onPress={()=>{}}>
-                            <Icons name={item.icon} size={18} color={'#fff'}/>
+                            onPress={() => { }}>
+                            <Icons name={item.icon} size={18} color={'#fff'} />
                         </ActionButton.Item>
                     )
                 }
