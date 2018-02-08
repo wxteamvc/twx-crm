@@ -12,6 +12,14 @@ export const Login_SUCCESS = 'Login_SUCCESS';
 //登陆账号失败
 export const Login_FAILED = 'Login_FAILED';
 
+//注册账户开始
+export const Register_BEGIN = 'Register_BEGIN';
+//注册账号成功
+export const Register_SUCCESS = 'Register_SUCCESS';
+//注册账号失败
+export const Register_FAILED = 'Register_FAILED';
+
+
 //获取用户信息开始
 export const UserInfo_BEGIN = 'UserInfo_BEGIN';
 //获取用户信息成功
@@ -83,3 +91,11 @@ export const OrderInfo_BEGIN = 'OrderInfo_BEGIN';
 export const OrderInfo_SUCCESS = 'OrderInfo_SUCCESS';
 //获取订单详细信息失败
 export const OrderInfo_FAILED = 'OrderInfo_FAILED';
+
+
+//获取公司主页信息开始
+export const CompanyHome_BEGIN = 'CompanyHome_BEGIN';
+//获取公司主页信息成功
+export const CompanyHome_SUCCESS = 'CompanyHome_SUCCESS';
+//获取公司主页信息失败
+export const CompanyHome_FAILED = 'CompanyHome_FAILED';

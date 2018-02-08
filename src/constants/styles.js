@@ -135,7 +135,7 @@ export const styles = StyleSheet.create({
         padding: 10, borderColor: '#ccc', borderWidth: 0.5, borderRadius: 5, paddingBottom: 5, width: 100
     },
     home_activity_title_item_btn: {
-        padding: 3, paddingLeft: 15, paddingRight: 15, backgroundColor: '#40a9ff', borderRadius: 5
+        padding: 3, paddingLeft: 15, paddingRight: 15, borderRadius: 5
     },
     home_activity_title_item_top: {
         height: 30, width: 100, position: 'absolute', top: 0, right: 0, backgroundColor: 'rgba(0,0,0,0.5)', borderTopLeftRadius: 5, borderTopRightRadius: 5
@@ -291,8 +291,14 @@ export const styles = StyleSheet.create({
     companyHome_head_avatar: {
         width: 70, height: 70, borderRadius: 35
     },
-    companyHome_head_foot: {
-        position: 'absolute', height:15,bottom: 10, right: 0, paddingLeft: 10, paddingRight: 10, backgroundColor: '#CC3300', borderBottomLeftRadius: 5, borderTopLeftRadius: 5
+    companyHome_head_foot_container: {
+        position: 'absolute', bottom: 10, right: 0,
+    },
+    companyHome_head_foot_text: {
+        padding: 5, paddingLeft: 10, paddingRight: 10, backgroundColor: '#CC3300', borderBottomLeftRadius: 5, borderTopLeftRadius: 5
+    },
+    companyHome_head_foot_btn: {
+       marginRight:10
     },
     companyHome_content_activity_header: {  //公司活动头部样式
         paddingTop: 10, paddingBottom: 10
@@ -316,22 +322,22 @@ export const styles = StyleSheet.create({
         borderBottomWidth: 5, borderBottomColor: '#993300', borderTopWidth: 5, borderTopColor: 'transparent', borderRightColor: 'transparent', borderRightWidth: 5, position: 'relative', top: -17
     },
     //```````````````````````公司认证页面样式·······················
-    CompanyAuthentication_input_container:{
-        backgroundColor: '#fff', paddingLeft: 10, borderColor: '#ccc', borderBottomWidth: 0.5 
+    CompanyAuthentication_input_container: {
+        backgroundColor: '#fff', paddingLeft: 10, borderColor: '#ccc', borderBottomWidth: 0.5
     },
-    CompanyAuthentication_input:{
+    CompanyAuthentication_input: {
         padding: 5, flex: 0.6
     },
-    CompanyAuthentication_upload_container:{
-        backgroundColor: '#fff', height: 150 
+    CompanyAuthentication_upload_container: {
+        backgroundColor: '#fff', height: 150
     },
-    CompanyAuthentication_upload_img_container:{
-        width: 100, height: 100, backgroundColor: '#E9E9EF' 
+    CompanyAuthentication_upload_img_container: {
+        width: 100, height: 100, backgroundColor: '#E9E9EF'
     },
-    CompanyAuthentication_upload_img_default:{
+    CompanyAuthentication_upload_img_default: {
         width: 40, height: 40
     },
-    CompanyAuthentication_upload_img_photo:{
+    CompanyAuthentication_upload_img_photo: {
         width: 100, height: 100
     },
 })  

@@ -127,7 +127,7 @@ class SetUserInfo extends Component {
                 >
                 <ListRow title='头像' 
                 detail={<Image
-                            source={{ uri: userInfo.info.avatar_path }}
+                            source={userInfo.info.avatar_path?{ uri: userInfo.info.avatar_path }:require('../constants/images/头像.png')}
                             style={{ height: 60, width: 60,borderRadius:30 }}
                         />} 
                 onPress={this._renderActionSheet}

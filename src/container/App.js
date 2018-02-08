@@ -31,7 +31,7 @@ import CompanyAuthentication from '../pages/CompanyAuthenticationView';
 import CompanySetting from '../pages/CompanySettingView';
 import CompanyHomeSetting from '../pages/CompanyHomeSettingView';
 import Staff from '../pages/StaffView';
-
+import Register from '../pages/RegisterView';
 
 const App = StackNavigator({
     Lead: {
@@ -198,6 +198,7 @@ const App = StackNavigator({
         screen: Authentication,
         navigationOptions: ({ navigation }) => {
             return ({
+                header: null
             })
         }
     },
@@ -212,11 +213,12 @@ const App = StackNavigator({
         screen: CompanyAuthentication,
         navigationOptions: ({ navigation }) => {
             return ({
+                header: null
             })
         }
     },
 
-    
+
     CompanySetting: {
         screen: CompanySetting,
         navigationOptions: ({ navigation }) => {
@@ -235,6 +237,14 @@ const App = StackNavigator({
     },
     Staff: {
         screen: Staff,
+        navigationOptions: ({ navigation }) => {
+            return ({
+                header: null
+            })
+        }
+    },
+    Register: {
+        screen: Register,
         navigationOptions: ({ navigation }) => {
             return ({
                 header: null

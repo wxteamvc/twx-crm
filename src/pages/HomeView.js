@@ -1,11 +1,15 @@
 import React, { Component } from 'react';
-import { View, Text, Image, ScrollView, FlatList, StatusBar, Platform, BackHandler, TouchableOpacity } from 'react-native';
+import { View, Text, Image, ScrollView, FlatList, StatusBar, Platform, BackHandler, TouchableOpacity, Linking } from 'react-native';
 import { Grid, WhiteSpace, Carousel, Flex, WingBlank, Icon } from 'antd-mobile';
 import { styles } from '../constants/styles'
 import { ScreenWidth } from '../constants/global';
 import { connect } from 'react-redux';
 import { Item } from 'antd-mobile/lib/tab-bar';
 import Notices from '../components/notices';
+import * as Urls from "../constants/urls";
+import Util from "../constants/util";
+import * as Types from "../actions/actionTypes";
+import { Toast } from 'teaset';
 
 class Home extends Component {
     componentDidMount() {
@@ -25,10 +29,30 @@ class Home extends Component {
     }
 
     renderCarouselItem = () => {
-        const { banner } = this.props.home.data;
-        const items = banner.map((item, index) => {
+        const { top_banner } = this.props.home.data;
+        const items = top_banner.map((item, index) => {
             return (
-                <Image resizeMode={'cover'} source={{ uri: item }} style={{ width: ScreenWidth, height: 180 }} key={index} />
+                <TouchableOpacity
+                    key={index}
+                    activeOpacity={1}
+                    onPress={() => {
+                        switch (item.type) {
+                            case 1:
+                                console.log(item.gourl, item.params)
+                                this.props.navigation.navigate(item.gourl, item.params)
+                                break;
+                            case 2:
+                                Linking.openURL(item.gourl)
+                                break;
+                            default:
+                                break;
+                        }
+
+                    }}
+                >
+                    <Image resizeMode={'cover'} source={{ uri: item.banner_url }} style={{ width: ScreenWidth, height: 180 }} />
+                </TouchableOpacity>
+
             )
         })
         return items
@@ -56,25 +80,49 @@ class Home extends Component {
     }
 
     renderFlatListItem = ({ item }) => {
+        const { dispatch } = this.props;
+        const { isLogin, info } = this.props.userInfo;
         return (
-            <View style={styles.home_activity_title_item}>
+            <TouchableOpacity
+                activeOpacity={1}
+                style={styles.home_activity_title_item}
+                onPress={() => this.props.navigation.navigate('CompanyHome', { cid: item.id })}
+            >
                 <View style={styles.home_activity_title_item_top}></View>
                 <View style={[styles.flex_center]}>
                     <View style={styles.home_activity_title_item_img_container}>
-                        <Image source={item.image ? { uri: item.image } : { uri: 'https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1517573585242&di=5101bfa7a38cb2a0920e70feb9bcd2be&imgtype=0&src=http%3A%2F%2Fi3.sinaimg.cn%2Fgm%2F2015%2F0325%2FU11755P115DT20150325134658.jpg' }} style={styles.home_activity_title_item_img_img} />
+                        <Image source={{ uri: item.company_home.company_avatar }} style={styles.home_activity_title_item_img_img} />
                     </View>
                     <Text numberOfLines={1} style={[styles.fontsize12, { color: '#000' }]}>{item.title}</Text>
                     <Text numberOfLines={1} style={styles.fontsize10}>{item.content}</Text>
                     <WhiteSpace size={'sm'} />
-                    <TouchableOpacity
+                    <TouchableOpacity style={[styles.home_activity_title_item_btn, { backgroundColor: isLogin && (info.follow.indexOf(item.id) >= 0) ? '#FD7D7C' : '#40a9ff' }]}
                         activeOpacity={1}
-                        style={styles.home_activity_title_item_btn}
-                        onPress={() => { alert('关注') }}
+                        onPress={() => {
+                            if (isLogin) {
+                                Util.post(Urls.FollowCompany_url + `/${item.id}`, {},
+                                    (respJson) => {
+                                        if (respJson.code == 1) {
+                                            dispatch({
+                                                type: Types.Change_User_Info,
+                                                data: respJson.data
+                                            })
+                                        }
+                                        Toast.message(respJson.msg);
+                                    },
+                                    (error) => {
+                                        Toast.message(error.message);
+                                    }
+                                )
+                            } else {
+                                Toast.message('请先登录')
+                            }
+                        }}
                     >
-                        <Text style={[styles.fontsize10, { color: '#fff' }]}>关注</Text>
+                        <Text style={[styles.fontsize12, { color: '#fff' }]}>{isLogin && (info.follow.indexOf(item.id) >= 0) ? '已关注' : '关注'} </Text>
                     </TouchableOpacity>
                 </View>
-            </View>
+            </TouchableOpacity>
         )
     }
 
@@ -82,42 +130,42 @@ class Home extends Component {
         return (
             <TouchableOpacity
                 activeOpacity={1}
-                onPress={() => this.props.navigation.navigate('CompanyHome')}
+                onPress={() => this.props.navigation.navigate('CompanyHome', { cid: item.id })}
                 style={[styles.flex_row_columncenter, styles.companyHome_content_activity_listItem_body]}
             >
                 <View style={{ flexDirection: 'row' }}>
                     <View style={[styles.flex_center, { flex: 0.5 }]}>
                         <Image
                             style={{ height: 100, width: 150, borderRadius: 5 }}
-                            source={item.img ? { uri: item.img } : require('../constants/images/activity.png')}
+                            source={{ uri: item.company_home.company_background }}
                         />
                     </View>
                     <View style={[{ flex: 0.5, paddingRight: 10 }]}>
-
-                        <Text style={[styles.fontsize14, { color: '#000' }]} numberOfLines={1}>{item.name}</Text>
+                        <Text style={[styles.fontsize14, { color: '#000' }]} numberOfLines={1}>{item.company_name}</Text>
                         <WhiteSpace size={'xs'} />
                         <Text style={styles.fontsize12} numberOfLines={1}>{item.address}</Text>
                         <WhiteSpace size={'sm'} />
-                        <Text style={styles.fontsize10} numberOfLines={3}>我是公司简介balabala我是公司简介balabala我是公司简介balabala我是公司简介balabala我是公司简介balabala我是公司简介balabala我是公司简介balabala我是公司简介balabala我是公司简介balabala我是公司简介balabala我是公司简介balabala我是公司简介balabala我是公司简介balabala我是公司简介balabala我是公司简介balabala我是公司简介balabala我是公司简介balabala
-                        </Text>
+                        <Text style={styles.fontsize10} numberOfLines={3}>{item.company_home.company_about}</Text>
                         <WhiteSpace size={'sm'} />
                         <View style={[styles.flex_row_end, { position: 'absolute', bottom: 0, right: 10, }]}>
                             <WingBlank size={'sm'}><Icon type={'\uE6A4'} size={12} color={'#ccc'} /></WingBlank>
-                            <Text style={[styles.fontsize10, { color: '#ccc' }]}>2456</Text>
+                            <Text style={[styles.fontsize10, { color: '#ccc' }]}>{item.follow_count + item.pre_follow}</Text>
+                        </View>
+                        <View style={[styles.flex_row_columncenter, { position: 'absolute', bottom: 0, left: 0, }]}>
+                            <Text style={[styles.fontsize10]}>100米</Text>
                         </View>
                     </View>
                 </View>
-                <View style={[styles.flex_row_columncenter, { position: 'absolute', top: 10, right: 10, }]}>
-                    <Text style={[styles.fontsize10]}>{item.range}米</Text>
-                </View>
+
             </TouchableOpacity>
         )
     }
 
     render() {
-        const { modules, home, isLogin } = this.props;
+        const { modules, home, userInfo } = this.props;
         const { notices, activityData, home_activity, HomeInfo } = home.data;
         const isReady = home.isReady;
+        // console.log(home)
         if (isReady) {
             return (
                 <View style={{ flex: 1 }}>
@@ -142,7 +190,7 @@ class Home extends Component {
                         </View>
                         <FlatList
                             style={{ backgroundColor: '#fff', paddingBottom: 5 }}
-                            data={HomeInfo}
+                            data={home.data.recommend_companys}
                             horizontal={true}
                             showsHorizontalScrollIndicator={false}
                             keyExtractor={(item, index) => index}
@@ -161,13 +209,13 @@ class Home extends Component {
                                     </View>
                                 </View>
                             }
-                            data={home_activity}
+                            data={[]}
                             numColumns={2}
                             keyExtractor={(item, index) => index}
                             renderItem={this.renderServeFlatListItem}
                         />
                         <WhiteSpace size={'sm'} />
-                        <Notices data={notices} imageSize={30} callBack={(item) => { alert('我要去' + item.goUrl) }} />
+                        {/* <Notices data={notices} imageSize={30} callBack={(item) => { alert('我要去' + item.goUrl) }} /> */}
                         <WhiteSpace size={'sm'} />
                         <FlatList
                             style={{ backgroundColor: '#fff' }}
@@ -182,11 +230,11 @@ class Home extends Component {
                                     </TouchableOpacity>
                                 </View>
                             }
-                            data={activityData}
+                            data={home.data.company_list}
                             keyExtractor={(item, index) => index}
                             renderItem={this.renderActivityList}
                             ListFooterComponent={
-                                <View style={[styles.flex_center, { paddingTop: 5, paddingBottom: 5,backgroundColor:'#fff' }]}>
+                                <View style={[styles.flex_center, { paddingTop: 5, paddingBottom: 5, backgroundColor: '#fff' }]}>
                                     <Text style={styles.fontsize10}>已经到底了哦~~~</Text>
                                 </View>
                             }
@@ -212,7 +260,7 @@ function mapStateToProps(state) {
         modules: state.localConfigReducer.modules,
         home: state.homeReducer,
         init: state.initReducer,
-        isLogin: state.personalReducer.isLogin,
+        userInfo: state.personalReducer
     }
 }
 export default connect(mapStateToProps)(Home);

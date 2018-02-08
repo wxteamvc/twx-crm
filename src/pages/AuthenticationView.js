@@ -24,6 +24,7 @@ import OrderCycle from '../components/orderCycle';
 import ParallaxScrollView from 'react-native-parallax-scroll-view';
 import * as Animatable from 'react-native-animatable';
 import { getOrderInfo } from '../actions/ordersAction';
+import { NavigationBar } from 'teaset';
 
 class Authentication extends Component {
 
@@ -36,13 +37,14 @@ class Authentication extends Component {
 
 
     render() {
+        const { navigation } = this.props;
         return (
             <View style={{ flex: 1 }}>
-                <StatusBar
-                    translucent={false}
-                    backgroundColor='#40A9FF'
+                <NavigationBar title='认证服务'
+                    leftView={<NavigationBar.BackButton
+                        onPress={() => { navigation.goBack() }} />}
                 />
-                <View style={[{ flexDirection: 'row', backgroundColor: '#FD7D7C', height: 100 }]}>
+                <View style={[{ flexDirection: 'row', backgroundColor: '#FD7D7C', height: 100, marginTop: 68 }]}>
                     <View style={[styles.flex_center, { flex: 0.3 }]}>
                         <Image source={require('../constants/images/认证.png')} style={{ width: 50, height: 50 }} />
                     </View>

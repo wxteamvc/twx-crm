@@ -3,29 +3,59 @@ import * as Urls from "../constants/urls";
 import Util from "../constants/util";
 import { Toast } from 'teaset';
 
-export function getCompanyList(geo={},url=false){
-    return (dispatch) =>{
+export function getCompanyList(geo = {}, url = false) {
+    return (dispatch) => {
         dispatch({
-            type:Types.CompanyList_BEGIN
+            type: Types.CompanyList_BEGIN
         })
-        Util.post(url ? url : Urls.CompanyList_url,geo,
-            (respJson) =>{
-                if (respJson.code == 1){
+        Util.post(url ? url : Urls.CompanyList_url, geo,
+            (respJson) => {
+                if (respJson.code == 1) {
                     dispatch({
-                        type:Types.CompanyList_SUCCESS,
-                        data:respJson.data
+                        type: Types.CompanyList_SUCCESS,
+                        data: respJson.data
                     })
-                }else{
+                } else {
                     dispatch({
-                        type:Types.CompanyList_SUCCESS,
-                        data:respJson.data
-                     })
-                     Toast.fail(respJson.msg);
+                        type: Types.CompanyList_SUCCESS,
+                        data: respJson.data
+                    })
+                    Toast.fail(respJson.msg);
                 }
             },
-            (error)=>{
+            (error) => {
                 dispatch({
-                    type:Types.CompanyList_FAILED,
+                    type: Types.CompanyList_FAILED,
+                })
+                Toast.fail(error.message);
+            }
+        )
+    }
+}
+
+export function getCompanyHome(cid) {
+    return (dispatch) => {
+        dispatch({
+            type: Types.CompanyHome_BEGIN
+        })
+        Util.post(Urls.CompanyHome_url + `/${cid}`, {},
+            (respJson) => {
+                if (respJson.code == 1) {
+                    dispatch({
+                        type: Types.CompanyHome_SUCCESS,
+                        data: respJson.data
+                    })
+                } else {
+                    // dispatch({
+                    //     type:Types.CompanyList_SUCCESS,
+                    //     data:respJson.data
+                    //  })
+                    Toast.fail(respJson.msg);
+                }
+            },
+            (error) => {
+                dispatch({
+                    type: Types.CompanyHome_FAILED,
                 })
                 Toast.fail(error.message);
             }

@@ -6,9 +6,8 @@ import {
     Image,
     ImageBackground,
     ScrollView,
-    TouchableWithoutFeedback,
     TouchableOpacity,
-    Dimensions
+    ProgressBarAndroid
 } from 'react-native';
 import { styles } from '../constants/styles'
 import { NavigationBar, Toast } from 'teaset';
@@ -17,6 +16,11 @@ import { Carousel, List, WhiteSpace, Icon, WingBlank, Popover } from 'antd-mobil
 import { ScreenHeight, StatusBarHeight, ScreenWidth } from '../constants/global';
 import ActionButton from 'react-native-action-button';
 import Icons from 'react-native-vector-icons/dist/FontAwesome';
+import { getCompanyHome } from '../actions/companyAction';
+import { connect } from 'react-redux';
+import * as Urls from "../constants/urls";
+import Util from "../constants/util";
+import * as Types from "../actions/actionTypes";
 
 class CompanyHome extends Component {
     activityData = [
@@ -26,12 +30,10 @@ class CompanyHome extends Component {
         { title: '初学佛时,我们如何发心', content: '发乎心止乎礼', count: 2000 },
     ]
 
-    banner = [
-        { img: 'http://p.yjbys.com/image/20160919/1474284202349030.png', title: '开借啦开借啦', content: '免息开借啦免息开借啦' },
-        { img: 'http://pic1.win4000.com/wallpaper/b/5881ae6e5e47b.jpg', title: '开借啦开借啦', content: '免息开借啦免息开借啦免息开借啦' },
-        { img: 'http://pic.90sjimg.com/back_pic/qk/back_origin_pic/00/04/01/a8e8afe94d0e1e912643537ad60dc540.jpg', title: '开借啦开借啦', content: '免息开借啦免息开借啦免息开借啦免息开借啦' },
-    ]
-
+    componentDidMount() {
+        const { cid } = this.props.navigation.state.params;
+        this.props.dispatch(getCompanyHome(cid))
+    }
 
 
     renderActivityList = () => {
@@ -64,17 +66,18 @@ class CompanyHome extends Component {
     }
 
     renderLunbo() {
-        const data = this.banner;
+        const { navigation, companyInfo } = this.props;
+        const data = companyInfo.data.company_home.company_home_carousel;
         let list = [];
         for (const key in data) {
             list.push(
                 <TouchableOpacity key={key} activeOpacity={1} onPress={() => alert('我要跳去别的页面咯')}>
                     <ImageBackground source={{ uri: data[key].img }} style={{ width: ScreenWidth, height: parseInt(ScreenWidth / 3) }}>
-                        <View style={[{ flex: 1, backgroundColor: 'rgba(0,0,0,0.3)', flexDirection: 'row' }]}>
+                        <View style={[{ flex: 1, backgroundColor: 'rgba(0,0,0,0.2)', flexDirection: 'row' }]}>
                             <View style={{ flex: 0.7, paddingLeft: 30, paddingTop: 20 }}>
-                                <Text style={[styles.fontsize14, { color: '#fff' }]}>{data[key].title}</Text>
+                                <Text style={[styles.fontsize14, { color: '#fff' }]}>{data[key].title ? data[key].title : null}</Text>
                                 <WhiteSpace size={'sm'} />
-                                <Text style={[styles.fontsize12, { color: '#fff' }]} numberOfLines={2}>{data[key].content}</Text>
+                                <Text style={[styles.fontsize12, { color: '#fff' }]} numberOfLines={2}>{data[key].content ? data[key].content : null}</Text>
                             </View>
                         </View>
                     </ImageBackground>
@@ -86,67 +89,91 @@ class CompanyHome extends Component {
     }
 
     render() {
-        const { navigation } = this.props;
-        const topData = {
-            background: 'http://pic.90sjimg.com/back_pic/qk/back_origin_pic/00/04/01/a8e8afe94d0e1e912643537ad60dc540.jpg',
-            log: 'http://pic.90sjimg.com/back_pic/qk/back_origin_pic/00/04/01/a8e8afe94d0e1e912643537ad60dc540.jpg',
-            title: '新昌咨询',
-            address: '无锡市大东方百货B座'
-        }
-
-        return (
-            <View style={{ flex: 1 }}>
-                <ParallaxScrollView
-                    headerBackgroundColor="#333"
-                    contentBackgroundColor={'#E9E9EF'}
-                    stickyHeaderHeight={50}
-                    parallaxHeaderHeight={130}
-                    backgroundSpeed={10}
-                    showsVerticalScrollIndicator={false}
-                    style={{ flex: 1 }}
-                    renderForeground={
-                        () =>
-                            <ImageBackground
-                                source={{ uri: topData.background }}
-                                style={{ width: ScreenWidth, height: 130 }}
-                            >
-                                <View style={[styles.customerInfo_head_bg, { flex: 1 }]}>
-                                    <View style={[styles.flex_row_columncenter, { marginTop: 50 }]}>
-                                        <View style={[styles.flex_row_columncenter, { flex: 0.6, paddingLeft: 15 }]}>
-                                            <Image source={require('../constants/images/infobackground.jpg')} style={styles.companyHome_head_avatar} />
-                                            <View style={{ marginLeft: 10, flex: 1 }}>
-                                                <Text style={[styles.fontsize12, { color: '#fff' }]}>{topData.title}</Text>
-                                                <WhiteSpace size={'xs'} />
-                                                <Text style={[styles.fontsize10, { color: '#fff' }]}>{topData.address}</Text>
+        const { navigation, companyInfo, userInfo, dispatch } = this.props;
+        const topData = companyInfo.data.company_home;
+        const { info, isLogin } = userInfo;
+        if (companyInfo.status == 'done') {
+            return (
+                <View style={{ flex: 1 }}>
+                    <ParallaxScrollView
+                        headerBackgroundColor="#333"
+                        contentBackgroundColor={'#E9E9EF'}
+                        stickyHeaderHeight={50}
+                        parallaxHeaderHeight={130}
+                        backgroundSpeed={10}
+                        showsVerticalScrollIndicator={false}
+                        style={{ flex: 1 }}
+                        renderForeground={
+                            () =>
+                                <ImageBackground
+                                    source={{ uri: topData.company_background }}
+                                    style={{ width: ScreenWidth, height: 130 }}
+                                >
+                                    <View style={[styles.customerInfo_head_bg, { flex: 1 }]}>
+                                        <View style={[styles.flex_row_columncenter, { marginTop: 50 }]}>
+                                            <View style={[styles.flex_row_columncenter, { flex: 0.6, paddingLeft: 15 }]}>
+                                                <Image source={{ uri: topData.company_avatar }} style={styles.companyHome_head_avatar} />
+                                                <View style={{ marginLeft: 10, flex: 1 }}>
+                                                    <Text style={[styles.fontsize12, { color: '#fff' }]}>{companyInfo.data.company_name}</Text>
+                                                    <WhiteSpace size={'xs'} />
+                                                    <Text numberOfLines={2} style={[styles.fontsize10, { color: '#fff' }]}>{companyInfo.data.address}</Text>
+                                                </View>
                                             </View>
                                         </View>
-                                    </View>
+                                        <View style={[styles.flex_row_columncenter, styles.companyHome_head_foot_container]}>
+                                            <TouchableOpacity
+                                                activeOpacity={1}
+                                                style={styles.companyHome_head_foot_btn}
+                                                onPress={() => {
+                                                    if (isLogin) {
+                                                        Util.post(Urls.FollowCompany_url + `/${companyInfo.data.id}`, {},
+                                                            (respJson) => {
+                                                                if (respJson.code == 1) {
+                                                                    dispatch({
+                                                                        type: Types.Change_User_Info,
+                                                                        data: respJson.data
+                                                                    })
+                                                                }
+                                                                Toast.message(respJson.msg);
+                                                            },
+                                                            (error) => {
+                                                                Toast.message(error.message);
+                                                            }
+                                                        )
+                                                    } else {
+                                                        Toast.message('请先登录')
+                                                    }
+                                                }}
+                                            >
+                                                <Icon type={isLogin && (info.follow.indexOf(companyInfo.data.id) >= 0) ? '\uE6A3' : '\uE6A4'} color={'#FD7D7C'} size={20} />
+                                            </TouchableOpacity>
+                                            <View style={styles.companyHome_head_foot_text}>
+                                                <Text style={[styles.fontsize10, { color: '#fff' }]}>关注人数:&nbsp;{companyInfo.data.follow_count + companyInfo.data.pre_follow}</Text>
+                                            </View>
 
-                                    <View style={styles.companyHome_head_foot}>
-                                        <Text style={[styles.fontsize10, { color: '#fff' }]}>关注人数:2w</Text>
+                                        </View>
+
                                     </View>
+                                </ImageBackground>
+                        }
+                        renderStickyHeader={() => (
+                            <View key="sticky-header" style={[{ marginTop: StatusBarHeight }, styles.flex_row_columncenter]}>
+                                <TouchableOpacity
+                                    style={[styles.flex_center, { flex: 0.1 }]}
+                                    activeOpacity={1}
+                                    onPress={() => this.props.navigation.goBack()}
+                                >
+                                    <Icon type={'left'} color={'#fff'} />
+                                </TouchableOpacity>
+                                <View style={[styles.flex_center, { flex: 0.8 }]}>
+                                    <Text style={[styles.fontsize16, { color: '#fff' }]}>{companyInfo.data.company_name}</Text>
                                 </View>
-                            </ImageBackground>
-                    }
-                    renderStickyHeader={() => (
-                        <View key="sticky-header" style={[{ marginTop: StatusBarHeight }, styles.flex_row_columncenter]}>
-                            <TouchableOpacity
-                                style={[styles.flex_center, { flex: 0.1 }]}
-                                activeOpacity={1}
-                                onPress={() => this.props.navigation.goBack()}
-                            >
-                                <Icon type={'left'} color={'#fff'} />
-                            </TouchableOpacity>
-                            <View style={[styles.flex_center, { flex: 0.8 }]}>
-                                <Text style={[styles.fontsize16, { color: '#fff' }]}>{topData.title}</Text>
                             </View>
-                        </View>
-                    )}
-                >
-                    {topData.about ?
+                        )}
+                    >
                         <View style={styles.companyHome_content_synopsis_body}>
                             <View style={styles.companyHome_content_synopsis_content}>
-                                <Text style={[styles.fontsize12]}>我是公司简介balabala</Text>
+                                <Text style={[styles.fontsize12]}>{topData.company_about}</Text>
                             </View>
                             <View style={styles.companyHome_content_synopsis_position}>
                                 <View style={styles.companyHome_content_synopsis_position_title}>
@@ -154,52 +181,59 @@ class CompanyHome extends Component {
                                 </View>
                                 <View style={styles.companyHome_content_synopsis_position_jiao}></View>
                             </View>
-                        </View> : null
-                    }
-
-                    <WhiteSpace size={'sm'} />
-                    <Carousel
-                        autoplayInterval={5000}
-                        autoplay
-                        infinite
-                        dots={false}
-                    >
-                        {this.renderLunbo()}
-                    </Carousel>
-                    <WhiteSpace size={'sm'} />
-                    <View style={{ backgroundColor: '#fff', }}>
-                        <View style={[styles.flex_row_between, styles.companyHome_content_activity_header]}>
-                            <View style={styles.flex_row_between}>
-                                <WingBlank size={'sm'}><Icon type={'\uE604'} color={'#4EC9B0'} size={12} /></WingBlank>
-                                <Text style={styles.fontsize12}>公司活动</Text>
-                            </View>
-                            <TouchableOpacity style={styles.flex_row_columncenter} activeOpacity={1} onPress={() => alert('查看更多')}>
-                                <Text style={styles.fontsize10}>更多</Text>
-                                <WingBlank size={'sm'}><Icon type={'right'} size={10} /></WingBlank>
-                            </TouchableOpacity>
                         </View>
-                        {this.renderActivityList()}
-                    </View>
-                </ParallaxScrollView>
-                <ActionButton buttonColor="rgba(231,76,60,1)" size={30} offsetX={20}>
-                    <ActionButton.Item buttonColor='#1abc9c' title="编辑界面" onPress={() => { this.props.navigation.navigate('CompanyEdit') }}>
-                        <Icons name={'heart'} size={20} color={'#fff'} />
-                    </ActionButton.Item>
-                    <ActionButton.Item buttonColor='#9b59b6' title="联系客服" onPress={() => console.log("notes tapped!")} >
-                        <Icons name={'comments-o'} size={20} color={'#fff'} />
-                    </ActionButton.Item>
-                    <ActionButton.Item buttonColor='#3498db' title="提交申请" onPress={() => { }}>
-                        <Icons name={'pencil-square-o'} size={20} color={'#fff'} />
-                    </ActionButton.Item>
-                    <ActionButton.Item buttonColor='#996600' title="预约见面" onPress={() => { }}>
-                        <Icons name={'taxi'} size={18} color={'#fff'} />
-                    </ActionButton.Item>
-                    <ActionButton.Item buttonColor='#1abc9c' title="关注" onPress={() => { }}>
-                        <Icons name={'heart'} size={20} color={'#fff'} />
-                    </ActionButton.Item>
-                </ActionButton>
-            </View>
-        )
+                        <WhiteSpace size={'sm'} />
+                        <Carousel
+                            autoplayInterval={5000}
+                            autoplay
+                            infinite
+                            dots={false}
+                        >
+                            {this.renderLunbo()}
+                        </Carousel>
+                        <WhiteSpace size={'sm'} />
+                        <View style={{ backgroundColor: '#fff', }}>
+                            <View style={[styles.flex_row_between, styles.companyHome_content_activity_header]}>
+                                <View style={styles.flex_row_between}>
+                                    <WingBlank size={'sm'}><Icon type={'\uE604'} color={'#4EC9B0'} size={12} /></WingBlank>
+                                    <Text style={styles.fontsize12}>公司活动</Text>
+                                </View>
+                                <TouchableOpacity style={styles.flex_row_columncenter} activeOpacity={1} onPress={() => alert('查看更多')}>
+                                    <Text style={styles.fontsize10}>更多</Text>
+                                    <WingBlank size={'sm'}><Icon type={'right'} size={10} /></WingBlank>
+                                </TouchableOpacity>
+                            </View>
+                            {this.renderActivityList()}
+                        </View>
+                    </ParallaxScrollView>
+                    <ActionButton buttonColor="rgba(231,76,60,1)" size={30} offsetX={20}>
+                        <ActionButton.Item buttonColor='#1abc9c' title="编辑界面" onPress={() => { this.props.navigation.navigate('CompanyEdit') }}>
+                            <Icons name={'heart'} size={20} color={'#fff'} />
+                        </ActionButton.Item>
+                        <ActionButton.Item buttonColor='#9b59b6' title="联系客服" onPress={() => console.log("notes tapped!")} >
+                            <Icons name={'comments-o'} size={20} color={'#fff'} />
+                        </ActionButton.Item>
+                        <ActionButton.Item buttonColor='#3498db' title="提交申请" onPress={() => { }}>
+                            <Icons name={'pencil-square-o'} size={20} color={'#fff'} />
+                        </ActionButton.Item>
+                        <ActionButton.Item buttonColor='#996600' title="预约见面" onPress={() => { }}>
+                            <Icons name={'taxi'} size={18} color={'#fff'} />
+                        </ActionButton.Item>
+                    </ActionButton>
+                </View>
+            )
+        } else {
+            return (
+                <View style={[{ flex: 1 }, styles.flex_center]}>
+                    <StatusBar
+                        translucent={false}
+                        backgroundColor='#40a9ff'
+                    />
+                    <ProgressBarAndroid styleAttr="Inverse" />
+                </View>
+            )
+        }
+
     }
     _renderActionButton = (extraData) => {
         let ActionButtonlist = [];
@@ -225,4 +259,10 @@ class CompanyHome extends Component {
     }
 }
 
-export default CompanyHome;
+function mapStateToProps(state) {
+    return {
+        companyInfo: state.companyReducer.info,
+        userInfo: state.personalReducer
+    }
+}
+export default connect(mapStateToProps)(CompanyHome);

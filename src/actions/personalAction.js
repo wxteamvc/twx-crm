@@ -4,77 +4,77 @@ import Util from "../constants/util";
 import { Toast } from 'teaset';
 
 
-export function bindWechat(data){
-    return (dispatch)=>{
-        Util.post(Urls.Bind_wechat+'/'+data,{},
-            (respJson)=>{
-                if (respJson.code == 1){
+export function bindWechat(data) {
+    return (dispatch) => {
+        Util.post(Urls.Bind_wechat + '/' + data, {},
+            (respJson) => {
+                if (respJson.code == 1) {
                     dispatch({
-                        type:Types.Change_User_Info,
-                        data:respJson.data
+                        type: Types.Change_User_Info,
+                        data: respJson.data
                     })
                     Toast.success(respJson.msg);
-                }else{
+                } else {
                     Toast.message(respJson.msg);
                 }
             },
-            (error)=>{
+            (error) => {
                 Toast.message(error.message);
             }
         )
     }
 }
 
-export function unbindWeChat(data){
-    return (dispatch)=>{
-        Util.post(Urls.Unbind_wechat,{},
-            (respJson)=>{
-                if (respJson.code == 1){
+export function unbindWeChat(data) {
+    return (dispatch) => {
+        Util.post(Urls.Unbind_wechat, {},
+            (respJson) => {
+                if (respJson.code == 1) {
                     dispatch({
-                        type:Types.Change_User_Info,
-                        data:respJson.data
+                        type: Types.Change_User_Info,
+                        data: respJson.data
                     })
                     Toast.success(respJson.msg);
-                }else{
+                } else {
                     Toast.message(respJson.msg);
                 }
             },
-            (error)=>{
+            (error) => {
                 Toast.message(error.message);
             }
         )
     }
 }
 
-export function loginWithWechat(data,type=1){
-    return (dispatch)=>{
+export function loginWithWechat(data, type = 1) {
+    return (dispatch) => {
         dispatch({
-            type:Types.UserInfo_BEGIN
+            type: Types.UserInfo_BEGIN
         })
         let register_id = global.registrationId ? global.registrationId : null;
-        Util.post(Urls.Login_wechat_url+'/'+data,{register_id},
-            (respJson)=>{
+        Util.post(Urls.Login_wechat_url + '/' + data, { register_id },
+            (respJson) => {
                 let token = '';
-                if (respJson.code == 1){
+                if (respJson.code == 1) {
                     dispatch({
-                        type:Types.UserInfo_SUCCESS,
-                        data:respJson.data
+                        type: Types.UserInfo_SUCCESS,
+                        data: respJson.data
                     })
                     token = respJson.data.token;
-                }else{
+                } else {
                     dispatch({
-                        type:Types.UserInfo_FAILED,
+                        type: Types.UserInfo_FAILED,
                     })
                     Toast.fail(respJson.msg);
                 }
                 dispatch({
-                    type:Types.Change_TOKEN,
-                    data:token
+                    type: Types.Change_TOKEN,
+                    data: token
                 })
             },
-            (error)=>{
+            (error) => {
                 dispatch({
-                    type:Types.UserInfo_FAILED,
+                    type: Types.UserInfo_FAILED,
                 })
                 Toast.message(error.message);
             }
@@ -82,36 +82,37 @@ export function loginWithWechat(data,type=1){
     }
 }
 
-export function login(data,type=1){
-    return (dispatch)=>{
+
+export function register(data, type = 1) {
+    return (dispatch) => {
         dispatch({
-            type:Types.UserInfo_BEGIN
+            type: Types.UserInfo_BEGIN
         })
         let register_id = global.registrationId ? global.registrationId : null;
-        Util.post(Urls.Login_url,{...data,register_id},
-            (respJson)=>{
+        Util.post(Urls.Register_url, { ...data, register_id },
+            (respJson) => {
                 console.log(respJson)
                 let token = '';
-                if (respJson.code == 1){
+                if (respJson.code == 1) {
                     dispatch({
-                        type:Types.UserInfo_SUCCESS,
-                        data:respJson.data
+                        type: Types.UserInfo_SUCCESS,
+                        data: respJson.data
                     })
                     token = respJson.data.token;
-                }else{
+                } else {
                     dispatch({
-                        type:Types.UserInfo_FAILED,
+                        type: Types.UserInfo_FAILED,
                     })
                     Toast.fail(respJson.msg);
                 }
                 dispatch({
-                    type:Types.Change_TOKEN,
-                    data:token 
+                    type: Types.Change_TOKEN,
+                    data: token
                 })
             },
-            (error)=>{
+            (error) => {
                 dispatch({
-                    type:Types.UserInfo_FAILED,
+                    type: Types.UserInfo_FAILED,
                 })
                 Toast.message(error.message);
             }
@@ -119,34 +120,36 @@ export function login(data,type=1){
     }
 }
 
-export function initPersonal(){
-    return (dispatch) =>{
+export function login(data, type = 1) {
+    return (dispatch) => {
         dispatch({
-            type:Types.UserInfo_BEGIN
+            type: Types.UserInfo_BEGIN
         })
-        Util.post(Urls.UserInfo_url,{},
-            (respJson) =>{
+        let register_id = global.registrationId ? global.registrationId : null;
+        Util.post(Urls.Login_url, { ...data, register_id },
+            (respJson) => {
+                // console.log(respJson)
                 let token = '';
-                if (respJson.code == 1){
+                if (respJson.code == 1) {
                     dispatch({
-                        type:Types.UserInfo_SUCCESS,
-                        data:respJson.data
+                        type: Types.UserInfo_SUCCESS,
+                        data: respJson.data
                     })
-                   token = respJson.data.token;
-                }else{
+                    token = respJson.data.token;
+                } else {
                     dispatch({
-                        type:Types.UserInfo_FAILED,
+                        type: Types.UserInfo_FAILED,
                     })
                     Toast.fail(respJson.msg);
                 }
                 dispatch({
-                    type:Types.Change_TOKEN,
-                    data:token
+                    type: Types.Change_TOKEN,
+                    data: token
                 })
             },
-            (error)=>{
+            (error) => {
                 dispatch({
-                    type:Types.UserInfo_FAILED,
+                    type: Types.UserInfo_FAILED,
                 })
                 Toast.message(error.message);
             }
@@ -154,32 +157,67 @@ export function initPersonal(){
     }
 }
 
-export function logout(data,type=1){
-    return (dispatch)=>{
+export function initPersonal() {
+    return (dispatch) => {
         dispatch({
-            type:Types.Logout
+            type: Types.UserInfo_BEGIN
+        })
+        Util.post(Urls.UserInfo_url, {},
+            (respJson) => {
+                let token = '';
+                if (respJson.code == 1) {
+                    dispatch({
+                        type: Types.UserInfo_SUCCESS,
+                        data: respJson.data
+                    })
+                    token = respJson.data.token;
+                } else {
+                    dispatch({
+                        type: Types.UserInfo_FAILED,
+                    })
+                    Toast.fail(respJson.msg);
+                }
+                dispatch({
+                    type: Types.Change_TOKEN,
+                    data: token
+                })
+            },
+            (error) => {
+                dispatch({
+                    type: Types.UserInfo_FAILED,
+                })
+                Toast.message(error.message);
+            }
+        )
+    }
+}
+
+export function logout(data, type = 1) {
+    return (dispatch) => {
+        dispatch({
+            type: Types.Logout
         })
         dispatch({
-            type:Types.Change_TOKEN,
-            data:''
+            type: Types.Change_TOKEN,
+            data: ''
         })
     }
 }
 
-export function uploadAvatar(data){
-    return (dispatch)=>{
-        Util.post(Urls.Upload_avatar,data,
-            (respJson)=>{
-                if (respJson.code == 1){
+export function uploadAvatar(data) {
+    return (dispatch) => {
+        Util.post(Urls.Upload_avatar, data,
+            (respJson) => {
+                if (respJson.code == 1) {
                     dispatch({
-                        type:Types.Upload_Avatar_SUCCESS,
-                        data:respJson.data
+                        type: Types.Upload_Avatar_SUCCESS,
+                        data: respJson.data
                     })
-                }else{
+                } else {
                     Toast.message(respJson.msg);
                 }
             },
-            (error)=>{
+            (error) => {
                 console.log(error)
                 Toast.message(error.message);
             }

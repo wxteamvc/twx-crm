@@ -10,7 +10,7 @@ export function getHomeInfo() {
         })
         Util.post(Urls.HomeInfo_url, {},
             (respJson) => {
-                // console.log(respJson)
+                console.log(respJson)
                 if (respJson.code == 1) {
                     dispatch({
                         type: Types.Home_SUCCESS,
