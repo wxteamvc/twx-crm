@@ -72,19 +72,14 @@ class CompanyEdit extends Component {
         data.company_background = { uri: company_background, type: 'multipart/form-data', name: 'company_background' };
         data.company_avatar = { uri: company_avatar, type: 'multipart/form-data', name: 'company_avatar' };
         data.company_about = company_about;
-        let list=[];
-        // let list = {
-        //     img: [],
-        //     title: [],
-        //     content: []
-        // };
+        data.img=[];
+        data.title=[];
+        data.content=[];
         banner.map((item, index) => {
-            // list.push({uri:item.img,type: 'multipart/form-data', name:`banner${index}`});
-            list.push({title:item.title});
-            // list.content.push(item.content);
+            data.img.push({uri:item.img,type: 'multipart/form-data', name:`banner${index}`});
+            data.title.push(item.title);
+            data.content.push(item.content);
         })
-        data['banner[]'] = list;
-        console.log(data)
         Util.post(Urls.SetCompanyHome, data,
             (respJson) => {
                 console.log(respJson)

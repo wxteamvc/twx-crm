@@ -45,7 +45,13 @@ let Util = {
             formData = new FormData();
             Object.keys(data).map(function(key) {
                 var value = data[key];
-                formData.append(key, value);
+                if (data[key] instanceof Array){
+                    data[key].map((item)=>{
+                        formData.append(`${key}[]`, item);
+                    })
+                }else{
+                    formData.append(key, value);
+                }
             });
         }
         let fetchOptions = {
