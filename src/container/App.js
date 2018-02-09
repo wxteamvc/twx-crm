@@ -206,6 +206,7 @@ const App = StackNavigator({
         screen: CompanyEdit,
         navigationOptions: ({ navigation }) => {
             return ({
+                header: null
             })
         }
     },

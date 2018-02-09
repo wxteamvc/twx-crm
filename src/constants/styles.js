@@ -64,6 +64,10 @@ export const styles = StyleSheet.create({
     fontsize20: {
         fontSize: 20 * fontSizeScaler
     },
+    //字体大小18
+    fontsize18: {
+        fontSize: 18 * fontSizeScaler
+    },
     //字体大小16
     fontsize16: {
         fontSize: 16 * fontSizeScaler
@@ -292,13 +296,16 @@ export const styles = StyleSheet.create({
         width: 70, height: 70, borderRadius: 35
     },
     companyHome_head_foot_container: {
-        position: 'absolute', bottom: 10, right: 0,
+        position: 'absolute', bottom: 5, right: 0,
     },
     companyHome_head_foot_text: {
         padding: 5, paddingLeft: 10, paddingRight: 10, backgroundColor: '#CC3300', borderBottomLeftRadius: 5, borderTopLeftRadius: 5
     },
     companyHome_head_foot_btn: {
-       marginRight:10
+        marginRight: 10
+    },
+    companyHome_head_modify_btn: {
+        padding: 2, paddingLeft: 15, paddingRight: 15, backgroundColor: '#445596', borderRadius: 5
     },
     companyHome_content_activity_header: {  //公司活动头部样式
         paddingTop: 10, paddingBottom: 10
@@ -310,7 +317,7 @@ export const styles = StyleSheet.create({
         paddingTop: 10
     },
     companyHome_content_synopsis_content: {
-        backgroundColor: '#fff', paddingLeft: 15, paddingRight: 15, paddingTop: 25, paddingBottom: 15, marginLeft: 5, marginRight: 5, borderRadius: 5
+        backgroundColor: '#fff', paddingLeft: 15, paddingRight: 15, paddingTop: 25, paddingBottom: 5, marginLeft: 5, marginRight: 5, borderRadius: 5
     },
     companyHome_content_synopsis_position: {
         position: 'absolute', top: 5, left: 5, flexDirection: 'row'
@@ -321,6 +328,11 @@ export const styles = StyleSheet.create({
     companyHome_content_synopsis_position_jiao: {
         borderBottomWidth: 5, borderBottomColor: '#993300', borderTopWidth: 5, borderTopColor: 'transparent', borderRightColor: 'transparent', borderRightWidth: 5, position: 'relative', top: -17
     },
+    companyHome_count_container: {
+        height: 80,marginLeft:5,marginRight:5,backgroundColor:'#F75297',borderRadius:5
+    },
+
+    
     //```````````````````````公司认证页面样式·······················
     CompanyAuthentication_input_container: {
         backgroundColor: '#fff', paddingLeft: 10, borderColor: '#ccc', borderBottomWidth: 0.5

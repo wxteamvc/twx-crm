@@ -14,15 +14,16 @@ let Util = {
      */
     get: (url, successCallback, failCallback) => {
         fetch(url)
-        .then((response) => {
-            console.log(response)
-            return response.json()})
-        .then((responseJson) => {
-            successCallback(responseJson);
-        })
-        .catch((err) => {
-            failCallback(err);
-        }); 
+            .then((response) => {
+                console.log(response)
+                return response.json()
+            })
+            .then((responseJson) => {
+                successCallback(responseJson);
+            })
+            .catch((err) => {
+                failCallback(err);
+            });
     },
 
     /**
@@ -33,23 +34,25 @@ let Util = {
      * @param failCallback failCallback 请求失败回调
      */
     post: (url, data, successCallback, failCallback) => {
-        let num = 0; 
+        let num = 0;
         let formData;
         //判断data是否为空
-        for (let key in data){
-    　　　　num++;
-    　　}
-    　　if(num==0){
-            formData=null;
-        }else{
+        for (let key in data) {
+            num++;
+        }
+        if (num == 0) {
+            formData = null;
+        } else {
             formData = new FormData();
-            Object.keys(data).map(function(key) {
+            Object.keys(data).map(function (key) {
                 var value = data[key];
-                if (data[key] instanceof Array){
-                    data[key].map((item)=>{
-                        formData.append(`${key}[]`, item);
+                if (value instanceof Array) {
+                    let itemData = new FormData();
+                    Object.keys(value).map((k) => {
+                        itemData = formData.append(k, value[k]);
                     })
-                }else{
+                    formData.append(`${key}[]`, itemData);
+                } else {
                     formData.append(key, value);
                 }
             });
@@ -59,22 +62,23 @@ let Util = {
             headers: {
                 // 'Accept': 'application/json',
                 // 'Content-Type': 'application/json'
-                'token':global.token,
+                'token': global.token,
                 'Content-Type': 'multipart/form-data;charset=utf-8',
             },
             body: formData
             // body: JSON.stringify(data)
         };
         fetch(url, fetchOptions)
-        .then((response) => {
-            // console.log(response)
-            return response.json()})
-        .then((responseJson) => {
-            successCallback(responseJson);
-        })
-        .catch((err) => {
-            failCallback(err);
-        });
+            .then((response) => {
+                // console.log(response)
+                return response.json()
+            })
+            .then((responseJson) => {
+                successCallback(responseJson);
+            })
+            .catch((err) => {
+                failCallback(err);
+            });
     },
 
     /**
@@ -83,7 +87,7 @@ let Util = {
      */
     log: (obj) => {
         var description = "";
-        for(let i in obj){
+        for (let i in obj) {
             let property = obj[i];
             description += i + " = " + property + "\n";
         }

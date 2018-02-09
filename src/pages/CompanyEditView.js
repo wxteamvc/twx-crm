@@ -27,9 +27,10 @@ import ParallaxScrollView from 'react-native-parallax-scroll-view';
 import * as Animatable from 'react-native-animatable';
 import { getOrderInfo } from '../actions/ordersAction';
 import ImagePicker from 'react-native-image-crop-picker';
-import { Toast } from 'teaset';
+import { NavigationBar, Toast } from 'teaset';
 import * as Urls from "../constants/urls";
 import Util from "../constants/util";
+import { Item } from 'antd-mobile/lib/tab-bar';
 
 const size = {
     company_background: {
@@ -53,30 +54,22 @@ class CompanyEdit extends Component {
             lunbo_modal: false,
             edit_introduce: '',  //编辑的简介数据
             edit_lunbo: [],      //编辑的轮播数据
-            company_background: 'https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1517916145875&di=9deac363e085fc4b55e7a99eaaac4bba&imgtype=0&src=http%3A%2F%2Fimg2.3lian.com%2F2014%2Ff2%2F188%2Fd%2F105.jpg',
-            company_avatar: 'https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1517916766069&di=fb9972803485a532e99bd79e87e09737&imgtype=0&src=http%3A%2F%2Fimg.mp.sohu.com%2Fupload%2F20170706%2F71e32d56cdff4917b1aac3319ffe2713_th.png',
-            company_about: '我是公司简介balala',
-            banner: [
-                { img: 'http://p.yjbys.com/image/20160919/1474284202349030.png', title: '开借啦开借啦', content: '免息开借啦免息开借啦' },
-                { img: 'http://pic1.win4000.com/wallpaper/b/5881ae6e5e47b.jpg', title: '开借啦开借啦', content: '免息开借啦免息开借啦免息开借啦' },
-                { img: 'http://pic.90sjimg.com/back_pic/qk/back_origin_pic/00/04/01/a8e8afe94d0e1e912643537ad60dc540.jpg', title: '开借啦开借啦', content: '免息开借啦免息开借啦免息开借啦免息开借啦' },
-            ]
+            ...this.props.navigation.state.params.companyInfo.company_home
         }
     }
 
 
-
     submitEdit = () => {
-        const { company_background, company_avatar, company_about, banner } = this.state;
+        const { company_background, company_avatar, company_about, company_home_carousel } = this.state;
         let data = {};
         data.company_background = { uri: company_background, type: 'multipart/form-data', name: 'company_background' };
         data.company_avatar = { uri: company_avatar, type: 'multipart/form-data', name: 'company_avatar' };
         data.company_about = company_about;
-        data.img=[];
-        data.title=[];
-        data.content=[];
-        banner.map((item, index) => {
-            data.img.push({uri:item.img,type: 'multipart/form-data', name:`banner${index}`});
+        data.img = [];
+        data.title = [];
+        data.content = [];
+        company_home_carousel.map((item, index) => {
+            data.img.push({ uri: item.img, type: 'multipart/form-data', name: `company_home_carousel${index}` });
             data.title.push(item.title);
             data.content.push(item.content);
         })
@@ -94,16 +87,16 @@ class CompanyEdit extends Component {
 
 
     renderLunbo() {
-        const { banner } = this.state;
+        const company_home_carousel = this.state.company_home_carousel;
         let list = [];
-        for (const key in banner) {
+        for (const key in company_home_carousel) {
             list.push(
-                <ImageBackground key={key} source={{ uri: banner[key].img }} style={{ width: ScreenWidth, height: parseInt(ScreenWidth / 3) }}>
+                <ImageBackground key={key} source={{ uri: company_home_carousel[key].img }} style={{ width: ScreenWidth, height: parseInt(ScreenWidth / 3) }}>
                     <View style={[{ flex: 1, backgroundColor: 'rgba(0,0,0,0.3)', flexDirection: 'row' }]}>
                         <View style={{ flex: 0.7, paddingLeft: 30, paddingTop: 20 }}>
-                            <Text style={[styles.fontsize14, { color: '#fff' }]}>{banner[key].title}</Text>
+                            <Text style={[styles.fontsize14, { color: '#fff' }]}>{company_home_carousel[key].title ? company_home_carousel[key].title : null}</Text>
                             <WhiteSpace size={'sm'} />
-                            <Text style={[styles.fontsize12, { color: '#fff' }]} numberOfLines={2}>{banner[key].content}</Text>
+                            <Text style={[styles.fontsize12, { color: '#fff' }]} numberOfLines={2}>{company_home_carousel[key].content ? company_home_carousel[key].content : null}</Text>
                         </View>
                     </View>
                 </ImageBackground>
@@ -118,9 +111,13 @@ class CompanyEdit extends Component {
         ImagePicker.openPicker(
             size[key]
         ).then(image => {
-            let file = { uri: image.path, type: image.mime };
+            let file = { uri: image.path, type: image.mime, name: 'image.jpg' };
             this.setState({
                 [key]: image.path,
+                form: {
+                    ...this.state.form,
+                    [key]: file
+                }
             })
         });
     }
@@ -129,9 +126,13 @@ class CompanyEdit extends Component {
         ImagePicker.openCamera(
             size[key]
         ).then(image => {
-            let file = { uri: image.path, type: image.mime };
+            let file = { uri: image.path, type: image.mime, name: 'image.jpg' };
             this.setState({
                 [key]: image.path,
+                form: {
+                    ...this.state.form,
+                    [key]: file
+                }
             })
         });
     }
@@ -154,14 +155,27 @@ class CompanyEdit extends Component {
     }
 
     render() {
-        const { company_background, company_avatar, company_about, banner, introduce_modal, edit_introduce, lunbo_modal, edit_lunbo } = this.state;
+        const { company_background, company_avatar, company_about, company_home_carousel, introduce_modal, edit_introduce, lunbo_modal, edit_lunbo } = this.state;
+        const { navigation } = this.props;
+        console.log(this.state.form);
         return (
             <View style={{ flex: 1 }}>
                 <StatusBar
                     translucent={false}
                     backgroundColor='#40A9FF'
                 />
-                <ScrollView>
+                <NavigationBar title='修改界面'
+                    leftView={<NavigationBar.BackButton
+                        onPress={() => { navigation.goBack() }} />}
+                    rightView={
+                        <TouchableOpacity
+                            activeOpacity={1}
+                            onPress={this.submitEdit}
+                        >
+                            <Text style={[styles.fontsize14, { color: '#fff' }]}>保存</Text>
+                        </TouchableOpacity>}
+                />
+                <ScrollView style={{ marginTop: 68 }}>
                     <WhiteSpace size={'sm'} />
                     <View style={[styles.flex_center, { backgroundColor: '#FD7D7C', height: 50 }]}>
                         <View style={[styles.flex_column_columncenter,]}>
@@ -208,8 +222,8 @@ class CompanyEdit extends Component {
                         </View>
                     </TouchableOpacity>
                     <WhiteSpace size={'sm'} />
-                    <TouchableOpacity activeOpacity={1} onPress={() => this.setState({ edit_lunbo: banner.length > 0 ? banner : [{}], lunbo_modal: true })}>
-                        {banner.length > 0 ?
+                    <TouchableOpacity activeOpacity={1} onPress={() => this.setState({ edit_lunbo: company_home_carousel.length > 0 ? company_home_carousel : [{}], lunbo_modal: true })}>
+                        {company_home_carousel.length > 0 ?
                             <Carousel
                                 autoplayInterval={5000}
                                 autoplay
@@ -227,44 +241,37 @@ class CompanyEdit extends Component {
                         }
                     </TouchableOpacity>
                 </ScrollView>
-                <View style={[styles.flex_row_center, { padding: 10 }]}>
-                    <TouchableOpacity
-                        activeOpacity={1}
-                        onPress={this.submitEdit}
-                        style={[styles.flex_center, { backgroundColor: '#40a9ff', flex: 0.2, borderRadius: 5, padding: 2 }]}>
-
-                        <Text style={[styles.fontsize14, { color: '#fff' }]}>保存</Text>
-                    </TouchableOpacity>
-                </View>
                 <Modal
                     visible={introduce_modal}
                     maskClosable={false}
                     animationType="slide"
                     onClose={() => this.setState({ introduce_modal: false })}
                 >
-                    <View style={[styles.flex_row_between, { padding: 10 }]}>
+                    <View style={[styles.flex_row_between, { padding: 3, paddingTop: 10, paddingBottom: 10, backgroundColor: '#007ACC' }]}>
                         <TouchableOpacity
                             activeOpacity={1}
                             onPress={() => { this.setState({ introduce_modal: false }) }}
                         >
-                            <Icon type={'\uE61C'} />
+                            <Icon type={'left'} color={'#fff'} size={25} />
                         </TouchableOpacity>
+                        <Text style={[styles.fontsize18, { color: '#fff' }]}>编辑公司简介</Text>
                         <TouchableOpacity
                             activeOpacity={1}
                             onPress={() => this.setState({
                                 company_about: edit_introduce,
                                 introduce_modal: false,
+                                form: {
+                                    ...this.state.form,
+                                    company_about: edit_introduce
+                                }
                             })}
-                            style={[styles.flex_center, { backgroundColor: '#40a9ff', flex: 0.2, borderRadius: 5, padding: 2 }]}>
-
+                            style={[styles.flex_center]}>
                             <Text style={[styles.fontsize14, { color: '#fff' }]}>保存</Text>
                         </TouchableOpacity>
                     </View>
                     {/* <WhiteSpace size={'md'} /> */}
                     <View style={[{ height: ScreenHeight, width: ScreenWidth }]}>
                         <View style={{ padding: 10 }}>
-                            <Text style={styles.fontsize14}>编辑公司简介</Text>
-                            <WhiteSpace size={'md'} />
                             <TextInput
                                 multiline={true}
                                 underlineColorAndroid="transparent"
@@ -282,26 +289,31 @@ class CompanyEdit extends Component {
                     onClose={() => this.setState({ introduce_modal: false })}
                 >
                     <View style={{ backgroundColor: '#E9E9EF', height: ScreenHeight }}>
-                        <View style={[styles.flex_row_between, { padding: 10 }]}>
+                        <View style={[styles.flex_row_between, { padding: 3, paddingTop: 10, paddingBottom: 10, backgroundColor: '#007ACC' }]}>
                             <TouchableOpacity
                                 activeOpacity={1}
                                 onPress={() => { this.setState({ lunbo_modal: false }) }}
                             >
-                                <Icon type={'\uE61C'} />
+                                <Icon type={'left'} color={'#fff'} size={25} />
                             </TouchableOpacity>
+                            <Text style={[styles.fontsize18, { color: '#fff' }]}>轮播图编辑</Text>
                             <TouchableOpacity
                                 activeOpacity={1}
                                 onPress={() => {
                                     this.setState({
-                                        banner: edit_lunbo,
-                                        lunbo_modal: false
+                                        company_home_carousel: edit_lunbo,
+                                        lunbo_modal: false,
+                                        form: {
+                                            ...this.state.form,
+                                            company_home_carousel: edit_lunbo
+                                        }
                                     })
                                 }}
-                                style={[styles.flex_center, { backgroundColor: '#40a9ff', flex: 0.2, borderRadius: 5, padding: 2 }]}>
-
+                            >
                                 <Text style={[styles.fontsize14, { color: '#fff' }]}>保存</Text>
                             </TouchableOpacity>
                         </View>
+                        <WhiteSpace size={'md'} />
                         <FlatList
                             style={{ height: ScreenHeight }}
                             data={edit_lunbo}
@@ -345,11 +357,12 @@ class CompanyEdit extends Component {
                 // cropping: true
             }
         ).then(image => {
-            let file = { uri: image.path, type: image.mime };
+            // let file = { uri: image.path, type: image.mime, name: 'image.jpg' };
             this.setState({
                 edit_lunbo: this.state.edit_lunbo.map((item, index) => {
                     if (index == key) {
-                        item.img = image.path
+                        item.id = 1,
+                            item.img = image.path
                     }
                     return item
                 })
@@ -365,11 +378,12 @@ class CompanyEdit extends Component {
                 // cropping: true
             }
         ).then(image => {
-            let file = { uri: image.path, type: image.mime };
+            // let file = { uri: image.path, type: image.mime, name: 'image.jpg' };
             this.setState({
                 edit_lunbo: this.state.edit_lunbo.map((item, index) => {
                     if (index == key) {
-                        item.img = image.path
+                        item.id = 1,
+                            item.img = image.path
                     }
                     return item
                 })
@@ -381,7 +395,8 @@ class CompanyEdit extends Component {
         this.setState({
             edit_lunbo: this.state.edit_lunbo.map((item, index) => {
                 if (index == key) {
-                    item[type] = text
+                    item.id = 1,
+                        item[type] = text
                 }
                 return item
             })
@@ -415,7 +430,7 @@ class CompanyEdit extends Component {
                 >
                     {item.img ?
                         <Image source={{ uri: item.img }} style={[{ width: ScreenWidth - 20, height: parseInt((ScreenWidth - 20) / 3), }]} /> :
-                        <View style={[styles.flex_center, { width: ScreenWidth - 20, height: 100, backgroundColor: '#fff' }]}>
+                        <View style={[styles.flex_center, { width: ScreenWidth - 20, height: parseInt((ScreenWidth - 20) / 3), backgroundColor: '#fff' }]}>
                             <Icon type={'\uE625'} size={50} color={'#ccc'} />
                         </View>
                     }

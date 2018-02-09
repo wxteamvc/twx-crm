@@ -132,7 +132,7 @@ class Personal extends Component {
                 icon={require('../constants/images/设置.png')}
             />);
         const data = [
-            { name: '公司主页', gourl: 'CompanyHome', icon: require('../constants/images/personal/主页.png') ,extra:userInfo.isLogin?{cid:userInfo.info.cid}:null},
+            { name: '公司主页', gourl: 'CompanyHome', icon: require('../constants/images/personal/主页.png') ,extra:userInfo.isLogin?{cid:userInfo.info.cid,staff:true}:null},
             { name: '客户管理', gourl: 'CustomerList', icon: require('../constants/images/personal/客户.png') },
             { name: '订单管理', gourl: 'Orders', icon: require('../constants/images/personal/订单.png') },
             { name: '还款管理', gourl: 'Repay', icon: require('../constants/images/personal/还款3.png') },

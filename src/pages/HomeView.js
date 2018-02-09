@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { View, Text, Image, ScrollView, FlatList, StatusBar, Platform, BackHandler, TouchableOpacity, Linking } from 'react-native';
-import { Grid, WhiteSpace, Carousel, Flex, WingBlank, Icon } from 'antd-mobile';
+import { Grid, WhiteSpace, Carousel, Flex, WingBlank, Icon, Button } from 'antd-mobile';
 import { styles } from '../constants/styles'
 import { ScreenWidth } from '../constants/global';
 import { connect } from 'react-redux';
@@ -10,6 +10,7 @@ import * as Urls from "../constants/urls";
 import Util from "../constants/util";
 import * as Types from "../actions/actionTypes";
 import { Toast } from 'teaset';
+import Icons from 'react-native-vector-icons/Ionicons';
 
 class Home extends Component {
     componentDidMount() {
@@ -86,15 +87,15 @@ class Home extends Component {
             <TouchableOpacity
                 activeOpacity={1}
                 style={styles.home_activity_title_item}
-                onPress={() => this.props.navigation.navigate('CompanyHome', { cid: item.id })}
+                onPress={() => this.props.navigation.navigate('CompanyHome', { cid: item.id, staff: false })}
             >
                 <View style={styles.home_activity_title_item_top}></View>
                 <View style={[styles.flex_center]}>
                     <View style={styles.home_activity_title_item_img_container}>
                         <Image source={{ uri: item.company_home.company_avatar }} style={styles.home_activity_title_item_img_img} />
                     </View>
-                    <Text numberOfLines={1} style={[styles.fontsize12, { color: '#000' }]}>{item.title}</Text>
-                    <Text numberOfLines={1} style={styles.fontsize10}>{item.content}</Text>
+                    <Text numberOfLines={1} style={[styles.fontsize12, { color: '#000' }]}>{item.company_name}</Text>
+                    {/* <Text numberOfLines={1} style={styles.fontsize10}>{item.address}</Text> */}
                     <WhiteSpace size={'sm'} />
                     <TouchableOpacity style={[styles.home_activity_title_item_btn, { backgroundColor: isLogin && (info.follow.indexOf(item.id) >= 0) ? '#FD7D7C' : '#40a9ff' }]}
                         activeOpacity={1}
@@ -126,34 +127,60 @@ class Home extends Component {
         )
     }
 
+    numToMoney(sum) {
+        if (sum >= 10000) {
+            sum = (sum / 10000).toFixed(2);
+            return `${sum}万`;
+        } else {
+            return `${sum}元`;
+        }
+    }
+
     renderActivityList = ({ item }) => {
+        // console.log(item)
         return (
             <TouchableOpacity
                 activeOpacity={1}
-                onPress={() => this.props.navigation.navigate('CompanyHome', { cid: item.id })}
+                onPress={() => this.props.navigation.navigate('CompanyHome', { cid: item.id, staff: false })}
                 style={[styles.flex_row_columncenter, styles.companyHome_content_activity_listItem_body]}
             >
                 <View style={{ flexDirection: 'row' }}>
-                    <View style={[styles.flex_center, { flex: 0.5 }]}>
+                    <View style={[styles.flex_center, { flex: 0.4 }]}>
                         <Image
-                            style={{ height: 100, width: 150, borderRadius: 5 }}
-                            source={{ uri: item.company_home.company_background }}
+                            style={{ height: 100, width: 100, borderRadius: 5 }}
+                            source={{ uri: item.company_home.company_avatar }}
                         />
                     </View>
-                    <View style={[{ flex: 0.5, paddingRight: 10 }]}>
-                        <Text style={[styles.fontsize14, { color: '#000' }]} numberOfLines={1}>{item.company_name}</Text>
-                        <WhiteSpace size={'xs'} />
-                        <Text style={styles.fontsize12} numberOfLines={1}>{item.address}</Text>
-                        <WhiteSpace size={'sm'} />
-                        <Text style={styles.fontsize10} numberOfLines={3}>{item.company_home.company_about}</Text>
-                        <WhiteSpace size={'sm'} />
-                        <View style={[styles.flex_row_end, { position: 'absolute', bottom: 0, right: 10, }]}>
-                            <WingBlank size={'sm'}><Icon type={'\uE6A4'} size={12} color={'#ccc'} /></WingBlank>
-                            <Text style={[styles.fontsize10, { color: '#ccc' }]}>{item.follow_count + item.pre_follow}</Text>
+                    <View style={[{ flex: 0.6, paddingRight: 10 }]}>
+                        <View style={[styles.flex_column_columncenter, { flex: 0.2 }]}>
+                            <Text style={[styles.fontsize14, { color: '#000' }]} numberOfLines={1}>{item.company_name}</Text>
+                            <Text style={styles.fontsize12} numberOfLines={1}>{item.address}</Text>
                         </View>
-                        <View style={[styles.flex_row_columncenter, { position: 'absolute', bottom: 0, left: 0, }]}>
-                            <Text style={[styles.fontsize10]}>100米</Text>
+                        <View style={[styles.flex_column_columncenter, { flex: 0.5 }]}>
+                            <Text style={styles.fontsize10} numberOfLines={3}>{item.company_home.company_about}</Text>
                         </View>
+                        <View style={{ flex: 0.1 }}></View>
+                        <View style={[styles.flex_column_end, { flex: 0.2 }]}>
+                            <View style={[styles.flex_row_between]}>
+                                {item.appointment ? <Button type="ghost" size={'small'} disabled style={{ borderColor: '#39B07E' }}>
+                                    <Text style={[styles.fontsize10, { color: '#39B07E' }]}>预约</Text>
+                                </Button>
+                                    : null}
+                                <View style={styles.flex_row_columncenter}>
+                                    <Icon type={'\uE66F'} color={'#ccc'} size={12} />
+                                    <Text style={[styles.fontsize10, { color: '#ccc', marginLeft: 5 }]}>{item.orders_count + item.pre_count}</Text>
+                                </View>
+                                <View style={styles.flex_row_columncenter}>
+                                    <Icon type={'\uE6A6'} color={'#ccc'} size={12} />
+                                    <Text style={[styles.fontsize10, { color: '#ccc', marginLeft: 5 }]}>{this.numToMoney(item.orders_sum + item.pre_order_money)}</Text>
+                                </View>
+                                <View style={styles.flex_row_columncenter}>
+                                    <Icon type={'\uE6A4'} color={'#ccc'} size={12} />
+                                    <Text style={[styles.fontsize10, { color: '#ccc', marginLeft: 5 }]}>{item.follow_count + item.pre_follow}</Text>
+                                </View>
+                            </View>
+                        </View>
+
                     </View>
                 </View>
 
@@ -185,7 +212,7 @@ class Home extends Component {
                         <WhiteSpace size={'sm'} />
                         <View style={[styles.flex_row_columncenter, styles.home_activity_title, { borderBottomWidth: 0 }]}>
                             <View style={[styles.home_activity_title_View, { borderColor: '#FF4611' }]}>
-                                <Text style={styles.fontsize12}>为您推荐</Text>
+                                <Text style={[styles.fontsize14, { fontWeight: 'bold' }]}>为您推荐</Text>
                             </View>
                         </View>
                         <FlatList
@@ -205,7 +232,7 @@ class Home extends Component {
                             ListHeaderComponent={
                                 <View style={[styles.flex_row_columncenter, styles.home_activity_title]}>
                                     <View style={styles.home_activity_title_View}>
-                                        <Text style={styles.fontsize12}>生活服务</Text>
+                                        <Text style={[styles.fontsize14, { fontWeight: 'bold' }]}>生活服务</Text>
                                     </View>
                                 </View>
                             }
@@ -222,24 +249,23 @@ class Home extends Component {
                             ListHeaderComponent={
                                 <View style={[styles.flex_row_between, styles.home_activity_title]}>
                                     <View style={[styles.home_activity_title_View, { borderColor: '#CC0000' }]}>
-                                        <Text style={styles.fontsize12}>离我最近</Text>
+                                        <Text style={[styles.fontsize14, { fontWeight: 'bold' }]}>最热</Text>
                                     </View>
-                                    <TouchableOpacity style={styles.flex_row_columncenter} activeOpacity={1} onPress={() => this.props.navigation.navigate('CompanyList')}>
-                                        <Text style={styles.fontsize10}>更多</Text>
-                                        <WingBlank size={'sm'}><Icon type={'right'} size={10} color={'#ccc'} /></WingBlank>
+                                    <TouchableOpacity style={styles.flex_row_columncenter} activeOpacity={1} onPress={() => { alert('换一批') }}>
+                                        <Text style={styles.fontsize12}>换一批</Text>
+                                        <WingBlank size={'sm'}><Icons name={'md-sync'} size={16} color={'#7A7A7A'} /></WingBlank>
                                     </TouchableOpacity>
                                 </View>
                             }
                             data={home.data.company_list}
                             keyExtractor={(item, index) => index}
                             renderItem={this.renderActivityList}
-                            ListFooterComponent={
-                                <View style={[styles.flex_center, { paddingTop: 5, paddingBottom: 5, backgroundColor: '#fff' }]}>
-                                    <Text style={styles.fontsize10}>已经到底了哦~~~</Text>
-                                </View>
-                            }
                         />
-
+                        <WhiteSpace size={'sm'} />
+                        <TouchableOpacity style={[styles.flex_center, { height: 50, backgroundColor: '#fff' }]} onPress={() => this.props.navigation.navigate('CompanyList')}>
+                            <Text>查看全部公司</Text>
+                        </TouchableOpacity>
+                        <WhiteSpace size={'sm'} />
                     </ScrollView>
                 </View>
             )
