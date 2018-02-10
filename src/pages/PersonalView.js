@@ -12,8 +12,8 @@ import {
     TouchableOpacity
 } from 'react-native';
 import { connect } from 'react-redux';
-import { NavigationBar, ListRow, Button, Toast } from 'teaset';
-import { Card, WhiteSpace, Grid, List, } from 'antd-mobile';
+import { NavigationBar, ListRow, Button, Toast, Badge } from 'teaset';
+import { Card, WhiteSpace, Grid, List } from 'antd-mobile';
 import { PullView } from 'react-native-pull';
 import { initPersonal } from '../actions/personalAction';
 import Loading from '../components/loading';
@@ -79,36 +79,39 @@ class Personal extends Component {
 
     renderListRow = (listData) => {
         let list = [];
-        listData.map((items, index) => {
+        for (const key in listData) {
             list.push(
-                <View key={index}>
+                <View key={key}>
                     <List>
-                        {this.renderItem(items)}
+                        {this.renderItem(listData[key])}
                     </List>
                     <WhiteSpace size="lg" />
                 </View>
             )
-        })
+        }
+
+
+
         return list;
     }
 
     renderItem(items) {
         const { userInfo, navigation } = this.props;
         let row = [];
-        items.map((item, index) => {
+        for (const key in items) {
             row.push(
-                <ListRow key={index} title={item.title} detail={item.detail ? item.detail : null}
-                    icon={item.icon}
+                <ListRow key={key} title={items[key].title} detail={items[key].detail ? items[key].detail : null}
+                    icon={items[key].icon}
                     accessory='indicator'
                     onPress={() => {
                         if (userInfo.isLogin) {
-                            navigation.navigate(item.gourl)
+                            navigation.navigate(items[key].gourl, items[key].extra)
                         } else {
                             navigation.navigate('Login')
                         }
                     }}
                 />)
-        })
+        }
         return row;
     }
 
@@ -123,7 +126,8 @@ class Personal extends Component {
     }
     render() {
         let { initData, userInfo, navigation } = this.props;
-        // console.log(userInfo)
+        const { info } = userInfo;
+        console.log(userInfo)
         const rightView = (
             <NavigationBar.IconButton
                 onPress={() => {
@@ -132,7 +136,7 @@ class Personal extends Component {
                 icon={require('../constants/images/设置.png')}
             />);
         const data = [
-            { name: '公司主页', gourl: 'CompanyHome', icon: require('../constants/images/personal/主页.png') ,extra:userInfo.isLogin?{cid:userInfo.info.cid,staff:true}:null},
+            { name: '公司主页', gourl: 'CompanyHome', icon: require('../constants/images/personal/主页.png'), extra: userInfo.isLogin ? { cid: userInfo.info.cid, staff: true } : null },
             { name: '客户管理', gourl: 'CustomerList', icon: require('../constants/images/personal/客户.png') },
             { name: '订单管理', gourl: 'Orders', icon: require('../constants/images/personal/订单.png') },
             { name: '还款管理', gourl: 'Repay', icon: require('../constants/images/personal/还款3.png') },
@@ -148,7 +152,7 @@ class Personal extends Component {
             [
                 { title: '我的订单', icon: require('../constants/images/personal/订单1.png') },
                 { title: '我的关注', icon: require('../constants/images/personal/关注.png') },
-                { title: '个人消息', icon: require('../constants/images/personal/消息.png') },
+                { title: '个人消息', icon: require('../constants/images/personal/消息.png'), gourl: 'Notice', extra: { notice: userInfo.info }, detail:userInfo.isLogin&& info.notice_all>0?  <Badge count={info.notice_all} /> :null},
                 { title: '浏览记录', icon: require('../constants/images/personal/足迹1.png') },
             ],
             [

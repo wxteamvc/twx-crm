@@ -32,6 +32,7 @@ import CompanySetting from '../pages/CompanySettingView';
 import CompanyHomeSetting from '../pages/CompanyHomeSettingView';
 import Staff from '../pages/StaffView';
 import Register from '../pages/RegisterView';
+import Notice from '../pages/NoticeView';
 
 const App = StackNavigator({
     Lead: {
@@ -246,6 +247,14 @@ const App = StackNavigator({
     },
     Register: {
         screen: Register,
+        navigationOptions: ({ navigation }) => {
+            return ({
+                header: null
+            })
+        }
+    },
+    Notice: {
+        screen: Notice,
         navigationOptions: ({ navigation }) => {
             return ({
                 header: null

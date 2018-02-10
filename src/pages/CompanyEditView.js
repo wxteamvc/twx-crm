@@ -157,7 +157,8 @@ class CompanyEdit extends Component {
     render() {
         const { company_background, company_avatar, company_about, company_home_carousel, introduce_modal, edit_introduce, lunbo_modal, edit_lunbo } = this.state;
         const { navigation } = this.props;
-        console.log(this.state.form);
+        console.log(company_home_carousel);
+        console.log(this.lunboForm);
         return (
             <View style={{ flex: 1 }}>
                 <StatusBar
@@ -222,7 +223,17 @@ class CompanyEdit extends Component {
                         </View>
                     </TouchableOpacity>
                     <WhiteSpace size={'sm'} />
-                    <TouchableOpacity activeOpacity={1} onPress={() => this.setState({ edit_lunbo: company_home_carousel.length > 0 ? company_home_carousel : [{}], lunbo_modal: true })}>
+                    <TouchableOpacity activeOpacity={1}
+                        onPress={() => {
+                            this.setState({
+                                edit_lunbo: company_home_carousel.length > 0 ? company_home_carousel : [{}],
+                                lunbo_modal: true
+                            })
+                            this.lunboForm = company_home_carousel.map((item,index)=>{
+                                      return {}
+                            })
+                        }}
+                    >
                         {company_home_carousel.length > 0 ?
                             <Carousel
                                 autoplayInterval={5000}
@@ -391,7 +402,7 @@ class CompanyEdit extends Component {
         });
     }
 
-    lunboChangeText(text, key, type) {
+    lunboChangeText(text, key, type,id) {
         this.setState({
             edit_lunbo: this.state.edit_lunbo.map((item, index) => {
                 if (index == key) {
@@ -401,6 +412,8 @@ class CompanyEdit extends Component {
                 return item
             })
         })
+        this.lunboForm[key].id=id;
+        this.lunboForm[key][type] = text;
     }
 
     lunboShowActionSheet(key) {
@@ -443,7 +456,7 @@ class CompanyEdit extends Component {
                     <TextInput
                         style={[styles.fontsize14, styles.CompanyAuthentication_input]}
                         underlineColorAndroid="transparent"
-                        onChangeText={(text) => this.lunboChangeText(text, index, 'title')}
+                        onChangeText={(text) => this.lunboChangeText(text, index, 'title',item.id)}
                         value={item.title}
                     />
                 </View>
@@ -454,7 +467,7 @@ class CompanyEdit extends Component {
                         style={[styles.fontsize14, styles.CompanyAuthentication_input]}
                         underlineColorAndroid="transparent"
                         style={{ minHeight: 50, maxHeight: 50, textAlignVertical: 'top', padding: 10 }}
-                        onChangeText={(text) => this.lunboChangeText(text, index, 'content')}
+                        onChangeText={(text) => this.lunboChangeText(text, index, 'content',item.id)}
                         value={item.content}
                     />
                 </View>
