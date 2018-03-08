@@ -28,11 +28,16 @@ import ImageView from '../pages/ImageView';
 import Authentication from '../pages/AuthenticationView';
 import CompanyEdit from '../pages/CompanyEditView';
 import CompanyAuthentication from '../pages/CompanyAuthenticationView';
+import PersonalAuthentication from '../pages/PersonalAuthenticationView';
 import CompanySetting from '../pages/CompanySettingView';
 import CompanyHomeSetting from '../pages/CompanyHomeSettingView';
 import Staff from '../pages/StaffView';
 import Register from '../pages/RegisterView';
 import Notice from '../pages/NoticeView';
+import CustomerContact from '../pages/CustomerContactView';
+import AddCustomerContact from '../pages/AddCustomerContactView';
+import Application from '../pages/ApplicationView';
+import Appointment from '../pages/AppointmentView';
 
 const App = StackNavigator({
     Lead: {
@@ -219,7 +224,14 @@ const App = StackNavigator({
             })
         }
     },
-
+    PersonalAuthentication: {
+        screen: PersonalAuthentication,
+        navigationOptions: ({ navigation }) => {
+            return ({
+                header: null
+            })
+        }
+    },
 
     CompanySetting: {
         screen: CompanySetting,
@@ -261,8 +273,39 @@ const App = StackNavigator({
             })
         }
     },
+    CustomerContact: {
+        screen: CustomerContact,
+        navigationOptions: ({ navigation }) => {
+            return ({
+                header: null
+            })
+        }
+    },
+    AddCustomerContact: {
+        screen: AddCustomerContact,
+        navigationOptions: ({ navigation }) => {
+            return ({
+                header: null
+            })
+        }
+    },
+    Application: {
+        screen: Application,
+        navigationOptions: ({ navigation }) => {
+            return ({
+                header: null
+            })
+        }
+    }, 
+    Appointment: {
+        screen: Appointment,
+        navigationOptions: ({ navigation }) => {
+            return ({
+                header: null
+            })
+        }
+    },
 },
-
     {
         transitionConfig: () => ({
             screenInterpolator: CardStackStyleInterpolator.forHorizontal,

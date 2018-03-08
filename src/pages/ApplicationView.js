@@ -5,134 +5,111 @@ import {
     StatusBar,
     Image,
     ScrollView,
-    ImageBackground
+    ImageBackground,
+    TouchableOpacity
 } from 'react-native';
 import { connect } from 'react-redux';
-import { List, InputItem, Toast, WhiteSpace, Button, Picker } from 'antd-mobile';
+import { List, InputItem, WhiteSpace, Button, Picker, TextareaItem } from 'antd-mobile';
 import { createForm } from 'rc-form';
 import { styles } from '../constants/styles';
-import { ApplicationForm } from '../constants/form';
 import { ScreenHeight, StatusBarHeight, ScreenWidth } from '../constants/global';
-
+import { NavigationBar, Toast } from 'teaset';
+import { GiftedForm, GiftedFormManager } from 'react-native-gifted-form';
 
 class Application extends Component {
 
     constructor(props) {
         super(props)
         this.state = {
-            formError: {},
-
-        }
-    }
-
-
-    submit = () => {
-        const { validateFields, getFieldError } = this.props.form;
-        validateFields((error, value) => {
-            console.log(error);
-            console.log(value);
-            if (error) {
-                let errors = {};
-                for (let key in error) {
-                    errors[key] = getFieldError(key)
-                }
-                this.setState({ formError: errors })
-            } else {
-                this.setState({ formError: {} })
-                console.log(value);
-            }
-        });
-    }
-
-
-
-
-    renderForm = () => {
-        const { getFieldProps, getFieldsValue } = this.props.form;
-        let form = [];
-        for (const key in ApplicationForm) {
-            const item = ApplicationForm[key];
-            switch (item.type) {
-                case 'input':
-                    form.push(
-                        <View key={key} style={styles.ApplicationView_item_body}>
-                            <InputItem
-                                {...getFieldProps(item.key, {
-                                    rules: item.rules ? item.rules : []
-                                }) }
-                                type={item.keyboard ? item.keyboard : null}
-                                extra={item.extra ? item.extra : null}
-                            // placeholder={`请输入${item.title}`}
-                            >
-                                <Text style={[styles.fontsize12]}>{item.title}</Text>
-                            </InputItem>
-                            {this.state.formError[item.key] ?   // 状态里有没有对应key的错误信息 有的话就输出错误
-                                this.state.formError[item.key].map((value, index) => {
-                                    return (
-                                        <View key={index} style={styles.flex_center}>
-                                            <Text style={[styles.fontsize12, { color: 'red' }]}>***{value}***</Text>
-                                        </View>)
-                                }) : null
-                            }
-                        </View>
-                    )
-                    form.push(<WhiteSpace size={'sm'} key={key + '_white'} />)
-                    break;
-                case 'picker':
-                    form.push(
-                        <View key={key} style={styles.ApplicationView_item_body}>
-                            <Picker
-                                data={item.options}
-                                cols={1}
-                                {...getFieldProps(item.key, {
-                                    rules: item.rules ? item.rules : []
-                                }) }
-                            >
-                                <List.Item><Text style={[styles.fontsize12]}>{item.title}</Text></List.Item>
-                            </Picker>
-                            {this.state.formError[item.key] ?   // 状态里有没有对应key的错误信息 有的话就输出错误
-                                this.state.formError[item.key].map((value, index) => {
-                                    return (
-                                        <View key={index} style={styles.flex_center}>
-                                            <Text style={[styles.fontsize12, { color: 'red' }]}>***{value}***</Text>
-                                        </View>)
-                                }) : null
-                            }
-                        </View >
-                    )
-                    form.push(<WhiteSpace size={'sm'} key={key + '_white'} />)
-                    break;
-                default:
-                    break;
+            submitdata: {
+                money: '',
+                reasons: '',
+                invitation_code: '',
             }
         }
-        return form
     }
+
 
 
     render() {
+        console.log('我是分辨率')
+        console.log(styles)
         const { getFieldProps, getFieldError, getFieldDecorator } = this.props.form;
+        const { navigation } = this.props;
         return (
             <View style={{ flex: 1 }}>
-                <StatusBar
-                    translucent={false}
+                <NavigationBar title='提交贷款申请'
+                    leftView={<NavigationBar.BackButton
+                        onPress={() => { navigation.goBack() }} />}
+                    rightView={
+                        <TouchableOpacity
+                            activeOpacity={1}
+                            onPress={this.submit}
+                        >
+                            <Text style={[styles.fontsize16, { color: '#fff' }]}>提交</Text>
+                        </TouchableOpacity>}
                 />
-                <ScrollView>
-                    <ImageBackground
-                        source={require('../constants/images/infobackground.jpg')}
-                        style={{ marginTop: StatusBarHeight, height: 150, width: ScreenWidth }}
+                <View style={{ marginTop: 68, flex: 1 }}>
+                    <GiftedForm
+                        formName='addContact'
+                        openModal={(router) => {
+                            Keyboard.dismiss();
+                            this.props.navigation.navigate('Modal',
+                                {
+                                    renderContent: router.renderScene,
+                                    onClose: router.onClose,
+                                    getTitle: router.getTitle
+                                });
+                        }}
+                        clearOnClose={true}
                     >
-                    </ImageBackground>
-                    <WhiteSpace size='xl' />
-                    {/* <List> */}
-                    {this.renderForm()}
-                    {/* </List> */}
-                    <WhiteSpace size='xl' />
-                    <View style={styles.flex_row_center}>
-                        <Button style={{flex:0.6}} type="primary" onClick={this.submit}>提交申请</Button>
-                    </View>
-                    <WhiteSpace size='xl' />
-                </ScrollView>
+                        <GiftedForm.SeparatorWidget />
+                        <GiftedForm.TextInputWidget
+                            name='contact_name'
+                            title='贷款金额'
+                            keyboardType='numeric'
+                            clearButtonMode='while-editing'
+                            underlineColorAndroid="transparent"
+                            onChangeText={(val) => {
+                                this.setState({
+                                    submitdata: {
+                                        ...this.state.submitdata,
+                                        money: val
+                                    }
+                                })
+                            }}
+                        />
+                        <List renderHeader={() => <View style={{ backgroundColor: '#fff', padding: 10 }}><Text style={[styles.fontsize15, { color: '#000' }]}>贷款用途</Text></View>} >
+                            <TextareaItem
+                                rows={5}
+                                count={200}
+                                onChange={value => {
+                                    this.setState({
+                                        submitdata: {
+                                            ...this.state.submitdata,
+                                            reasons: value
+                                        }
+                                    })
+                                }}
+                            />
+                        </List>
+                        <GiftedForm.SeparatorWidget />
+                        <GiftedForm.TextInputWidget
+                            name='contact_name'
+                            title='业务员邀请码'
+                            clearButtonMode='while-editing'
+                            underlineColorAndroid="transparent"
+                            onChangeText={(val) => {
+                                this.setState({
+                                    submitdata: {
+                                        ...this.state.submitdata,
+                                        invitation_code: val
+                                    }
+                                })
+                            }}
+                        />
+                    </GiftedForm>
+                </View>
             </View>
 
 

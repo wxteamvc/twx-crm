@@ -259,10 +259,10 @@ class CompanyHome extends Component {
                             <ActionButton.Item buttonColor='#9b59b6' title="联系客服" onPress={() => console.log("notes tapped!")} >
                                 <Icons name={'comments-o'} size={20} color={'#fff'} />
                             </ActionButton.Item>
-                            <ActionButton.Item buttonColor='#3498db' title="提交申请" onPress={() => { }}>
+                            <ActionButton.Item buttonColor='#3498db' title="提交申请" onPress={() => {this.props.navigation.navigate('Application') }}>
                                 <Icons name={'pencil-square-o'} size={20} color={'#fff'} />
                             </ActionButton.Item>
-                            <ActionButton.Item buttonColor='#996600' title="预约见面" onPress={() => { }}>
+                            <ActionButton.Item buttonColor='#996600' title="预约见面" onPress={() => {this.props.navigation.navigate('Appointment')}}>
                                 <Icons name={'taxi'} size={18} color={'#fff'} />
                             </ActionButton.Item>
                         </ActionButton>

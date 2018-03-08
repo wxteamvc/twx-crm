@@ -81,3 +81,11 @@ export const Company_authentication_url = BASIC_URL + '/companyAuth';
 export const CompanyHome_url = BASIC_URL + '/getCompanyHome';
 //关注公司
 export const FollowCompany_url = BASIC_URL + '/followCompany';
+//添加担保人
+export const AddCustomerContact_url = BASIC_URL + '/userRelationAdd';
+//编辑担保人
+export const EditCustomerContact_url = BASIC_URL + '/userRelationEdit';
+//删除担保人
+export const DeleteCustomerContact_url = BASIC_URL + '/userRelationDelete';
+//个人认证
+export const Personal_authentication_url = BASIC_URL + '/userAuth';

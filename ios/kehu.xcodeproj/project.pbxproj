@@ -51,6 +51,31 @@
 		8C5837BD4763412C89FD7702 /* Octicons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 79EB966CCE074A249B7B9FB6 /* Octicons.ttf */; };
 		CB587E86D6024B898950D506 /* SimpleLineIcons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 10A5CD2276F343238D023D28 /* SimpleLineIcons.ttf */; };
 		C71D234C514D4B8DA5EBEC08 /* Zocial.ttf in Resources */ = {isa = PBXBuildFile; fileRef = AE2DE86AD477462EAD6C1590 /* Zocial.ttf */; };
+		EC54438AD0DA43D29E51B315 /* libAuroraIMUI.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 930715F566BA41BF82AE27FB /* libAuroraIMUI.a */; };
+		ABCBE495095C47A49CC28FFC /* libz.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 8FBF43569ABA45988A83FFA5 /* libz.tbd */; };
+		3FA2296FEDF3485382D81560 /* CoreTelephony.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 315B9681843A4D8396B53A55 /* CoreTelephony.framework */; };
+		B2D74B9D19324FC9B3A15FA3 /* CFNetwork.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4EDFC59381AC4DD191135E88 /* CFNetwork.framework */; };
+		2922D6E4471E4BDDAB04C6D0 /* CoreFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 94CDC4DFA5B745E4AED3AAF3 /* CoreFoundation.framework */; };
+		46059915BD754BB39C511BE7 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A6E2DF2FC08F4CDA85F2CF79 /* SystemConfiguration.framework */; };
+		38E34BF26EAE472EAC9B2BF0 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D104701682B54960B98B1A03 /* Foundation.framework */; };
+		708F81DE39984A879E45C667 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A11C36D876CD4D48BAB07C79 /* UIKit.framework */; };
+		B0B7801F042446E8A70F3A7E /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 151236A2AF4B417DBB63EC3D /* CoreGraphics.framework */; };
+		AA1352322B0448D4B1C93B28 /* libRCTJCoreModule.a in Frameworks */ = {isa = PBXBuildFile; fileRef = AFBBB101C01240DFBD81A841 /* libRCTJCoreModule.a */; };
+		1DA4B358125B42D4B6ED68F5 /* libRCTJPushModule.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 2AEFB33443EF4FE092E67221 /* libRCTJPushModule.a */; };
+		011E8842D9DF4795B65B1558 /* UserNotifications.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9816BA3479BD41D8B42C609E /* UserNotifications.framework */; };
+		C6E317C332264C388F548647 /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 399154F91ABE4162915C99E9 /* Security.framework */; };
+		95CBC569312B4742B7817533 /* libresolv.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 9AB8D0AB09AF435E90ADA51E /* libresolv.tbd */; };
+		4BE43CB5A4E847469B0A35D2 /* libRNFS.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 8964D28034374252AAC2C12D /* libRNFS.a */; };
+		0314E9970D1942E083D2564E /* libRCTHttpCache.a in Frameworks */ = {isa = PBXBuildFile; fileRef = D9FB7D8406B4426D85CB7DC3 /* libRCTHttpCache.a */; };
+		DD3AD3EF6A964BE2922C9ECE /* libRNSpinkit.a in Frameworks */ = {isa = PBXBuildFile; fileRef = E025F7D781E1484C9FB64BD6 /* libRNSpinkit.a */; };
+		103B52D0CAF34B878AA37D20 /* libReact.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 6DD635028A9E4CC4AD045D9F /* libReact.a */; };
+		6D5D7FF473F640EE8EE5B5A4 /* libyoga.a in Frameworks */ = {isa = PBXBuildFile; fileRef = ECFCFE266A3A44D995B1BB48 /* libyoga.a */; };
+		2EB25C73B4754409B68CCEA3 /* libcxxreact.a in Frameworks */ = {isa = PBXBuildFile; fileRef = C45E3324835744E4B5C9767C /* libcxxreact.a */; };
+		9A2B896F85DD41C0A1BB587B /* libjschelpers.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 1A305A9D9FE946959882DCDC /* libjschelpers.a */; };
+		EF4BA43412BD40F4AF601F8C /* libthird-party.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 71FE13D73EB245879862BF98 /* libthird-party.a */; };
+		F13749BF457D460B8D7E0EBE /* libdouble-conversion.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 5C57B2E090EB48B3B321D5ED /* libdouble-conversion.a */; };
+		B38B53A8B2DC4439A5D81332 /* libRCTBEEPickerManager.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 46809EB1372B421885923EF8 /* libRCTBEEPickerManager.a */; };
+		9B92C9D68E96462F9F436FC2 /* libRCTContactsWrapper.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 7CD1CA24E4B44376B5F2E16D /* libRCTContactsWrapper.a */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -296,6 +321,40 @@
 		79EB966CCE074A249B7B9FB6 /* Octicons.ttf */ = {isa = PBXFileReference; name = "Octicons.ttf"; path = "../node_modules/react-native-vector-icons/Fonts/Octicons.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
 		10A5CD2276F343238D023D28 /* SimpleLineIcons.ttf */ = {isa = PBXFileReference; name = "SimpleLineIcons.ttf"; path = "../node_modules/react-native-vector-icons/Fonts/SimpleLineIcons.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
 		AE2DE86AD477462EAD6C1590 /* Zocial.ttf */ = {isa = PBXFileReference; name = "Zocial.ttf"; path = "../node_modules/react-native-vector-icons/Fonts/Zocial.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		9B55F615BBFD449AA6377EA8 /* RCTAuroraIMUI.xcodeproj */ = {isa = PBXFileReference; name = "RCTAuroraIMUI.xcodeproj"; path = "../node_modules/aurora-imui-react-native/ReactNative/ios/RCTAuroraIMUI.xcodeproj"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = wrapper.pb-project; explicitFileType = undefined; includeInIndex = 0; };
+		930715F566BA41BF82AE27FB /* libAuroraIMUI.a */ = {isa = PBXFileReference; name = "libAuroraIMUI.a"; path = "libAuroraIMUI.a"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = archive.ar; explicitFileType = undefined; includeInIndex = 0; };
+		8FBF43569ABA45988A83FFA5 /* libz.tbd */ = {isa = PBXFileReference; name = "libz.tbd"; path = "usr/lib/libz.tbd"; sourceTree = SDKROOT; fileEncoding = undefined; lastKnownFileType = sourcecode.text-based-dylib-definition; explicitFileType = undefined; includeInIndex = 0; };
+		315B9681843A4D8396B53A55 /* CoreTelephony.framework */ = {isa = PBXFileReference; name = "CoreTelephony.framework"; path = "System/Library/Frameworks/CoreTelephony.framework"; sourceTree = SDKROOT; fileEncoding = undefined; lastKnownFileType = wrapper.framework; explicitFileType = undefined; includeInIndex = 0; };
+		4EDFC59381AC4DD191135E88 /* CFNetwork.framework */ = {isa = PBXFileReference; name = "CFNetwork.framework"; path = "System/Library/Frameworks/CFNetwork.framework"; sourceTree = SDKROOT; fileEncoding = undefined; lastKnownFileType = wrapper.framework; explicitFileType = undefined; includeInIndex = 0; };
+		94CDC4DFA5B745E4AED3AAF3 /* CoreFoundation.framework */ = {isa = PBXFileReference; name = "CoreFoundation.framework"; path = "System/Library/Frameworks/CoreFoundation.framework"; sourceTree = SDKROOT; fileEncoding = undefined; lastKnownFileType = wrapper.framework; explicitFileType = undefined; includeInIndex = 0; };
+		A6E2DF2FC08F4CDA85F2CF79 /* SystemConfiguration.framework */ = {isa = PBXFileReference; name = "SystemConfiguration.framework"; path = "System/Library/Frameworks/SystemConfiguration.framework"; sourceTree = SDKROOT; fileEncoding = undefined; lastKnownFileType = wrapper.framework; explicitFileType = undefined; includeInIndex = 0; };
+		D104701682B54960B98B1A03 /* Foundation.framework */ = {isa = PBXFileReference; name = "Foundation.framework"; path = "System/Library/Frameworks/Foundation.framework"; sourceTree = SDKROOT; fileEncoding = undefined; lastKnownFileType = wrapper.framework; explicitFileType = undefined; includeInIndex = 0; };
+		A11C36D876CD4D48BAB07C79 /* UIKit.framework */ = {isa = PBXFileReference; name = "UIKit.framework"; path = "System/Library/Frameworks/UIKit.framework"; sourceTree = SDKROOT; fileEncoding = undefined; lastKnownFileType = wrapper.framework; explicitFileType = undefined; includeInIndex = 0; };
+		151236A2AF4B417DBB63EC3D /* CoreGraphics.framework */ = {isa = PBXFileReference; name = "CoreGraphics.framework"; path = "System/Library/Frameworks/CoreGraphics.framework"; sourceTree = SDKROOT; fileEncoding = undefined; lastKnownFileType = wrapper.framework; explicitFileType = undefined; includeInIndex = 0; };
+		A3C300C1770B490E8E0D9EA7 /* RCTJCoreModule.xcodeproj */ = {isa = PBXFileReference; name = "RCTJCoreModule.xcodeproj"; path = "../node_modules/jcore-react-native/ios/RCTJCoreModule.xcodeproj"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = wrapper.pb-project; explicitFileType = undefined; includeInIndex = 0; };
+		AFBBB101C01240DFBD81A841 /* libRCTJCoreModule.a */ = {isa = PBXFileReference; name = "libRCTJCoreModule.a"; path = "libRCTJCoreModule.a"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = archive.ar; explicitFileType = undefined; includeInIndex = 0; };
+		4BD6F29754864C2C83B2D97C /* RCTJPushModule.xcodeproj */ = {isa = PBXFileReference; name = "RCTJPushModule.xcodeproj"; path = "../node_modules/jpush-react-native/ios/RCTJPushModule.xcodeproj"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = wrapper.pb-project; explicitFileType = undefined; includeInIndex = 0; };
+		2AEFB33443EF4FE092E67221 /* libRCTJPushModule.a */ = {isa = PBXFileReference; name = "libRCTJPushModule.a"; path = "libRCTJPushModule.a"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = archive.ar; explicitFileType = undefined; includeInIndex = 0; };
+		9816BA3479BD41D8B42C609E /* UserNotifications.framework */ = {isa = PBXFileReference; name = "UserNotifications.framework"; path = "System/Library/Frameworks/UserNotifications.framework"; sourceTree = SDKROOT; fileEncoding = undefined; lastKnownFileType = wrapper.framework; explicitFileType = undefined; includeInIndex = 0; };
+		399154F91ABE4162915C99E9 /* Security.framework */ = {isa = PBXFileReference; name = "Security.framework"; path = "System/Library/Frameworks/Security.framework"; sourceTree = SDKROOT; fileEncoding = undefined; lastKnownFileType = wrapper.framework; explicitFileType = undefined; includeInIndex = 0; };
+		9AB8D0AB09AF435E90ADA51E /* libresolv.tbd */ = {isa = PBXFileReference; name = "libresolv.tbd"; path = "usr/lib/libresolv.tbd"; sourceTree = SDKROOT; fileEncoding = undefined; lastKnownFileType = sourcecode.text-based-dylib-definition; explicitFileType = undefined; includeInIndex = 0; };
+		1F254E8BC336471993164A94 /* RNFS.xcodeproj */ = {isa = PBXFileReference; name = "RNFS.xcodeproj"; path = "../node_modules/react-native-fs/RNFS.xcodeproj"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = wrapper.pb-project; explicitFileType = undefined; includeInIndex = 0; };
+		8964D28034374252AAC2C12D /* libRNFS.a */ = {isa = PBXFileReference; name = "libRNFS.a"; path = "libRNFS.a"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = archive.ar; explicitFileType = undefined; includeInIndex = 0; };
+		868FF321F6C94FFD93E39932 /* RCTHttpCache.xcodeproj */ = {isa = PBXFileReference; name = "RCTHttpCache.xcodeproj"; path = "../node_modules/react-native-http-cache/ios/RCTHttpCache.xcodeproj"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = wrapper.pb-project; explicitFileType = undefined; includeInIndex = 0; };
+		D9FB7D8406B4426D85CB7DC3 /* libRCTHttpCache.a */ = {isa = PBXFileReference; name = "libRCTHttpCache.a"; path = "libRCTHttpCache.a"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = archive.ar; explicitFileType = undefined; includeInIndex = 0; };
+		EDBC9C573FBE409694F5C3E0 /* RNSpinkit.xcodeproj */ = {isa = PBXFileReference; name = "RNSpinkit.xcodeproj"; path = "../node_modules/react-native-spinkit/ios/RNSpinkit.xcodeproj"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = wrapper.pb-project; explicitFileType = undefined; includeInIndex = 0; };
+		E025F7D781E1484C9FB64BD6 /* libRNSpinkit.a */ = {isa = PBXFileReference; name = "libRNSpinkit.a"; path = "libRNSpinkit.a"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = archive.ar; explicitFileType = undefined; includeInIndex = 0; };
+		842EC2C79EB74762AFD592CD /* RCTWeChat.xcodeproj */ = {isa = PBXFileReference; name = "RCTWeChat.xcodeproj"; path = "../node_modules/react-native-wechat/ios/RCTWeChat.xcodeproj"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = wrapper.pb-project; explicitFileType = undefined; includeInIndex = 0; };
+		6DD635028A9E4CC4AD045D9F /* libReact.a */ = {isa = PBXFileReference; name = "libReact.a"; path = "libReact.a"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = archive.ar; explicitFileType = undefined; includeInIndex = 0; };
+		ECFCFE266A3A44D995B1BB48 /* libyoga.a */ = {isa = PBXFileReference; name = "libyoga.a"; path = "libyoga.a"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = archive.ar; explicitFileType = undefined; includeInIndex = 0; };
+		C45E3324835744E4B5C9767C /* libcxxreact.a */ = {isa = PBXFileReference; name = "libcxxreact.a"; path = "libcxxreact.a"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = archive.ar; explicitFileType = undefined; includeInIndex = 0; };
+		1A305A9D9FE946959882DCDC /* libjschelpers.a */ = {isa = PBXFileReference; name = "libjschelpers.a"; path = "libjschelpers.a"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = archive.ar; explicitFileType = undefined; includeInIndex = 0; };
+		71FE13D73EB245879862BF98 /* libthird-party.a */ = {isa = PBXFileReference; name = "libthird-party.a"; path = "libthird-party.a"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = archive.ar; explicitFileType = undefined; includeInIndex = 0; };
+		5C57B2E090EB48B3B321D5ED /* libdouble-conversion.a */ = {isa = PBXFileReference; name = "libdouble-conversion.a"; path = "libdouble-conversion.a"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = archive.ar; explicitFileType = undefined; includeInIndex = 0; };
+		BC6AD98DBE394DC99C06EC97 /* RCTBEEPickerManager.xcodeproj */ = {isa = PBXFileReference; name = "RCTBEEPickerManager.xcodeproj"; path = "../node_modules/react-native-picker/ios/RCTBEEPickerManager.xcodeproj"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = wrapper.pb-project; explicitFileType = undefined; includeInIndex = 0; };
+		46809EB1372B421885923EF8 /* libRCTBEEPickerManager.a */ = {isa = PBXFileReference; name = "libRCTBEEPickerManager.a"; path = "libRCTBEEPickerManager.a"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = archive.ar; explicitFileType = undefined; includeInIndex = 0; };
+		0AA5718391544DC58C01AF77 /* ContactsWrapper.xcodeproj */ = {isa = PBXFileReference; name = "ContactsWrapper.xcodeproj"; path = "../node_modules/react-native-contacts-wrapper/ios/ContactsWrapper.xcodeproj"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = wrapper.pb-project; explicitFileType = undefined; includeInIndex = 0; };
+		7CD1CA24E4B44376B5F2E16D /* libRCTContactsWrapper.a */ = {isa = PBXFileReference; name = "libRCTContactsWrapper.a"; path = "libRCTContactsWrapper.a"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = archive.ar; explicitFileType = undefined; includeInIndex = 0; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -328,6 +387,31 @@
 				03B26723ABB74CF8B34B886E /* libRNDeviceInfo-tvOS.a in Frameworks */,
 				EB2F2CC871764B329DCCF3DA /* libimageCropPicker.a in Frameworks */,
 				04E4A9F6AC734F61904A2C2C /* libRNVectorIcons.a in Frameworks */,
+				EC54438AD0DA43D29E51B315 /* libAuroraIMUI.a in Frameworks */,
+				ABCBE495095C47A49CC28FFC /* libz.tbd in Frameworks */,
+				3FA2296FEDF3485382D81560 /* CoreTelephony.framework in Frameworks */,
+				B2D74B9D19324FC9B3A15FA3 /* CFNetwork.framework in Frameworks */,
+				2922D6E4471E4BDDAB04C6D0 /* CoreFoundation.framework in Frameworks */,
+				46059915BD754BB39C511BE7 /* SystemConfiguration.framework in Frameworks */,
+				38E34BF26EAE472EAC9B2BF0 /* Foundation.framework in Frameworks */,
+				708F81DE39984A879E45C667 /* UIKit.framework in Frameworks */,
+				B0B7801F042446E8A70F3A7E /* CoreGraphics.framework in Frameworks */,
+				AA1352322B0448D4B1C93B28 /* libRCTJCoreModule.a in Frameworks */,
+				1DA4B358125B42D4B6ED68F5 /* libRCTJPushModule.a in Frameworks */,
+				011E8842D9DF4795B65B1558 /* UserNotifications.framework in Frameworks */,
+				C6E317C332264C388F548647 /* Security.framework in Frameworks */,
+				95CBC569312B4742B7817533 /* libresolv.tbd in Frameworks */,
+				4BE43CB5A4E847469B0A35D2 /* libRNFS.a in Frameworks */,
+				0314E9970D1942E083D2564E /* libRCTHttpCache.a in Frameworks */,
+				DD3AD3EF6A964BE2922C9ECE /* libRNSpinkit.a in Frameworks */,
+				103B52D0CAF34B878AA37D20 /* libReact.a in Frameworks */,
+				6D5D7FF473F640EE8EE5B5A4 /* libyoga.a in Frameworks */,
+				2EB25C73B4754409B68CCEA3 /* libcxxreact.a in Frameworks */,
+				9A2B896F85DD41C0A1BB587B /* libjschelpers.a in Frameworks */,
+				EF4BA43412BD40F4AF601F8C /* libthird-party.a in Frameworks */,
+				F13749BF457D460B8D7E0EBE /* libdouble-conversion.a in Frameworks */,
+				B38B53A8B2DC4439A5D81332 /* libRCTBEEPickerManager.a in Frameworks */,
+				9B92C9D68E96462F9F436FC2 /* libRCTContactsWrapper.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -499,6 +583,15 @@
 				758778A88EEC446999F96872 /* RNDeviceInfo.xcodeproj */,
 				741A25DC02834EA3AB64AC9B /* imageCropPicker.xcodeproj */,
 				8025ED05AC19486681B2C9F3 /* RNVectorIcons.xcodeproj */,
+				9B55F615BBFD449AA6377EA8 /* RCTAuroraIMUI.xcodeproj */,
+				A3C300C1770B490E8E0D9EA7 /* RCTJCoreModule.xcodeproj */,
+				4BD6F29754864C2C83B2D97C /* RCTJPushModule.xcodeproj */,
+				1F254E8BC336471993164A94 /* RNFS.xcodeproj */,
+				868FF321F6C94FFD93E39932 /* RCTHttpCache.xcodeproj */,
+				EDBC9C573FBE409694F5C3E0 /* RNSpinkit.xcodeproj */,
+				842EC2C79EB74762AFD592CD /* RCTWeChat.xcodeproj */,
+				BC6AD98DBE394DC99C06EC97 /* RCTBEEPickerManager.xcodeproj */,
+				0AA5718391544DC58C01AF77 /* ContactsWrapper.xcodeproj */,
 			);
 			name = Libraries;
 			sourceTree = "<group>";
@@ -520,6 +613,7 @@
 				00E356EF1AD99517003FC87E /* kehuTests */,
 				83CBBA001A601CBA00E9B192 /* Products */,
 				B56EDCE4D9164F85BD5AAF5B /* Resources */,
+				7262E9E4903E441C9824E383 /* Frameworks */,
 			);
 			indentWidth = 2;
 			sourceTree = "<group>";
@@ -561,6 +655,25 @@
 				AE2DE86AD477462EAD6C1590 /* Zocial.ttf */,
 			);
 			name = Resources;
+			sourceTree = "<group>";
+			path = "";
+		};
+		7262E9E4903E441C9824E383 /* Frameworks */ = {
+			isa = "PBXGroup";
+			children = (
+				8FBF43569ABA45988A83FFA5 /* libz.tbd */,
+				315B9681843A4D8396B53A55 /* CoreTelephony.framework */,
+				4EDFC59381AC4DD191135E88 /* CFNetwork.framework */,
+				94CDC4DFA5B745E4AED3AAF3 /* CoreFoundation.framework */,
+				A6E2DF2FC08F4CDA85F2CF79 /* SystemConfiguration.framework */,
+				D104701682B54960B98B1A03 /* Foundation.framework */,
+				A11C36D876CD4D48BAB07C79 /* UIKit.framework */,
+				151236A2AF4B417DBB63EC3D /* CoreGraphics.framework */,
+				9816BA3479BD41D8B42C609E /* UserNotifications.framework */,
+				399154F91ABE4162915C99E9 /* Security.framework */,
+				9AB8D0AB09AF435E90ADA51E /* libresolv.tbd */,
+			);
+			name = Frameworks;
 			sourceTree = "<group>";
 			path = "";
 		};
@@ -1079,14 +1192,21 @@
 					"$(inherited)",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
-					"\"$(SRCROOT)/$(TARGET_NAME)\"",
-					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 				);
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(SRCROOT)\..\node_modules\react-native-device-info\RNDeviceInfo",
 					"$(SRCROOT)\..\node_modules\react-native-image-crop-picker\ios/**",
 					"$(SRCROOT)\..\node_modules\react-native-vector-icons\RNVectorIconsManager",
+					"$(SRCROOT)\..\node_modules\aurora-imui-react-native\iOS\IMUIMessageCollectionView/**",
+					"$(SRCROOT)\..\node_modules\jcore-react-native\ios\RCTJCoreModule",
+					"$(SRCROOT)\..\node_modules\jpush-react-native\ios\RCTJPushModule",
+					"$(SRCROOT)\..\node_modules\react-native-fs/**",
+					"$(SRCROOT)\..\node_modules\react-native-http-cache\ios\RCTHttpCache",
+					"$(SRCROOT)\..\node_modules\react-native-spinkit\ios/**",
+					"$(SRCROOT)\..\node_modules\react-native-wechat\ios",
+					"$(SRCROOT)\..\node_modules\react-native-picker\ios\RCTBEEPickerManager",
+					"$(SRCROOT)\..\node_modules\react-native-contacts-wrapper\ios\RCTContactsWrapper",
 				);
 			};
 			name = Debug;
@@ -1109,14 +1229,21 @@
 					"$(inherited)",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
-					"\"$(SRCROOT)/$(TARGET_NAME)\"",
-					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 				);
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(SRCROOT)\..\node_modules\react-native-device-info\RNDeviceInfo",
 					"$(SRCROOT)\..\node_modules\react-native-image-crop-picker\ios/**",
 					"$(SRCROOT)\..\node_modules\react-native-vector-icons\RNVectorIconsManager",
+					"$(SRCROOT)\..\node_modules\aurora-imui-react-native\iOS\IMUIMessageCollectionView/**",
+					"$(SRCROOT)\..\node_modules\jcore-react-native\ios\RCTJCoreModule",
+					"$(SRCROOT)\..\node_modules\jpush-react-native\ios\RCTJPushModule",
+					"$(SRCROOT)\..\node_modules\react-native-fs/**",
+					"$(SRCROOT)\..\node_modules\react-native-http-cache\ios\RCTHttpCache",
+					"$(SRCROOT)\..\node_modules\react-native-spinkit\ios/**",
+					"$(SRCROOT)\..\node_modules\react-native-wechat\ios",
+					"$(SRCROOT)\..\node_modules\react-native-picker\ios\RCTBEEPickerManager",
+					"$(SRCROOT)\..\node_modules\react-native-contacts-wrapper\ios\RCTContactsWrapper",
 				);
 			};
 			name = Release;
@@ -1141,6 +1268,15 @@
 					"$(SRCROOT)\..\node_modules\react-native-device-info\RNDeviceInfo",
 					"$(SRCROOT)\..\node_modules\react-native-image-crop-picker\ios/**",
 					"$(SRCROOT)\..\node_modules\react-native-vector-icons\RNVectorIconsManager",
+					"$(SRCROOT)\..\node_modules\aurora-imui-react-native\iOS\IMUIMessageCollectionView/**",
+					"$(SRCROOT)\..\node_modules\jcore-react-native\ios\RCTJCoreModule",
+					"$(SRCROOT)\..\node_modules\jpush-react-native\ios\RCTJPushModule",
+					"$(SRCROOT)\..\node_modules\react-native-fs/**",
+					"$(SRCROOT)\..\node_modules\react-native-http-cache\ios\RCTHttpCache",
+					"$(SRCROOT)\..\node_modules\react-native-spinkit\ios/**",
+					"$(SRCROOT)\..\node_modules\react-native-wechat\ios",
+					"$(SRCROOT)\..\node_modules\react-native-picker\ios\RCTBEEPickerManager",
+					"$(SRCROOT)\..\node_modules\react-native-contacts-wrapper\ios\RCTContactsWrapper",
 				);
 			};
 			name = Debug;
@@ -1164,6 +1300,15 @@
 					"$(SRCROOT)\..\node_modules\react-native-device-info\RNDeviceInfo",
 					"$(SRCROOT)\..\node_modules\react-native-image-crop-picker\ios/**",
 					"$(SRCROOT)\..\node_modules\react-native-vector-icons\RNVectorIconsManager",
+					"$(SRCROOT)\..\node_modules\aurora-imui-react-native\iOS\IMUIMessageCollectionView/**",
+					"$(SRCROOT)\..\node_modules\jcore-react-native\ios\RCTJCoreModule",
+					"$(SRCROOT)\..\node_modules\jpush-react-native\ios\RCTJPushModule",
+					"$(SRCROOT)\..\node_modules\react-native-fs/**",
+					"$(SRCROOT)\..\node_modules\react-native-http-cache\ios\RCTHttpCache",
+					"$(SRCROOT)\..\node_modules\react-native-spinkit\ios/**",
+					"$(SRCROOT)\..\node_modules\react-native-wechat\ios",
+					"$(SRCROOT)\..\node_modules\react-native-picker\ios\RCTBEEPickerManager",
+					"$(SRCROOT)\..\node_modules\react-native-contacts-wrapper\ios\RCTContactsWrapper",
 				);
 			};
 			name = Release;
@@ -1195,14 +1340,21 @@
 					"$(inherited)",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
-					"\"$(SRCROOT)/$(TARGET_NAME)\"",
-					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 				);
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(SRCROOT)\..\node_modules\react-native-device-info\RNDeviceInfo",
 					"$(SRCROOT)\..\node_modules\react-native-image-crop-picker\ios/**",
 					"$(SRCROOT)\..\node_modules\react-native-vector-icons\RNVectorIconsManager",
+					"$(SRCROOT)\..\node_modules\aurora-imui-react-native\iOS\IMUIMessageCollectionView/**",
+					"$(SRCROOT)\..\node_modules\jcore-react-native\ios\RCTJCoreModule",
+					"$(SRCROOT)\..\node_modules\jpush-react-native\ios\RCTJPushModule",
+					"$(SRCROOT)\..\node_modules\react-native-fs/**",
+					"$(SRCROOT)\..\node_modules\react-native-http-cache\ios\RCTHttpCache",
+					"$(SRCROOT)\..\node_modules\react-native-spinkit\ios/**",
+					"$(SRCROOT)\..\node_modules\react-native-wechat\ios",
+					"$(SRCROOT)\..\node_modules\react-native-picker\ios\RCTBEEPickerManager",
+					"$(SRCROOT)\..\node_modules\react-native-contacts-wrapper\ios\RCTContactsWrapper",
 				);
 			};
 			name = Debug;
@@ -1234,14 +1386,21 @@
 					"$(inherited)",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
-					"\"$(SRCROOT)/$(TARGET_NAME)\"",
-					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 				);
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(SRCROOT)\..\node_modules\react-native-device-info\RNDeviceInfo",
 					"$(SRCROOT)\..\node_modules\react-native-image-crop-picker\ios/**",
 					"$(SRCROOT)\..\node_modules\react-native-vector-icons\RNVectorIconsManager",
+					"$(SRCROOT)\..\node_modules\aurora-imui-react-native\iOS\IMUIMessageCollectionView/**",
+					"$(SRCROOT)\..\node_modules\jcore-react-native\ios\RCTJCoreModule",
+					"$(SRCROOT)\..\node_modules\jpush-react-native\ios\RCTJPushModule",
+					"$(SRCROOT)\..\node_modules\react-native-fs/**",
+					"$(SRCROOT)\..\node_modules\react-native-http-cache\ios\RCTHttpCache",
+					"$(SRCROOT)\..\node_modules\react-native-spinkit\ios/**",
+					"$(SRCROOT)\..\node_modules\react-native-wechat\ios",
+					"$(SRCROOT)\..\node_modules\react-native-picker\ios\RCTBEEPickerManager",
+					"$(SRCROOT)\..\node_modules\react-native-contacts-wrapper\ios\RCTContactsWrapper",
 				);
 			};
 			name = Release;
@@ -1268,8 +1427,6 @@
 					"$(inherited)",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
-					"\"$(SRCROOT)/$(TARGET_NAME)\"",
-					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 				);
 			};
 			name = Debug;
@@ -1294,8 +1451,6 @@
 				TVOS_DEPLOYMENT_TARGET = 10.1;
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
-					"\"$(SRCROOT)/$(TARGET_NAME)\"",
-					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 				);

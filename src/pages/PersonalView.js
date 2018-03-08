@@ -13,11 +13,13 @@ import {
 } from 'react-native';
 import { connect } from 'react-redux';
 import { NavigationBar, ListRow, Button, Toast, Badge } from 'teaset';
-import { Card, WhiteSpace, Grid, List } from 'antd-mobile';
+import { Card, WhiteSpace, Grid, List, NoticeBar, Icon, WingBlank } from 'antd-mobile';
 import { PullView } from 'react-native-pull';
 import { initPersonal } from '../actions/personalAction';
 import Loading from '../components/loading';
 import { styles } from '../constants/styles';
+import Icons from 'react-native-vector-icons/dist/FontAwesome';
+import { ScreenWidth } from '../constants/global';
 
 class Personal extends Component {
     constructor(props) {
@@ -124,10 +126,39 @@ class Personal extends Component {
             </View>
         )
     }
+
+    renderRid() {
+        const { initData, userInfo, navigation } = this.props;
+        const { rid } = userInfo.info;
+        switch (rid) {
+            case 100:
+                return '普通用户'
+                break;
+            case 3:
+                return '公司创建者'
+                break;
+            case 4:
+                return '公司主管'
+                break;
+            case 5:
+                return '公司财务'
+                break;
+            case 6:
+                return '公司业务员'
+                break;
+            case 7:
+                return '公司家访员'
+                break;
+            default:
+                return ''
+                break;
+        }
+    }
+
     render() {
         let { initData, userInfo, navigation } = this.props;
-        const { info } = userInfo;
         console.log(userInfo)
+        const { info } = userInfo;
         const rightView = (
             <NavigationBar.IconButton
                 onPress={() => {
@@ -152,12 +183,12 @@ class Personal extends Component {
             [
                 { title: '我的订单', icon: require('../constants/images/personal/订单1.png') },
                 { title: '我的关注', icon: require('../constants/images/personal/关注.png') },
-                { title: '个人消息', icon: require('../constants/images/personal/消息.png'), gourl: 'Notice', extra: { notice: userInfo.info }, detail:userInfo.isLogin&& info.notice_all>0?  <Badge count={info.notice_all} /> :null},
+                { title: '个人消息', icon: require('../constants/images/personal/消息.png'), gourl: 'Notice', extra: { notice: userInfo.info }, detail: userInfo.isLogin && info.notice_all > 0 ? <Badge count={info.notice_all} /> : null },
                 { title: '浏览记录', icon: require('../constants/images/personal/足迹1.png') },
             ],
             [
                 { title: '联系我们', icon: require('../constants/images/personal/联系我们.png') },
-                { title: '成为公司用户', icon: require('../constants/images/personal/公司.png'), gourl: 'Authentication' },
+                { title: '认证服务', icon: require('../constants/images/personal/公司.png'), gourl: 'Authentication' },
             ],
             [
                 { title: '企业服务' },
@@ -168,9 +199,7 @@ class Personal extends Component {
         const userCard = userInfo.isLogin ?
             <Button title='个人信息' type='secondary' onPress={() => navigation.navigate('SetUserInfo')} />
             : <Button title='登陆' type='secondary' onPress={() => navigation.navigate('Login')} />;
-        const avatar = userInfo.isLogin ?
-            userInfo.info.avatar_path ? { uri: userInfo.info.avatar_path } : require('../constants/images/头像.png')
-            : require('../constants/images/头像.png');
+        const avatar = userInfo.isLogin && userInfo.info.avatar_path ? { uri: userInfo.info.avatar_path } : require('../constants/images/头像.png');
         return (
             <View style={{ flex: 1 }}>
                 <View style={{ height: 66, backgroundColor: "#337AB7", padding: 0, margin: 0 }}>
@@ -187,17 +216,70 @@ class Personal extends Component {
                     topIndicatorHeight={60}
                     isPullEnd={userInfo.status == 'done' ? true : false}
                 >
-                    <Card full style={{ borderWidth: 0, backgroundColor: "#337AB7" }}>
-                        <Card.Header
-                            title={null}
-                            thumb={
-                                <Image
-                                    source={avatar}
-                                    style={{ height: 70, width: 70, borderRadius: 35 }}
-                                />}
-                            extra={userCard}
-                        />
-                    </Card>
+                    {userInfo.isLogin ?
+                        <View style={{ paddingTop: 10, paddingBottom: 10, backgroundColor: '#337AB7' }} >
+                            <View style={[styles.flex_row_columncenter]}>
+                                <View style={[styles.flex_row_center, { flex: 0.5 }]}>
+                                    <TouchableOpacity
+                                        activeOpacity={1}
+                                        onPress={() => navigation.navigate('SetUserInfo')}
+                                        style={[{ borderRadius: 36, borderColor: '#fff', borderWidth: 1 }]}
+                                    >
+                                        <Image
+                                            source={avatar}
+                                            style={{ height: 70, width: 70, borderRadius: 35 }}
+                                        />
+                                    </TouchableOpacity>
+                                    <WingBlank size={'md'}>
+                                        <View>
+                                            <Text style={[styles.fontsize14, { color: '#fff' }]}>{userInfo.info.nickname}</Text>
+                                            <View style={{ padding: 5, paddingTop: 1, paddingBottom: 1, borderColor: '#fff', borderWidth: 1, borderRadius: 5, marginTop: 10 }}>
+                                                <Text style={[styles.fontsize10, { color: '#fff' }]}>{this.renderRid()}</Text>
+                                            </View>
+                                        </View>
+
+                                    </WingBlank>
+                                </View>
+                                <View style={[styles.flex_row_end, { flex: 0.5 }]}>
+                                    <TouchableOpacity
+                                        activeOpacity={1}
+                                        onPress={() => {
+                                            if (info.is_auth == 0) {
+                                                navigation.navigate('PersonalAuthentication')
+                                            }
+                                        }}
+                                        style={[styles.flex_row_center, { height: 30, paddingLeft: 10, paddingRight: 10, borderBottomLeftRadius: 15, borderTopLeftRadius: 15, backgroundColor: info.is_auth ? '#0099CC' : '#8a8a8a' }]}>
+                                        <View style={[styles.flex_center, { width: 20, height: 20, borderRadius: 10, backgroundColor: '#fff', marginRight: 10 }]}>
+                                            {info.is_auth ? <Icons size={16} name={'check'} color={'#0099CC'} /> :
+                                                <Icons size={16} name={'check'} color={'#8a8a8a'} />}
+                                        </View>
+                                        <Text style={[styles.fontsize12, { color: '#fff' }]}>{info.is_auth ? '已认证' : '未认证'}</Text>
+                                    </TouchableOpacity>
+                                </View>
+                            </View>
+                        </View> :
+                        <View style={[styles.flex_row_center, { paddingTop: 10, paddingBottom: 10, backgroundColor: '#337AB7' }]}>
+                            <TouchableOpacity
+                                activeOpacity={1}
+                                onPress={() => navigation.navigate('Login')}
+                                style={styles.flex_column_rowcenter}
+                            >
+                                <View
+                                    style={[{ borderRadius: 36, borderColor: '#fff', borderWidth: 1 }]}
+                                >
+                                    <Image
+                                        source={avatar}
+                                        style={{ height: 70, width: 70, borderRadius: 35 }}
+                                    />
+                                </View>
+                                <WhiteSpace size={'md'}/>
+                                <Text style={[styles.fontsize12,{color:'#fff'}]}>点击登录</Text>
+                            </TouchableOpacity>
+                        </View>
+                    }
+                    {/* <NoticeBar mode="closable" >
+                        你的个人认证没有通过
+                    </NoticeBar> */}
                     {userInfo.isLogin && userInfo.info.rid < 100 ?
                         <List>
                             <Grid data={data}

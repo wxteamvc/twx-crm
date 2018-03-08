@@ -128,10 +128,6 @@ class CompanyAuthentication extends Component {
         const { form, isAgree } = this.state;
         return (
             <View style={{ flex: 1 }}>
-                {/* <StatusBar
-                    translucent={false}
-                    backgroundColor='#40a9ff'
-                /> */}
                 <NavigationBar title='公司认证'
                     leftView={<NavigationBar.BackButton
                         onPress={() => { navigation.goBack() }} />}
@@ -244,7 +240,7 @@ class CompanyAuthentication extends Component {
                     </View>
                     <View style={{ padding: 10, backgroundColor: '#fff' }}>
                         <Text style={styles.fontsize12}>1.证件照片要求清晰可见,才能审核通过</Text>
-                        <Text style={styles.fontsize12}>2.证件照片只用于认证神风,不会用于其他用途,请放心上传</Text>
+                        <Text style={styles.fontsize12}>2.证件照片只用于认证身份,不会用于其他用途,请放心上传</Text>
                         <WhiteSpace size={'xs'} />
                         <View style={styles.flex_row_columncenter}>
                             <TouchableOpacity

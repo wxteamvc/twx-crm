@@ -7,12 +7,12 @@
 import React, { Component } from 'react';
 import { View, Text, Image, ScrollView, FlatList, ProgressBarAndroid, TouchableOpacity, StatusBar, ImageBackground, Linking } from 'react-native';
 import { Icon, Grid, WhiteSpace, Carousel, Flex, WingBlank } from 'antd-mobile';
-import Accordion from '../components/Accordion/Accordion';
 import { styles } from '../constants/styles'
 import { ScreenWidth, StatusBarHeight } from '../constants/global';
 import Item from 'antd-mobile/lib/popover/Item';
 
 export default class CustomerContacts extends Component {
+    
 
     renderListItem = ({ item, index }) => {
         return (

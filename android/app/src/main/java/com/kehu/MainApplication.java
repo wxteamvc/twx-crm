@@ -5,6 +5,9 @@ import android.app.Application;
 import com.theweflex.react.WeChatPackage;
 import cn.reactnative.httpcache.HttpCachePackage;
 import com.facebook.react.ReactApplication;
+import com.lynxit.contactswrapper.ContactsWrapperPackage;
+import com.beefe.picker.PickerViewPackage;
+// import com.RNFetchBlob.RNFetchBlobPackage;
 import com.oblador.vectoricons.VectorIconsPackage;
 import com.reactnative.ivpusic.imagepicker.PickerPackage;
 import com.learnium.RNDeviceInfo.RNDeviceInfo;
@@ -34,11 +37,14 @@ public class MainApplication extends Application implements ReactApplication {
     protected List<ReactPackage> getPackages() {
       return Arrays.<ReactPackage>asList(
           new MainReactPackage(),
+            new ContactsWrapperPackage(),
+            new PickerViewPackage(),
+            new WeChatPackage(),
+            new HttpCachePackage(),
+            // new RNFetchBlobPackage(),
             new VectorIconsPackage(),
             new PickerPackage(),
             new RNDeviceInfo(),
-            new HttpCachePackage(),
-            new WeChatPackage(),
             new JPushPackage(SHUTDOWN_TOAST, SHUTDOWN_LOG),
             new RNSpinkitPackage(),
             new ReactIMUIPackage(),

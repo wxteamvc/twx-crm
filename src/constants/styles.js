@@ -1,5 +1,6 @@
 import { StyleSheet } from 'react-native';
 import { fontSizeScaler, ScreenHeight, StatusBarHeight, ScreenWidth } from '../constants/global';
+
 export const styles = StyleSheet.create({
 
     //````````````````````````通用````````````````````````````````
@@ -30,6 +31,10 @@ export const styles = StyleSheet.create({
     //水平布局双向居中
     flex_row_center: {
         flexDirection: 'row', justifyContent: 'center', alignItems: 'center',
+    },
+    //水平布局水平居中
+    flex_row_rowcenter: {
+        flexDirection: 'row', justifyContent: 'center',
     },
     //垂直布局双向居中
     flex_column_center: {
@@ -72,6 +77,10 @@ export const styles = StyleSheet.create({
     fontsize16: {
         fontSize: 16 * fontSizeScaler
     },
+    //字体大小15
+    fontsize15: {
+        fontSize: 15 * fontSizeScaler
+    },
     //字体大小14
     fontsize14: {
         fontSize: 14 * fontSizeScaler
@@ -87,6 +96,10 @@ export const styles = StyleSheet.create({
     //字体大小8
     fontsize8: {
         fontSize: 8 * fontSizeScaler, color: '#ccc'
+    },
+    //全屏半透明黑色View
+    blackView: {
+        position: 'absolute', width: ScreenWidth, height: ScreenHeight, top: 0, left: 0, backgroundColor: 'rgba(0,0,0,0.7)'
     },
     // //正常模式标题背景颜色
     // title_bgc_light: {
@@ -329,10 +342,10 @@ export const styles = StyleSheet.create({
         borderBottomWidth: 5, borderBottomColor: '#993300', borderTopWidth: 5, borderTopColor: 'transparent', borderRightColor: 'transparent', borderRightWidth: 5, position: 'relative', top: -17
     },
     companyHome_count_container: {
-        height: 80,marginLeft:5,marginRight:5,backgroundColor:'#F75297',borderRadius:5
+        height: 80, marginLeft: 5, marginRight: 5, backgroundColor: '#F75297', borderRadius: 5
     },
 
-    
+
     //```````````````````````公司认证页面样式·······················
     CompanyAuthentication_input_container: {
         backgroundColor: '#fff', paddingLeft: 10, borderColor: '#ccc', borderBottomWidth: 0.5
@@ -352,4 +365,10 @@ export const styles = StyleSheet.create({
     CompanyAuthentication_upload_img_photo: {
         width: 100, height: 100
     },
+    //```````````````````````客户担保人页面样式·······················
+
+    CustomerContact_add_btn: {
+        padding: 10, paddingLeft: 30, paddingRight: 30, backgroundColor: '#fff', borderWidth: 0.7, borderRadius: 5, borderColor: '#ccc'
+    },
 })  
+
